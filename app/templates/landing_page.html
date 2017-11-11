@@ -9,6 +9,9 @@
     <link href='https://fonts.googleapis.com/css?family=Titillium+Web:400,300,600' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
     <link rel="stylesheet" href="../static/css/style.css">
+    <link rel="stylesheet" href="css/footer-distributed-with-address-and-phones.css">
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
+    <link href="http://fonts.googleapis.com/css?family=Cookie" rel="stylesheet" type="text/css">
     <title>Landing Page</title>
 </head>
 
@@ -23,11 +26,11 @@
 
             <h1>Interactive Tutorial for CSC Subjects</h1>
             <p> Web Interactive Tutorial for Computer Science Courses in MSU-IIT School of Computer Studies. It is an interactive learning assistant created to make learning more fun</p>
-            <a href="#" class="btn">Register Now</a>
+            <a href="#form" class="btn" id="buttones">Register Now</a>
 
         </div>
     </header>
-    <div class="form">
+    <div class="form" id="form">
         <ul class="tab-group">
             <li class="tab active"><a href="#signup">Sign Up</a></li>
             <li class="tab"><a href="#login">Log In</a></li>
@@ -126,15 +129,66 @@
     </div>
 
 
-    <section class="section section-a">
-        <div class="container">
-            <h1>Contact Us</h1>
-            <p> Facebook | Twitter | Gmail </p>
-        </div>
-    </section>
 
     <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
     <script src="../static/js/index.js"></script>
+    <footer class="footer-distributed">
+
+        <div class="footer-left">
+
+            <img src="../static/img/wit_logo.png" alt="wit logo" height="20%" ,width="20%">
+
+            <p class="footer-links">
+                <a href="#">Home</a> ·
+                <a href="#">Browse Courses</a> ·
+                <a href="#">Pricing</a> ·
+                <a href="#">About</a> ·
+                <a href="#">Faq</a> ·
+                <a href="#">Contact</a>
+            </p>
+
+            <p class="footer-company-name">WIT &copy; 2017</p>
+        </div>
+
+        <div class="footer-center">
+
+            <div>
+                <i class="fa fa-map-marker"></i>
+                <p><span>Tibanga</span>Iligan, Philippines</p>
+            </div>
+
+            <div>
+                <i class="fa fa-phone"></i>
+                <p>+639 0583 8123</p>
+            </div>
+
+            <div>
+                <i class="fa fa-envelope"></i>
+                <p><a href="mailto:support@company.com">support@wit.com</a></p>
+            </div>
+
+        </div>
+
+        <div class="footer-right">
+
+            <p class="footer-company-about">
+                <span>About the company</span> Lorem ipsum dolor sit amet, consectateur adispicing elit. Fusce euismod convallis velit, eu auctor lacus vehicula sit amet.
+            </p>
+
+            <div class="footer-icons">
+
+                <a href="#"><i class="fa fa-facebook"></i></a>
+                <a href="#"><i class="fa fa-twitter"></i></a>
+                <a href="#"><i class="fa fa-linkedin"></i></a>
+                <a href="#"><i class="fa fa-github"></i></a>
+
+            </div>
+
+        </div>
+
+    </footer>
+
+
 </body>
 
 </html>
