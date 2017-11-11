@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags must come first in the head; any other head content must come after these tags -->
+    <title>Matching Game</title>
+
+    <!-- Common plugins -->
+    <link rel="stylesheet" href="{{ url_for('.static', filename='css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('.static', filename='css/simple-line-icons.css') }}">
+    <link rel="stylesheet" href="{{ url_for('.static', filename='css/font-awesome.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('.static', filename='css/pace.css') }}">
+    <link rel="stylesheet" href="{{ url_for('.static', filename='css/landing-style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('.static', filename='css/help.css') }}">
+    <link rel="stylesheet" href="{{ url_for('.static', filename='css/sidebar.css') }}">
+    <link rel="stylesheet" href="{{ url_for('.static', filename='js/sidebar.js') }}">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+<style>
+body,h1 {font-family: "Raleway", sans-serif}
+body, html {height: 100%}
+.bgimg {
+    background-image: url('background.jpg');
+    min-height: 100%;
+    background-size: cover;
+}
+</style>
+</head>
+<body>
+    <div class="bgimg container-fluid">
+      <h2 align="center">Matching Game</h2>
+      <!-- Trigger the modal with a button -->
+      <button type="button" class="btn btn-default btn-lg pull-right" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-pause"></span></button>
+
+      <!-- Modal -->
+      <div class="modal fade" id="myModal" role="dialog">
+        <div class="modal-dialog">
+
+          <!-- Modal content-->
+          <div class="modal-content">
+            <div class="modal-header" style="color: #007bff, width:500px,length:500px" align="center">
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+              <h4 class="modal-title">Game is Paused!</h4>
+            </div>
+            <div class="modal-body">
+              <div class="container-fluid" align="center">
+                  <div class="row">
+                      <p class="">level</p>
+                  </div>
+                  <div class="row">
+                      <p class="">score</p>
+                  </div>
+                  <div class="row">
+                      <a class="btn btn-default btn-lg text-align"><span class="glyphicon glyphicon-repeat"></span></a>
+                      <a class="btn btn-default btn-lg text-align"><span class="glyphicon glyphicon-list"></span></a>
+                      <a class="btn btn-default btn-lg text-align"><span class="glyphicon glyphicon-play"></span></a>
+                  </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+</body>
+</html>
