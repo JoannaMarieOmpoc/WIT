@@ -73,6 +73,10 @@ nav a:hover::before {
     width: 100%;
 }
 
+p {
+    color: white;
+}
+
 .footer-distributed {
     background-color: #333;
     box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.12);
@@ -239,4 +243,8 @@ nav a:hover::before {
     .footer-distributed .footer-center i {
         margin-left: 0;
     }
+}
+
+.box {
+    padding: 20px;
 }
