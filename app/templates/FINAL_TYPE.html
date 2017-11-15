@@ -4,12 +4,7 @@
 	<title>Typing Game</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 	<link rel="stylesheet" href="../static/css/typing_game.css">
-	<script src="demo.js"></script>
 	<style>
-		div {
-			width: 100%;
-			text-align: center;
-		}
 	canvas {
 		display: inline;
 		background-image: url("../static/img/typing_game_background.jpg");
@@ -22,24 +17,44 @@
     	right: 0;
 		margin: 130px auto auto auto;
 	}
+	#myCanvas{
+		background-image: url("../static/img/typing_game_background.jpg");
+	}
 	</style>
 </head>
 <body>
-	<div class="mainb">
-		<div class="header">
-			<div class="headerContent">
-				<al><a href="#Home"><h1>WIT</h1></a></al>
+	<header>
+        <div class="container">
+				<a href=#Home><img src="../static/img/wit_logo.png" alt="wit logo" class="logo"></a>
+				<div class="navigation">
+                <nav>
+					
+                    <ul>
+                        <li><a href=#home>Home</a>
+                        <li><a href=#About>About</a></li>    
+						<li><a href=#myCourses>My Courses</a></li>
+						<li><a href=#Games>Games</a></li>
+                        <div class="profile">
+                        <a href=#profile><img src=../static/img/adminprofile.jpg alt="Profile" id=avatar></a>
+                        </div>
+                        <div class="dropdownp">
+                        <button type="submit" onclick="showsignout()" class="drpbtn">
+                                <img src="../static/img/dropdownimg2.png" class="signout">
+                        </button>
+
+                            <div id="dropdownp-id" class="dropdownp-content">
+                                    <a href="#signout">Sign-out</a>
+                            </div>
+                        </div>
+					</ul>	
+				</nav>
 			</div>
-			<div class="nav">
-				<catab><a href="#Home">Home</a></catab>
-				<catab><a href="#Quit">Quit</a></catab>
-			</div>
-		</div>
-		<div class="headerBreaK"></div>
-	</div>
+        </div>
+
+    </header>
 	<div id="myCanvas" class="main" width="480" height="320">
 		<div id="main">
-			<a href=#home><img id="logo" src="logo.png"/></img></a>
+			<a href=#home><img id="logo" src="../static/img/logo.png"/></img></a>
 			<div id="titlep"><p>Typing Game</p></div>
 			<button id="play"><p>PLAY</p></button>
 			<button id="credits"><p>CREDITS</p></div>
@@ -219,5 +234,8 @@ function stringDrop() {
 	}
 }
 </script>
+<footer class="footer-distributed">
+</footer>
+
 </body>
 </html>
