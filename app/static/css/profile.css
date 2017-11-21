@@ -8,6 +8,11 @@ body {
 .container {
     width: 80%;
     margin: 0 auto;
+    /*float: left;*/
+}
+
+.profileLink {
+    float: left;
 }
 
 header {
@@ -23,7 +28,8 @@ header ::after {
 .logo {
     float: left;
     padding: 10px 0px;
-    width: 10%
+    width: 10%;
+    position: relative;
 }
 
 pic {
@@ -33,10 +39,11 @@ pic {
 
 nav {
     float: left;
+    position: relative;
 }
 
 nav ul {
-    margin: O;
+    margin: 5;
     padding: 0;
     list-style: none;
 }
@@ -251,7 +258,7 @@ p {
 .container1 {
     position: relative;
     width: 50%;
-    padding-left: 50px;
+    padding-left: 40px;
 }
 
 .image {
