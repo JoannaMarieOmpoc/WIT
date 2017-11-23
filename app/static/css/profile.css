@@ -2,17 +2,24 @@ body {
     margin: 0;
     background: #333333;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+<<<<<<< HEAD
     font-size: 1rem;
+=======
+    font-size: 0.9rem;
+>>>>>>> 29a0248f881678564ade6384c3e875dd7445bc2a
 }
 
 .container {
     width: 80%;
     margin: 0 auto;
+<<<<<<< HEAD
     /*float: left;*/
 }
 
 .profileLink {
     float: left;
+=======
+>>>>>>> 29a0248f881678564ade6384c3e875dd7445bc2a
 }
 
 header {
@@ -28,8 +35,12 @@ header ::after {
 .logo {
     float: left;
     padding: 10px 0px;
+<<<<<<< HEAD
     width: 10%;
     position: relative;
+=======
+    width: 10%
+>>>>>>> 29a0248f881678564ade6384c3e875dd7445bc2a
 }
 
 pic {
@@ -39,11 +50,18 @@ pic {
 
 nav {
     float: left;
+<<<<<<< HEAD
     position: relative;
 }
 
 nav ul {
     margin: 5;
+=======
+}
+
+nav ul {
+    margin: O;
+>>>>>>> 29a0248f881678564ade6384c3e875dd7445bc2a
     padding: 0;
     list-style: none;
 }
@@ -58,6 +76,10 @@ nav li {
 nav a {
     color: #ffffff;
     text-decoration: none;
+<<<<<<< HEAD
+=======
+    text-transform: uppercase;
+>>>>>>> 29a0248f881678564ade6384c3e875dd7445bc2a
 }
 
 nav a:hover {
@@ -253,6 +275,7 @@ p {
 
 .box {
     padding: 20px;
+<<<<<<< HEAD
 }
 
 .container1 {
@@ -304,4 +327,6 @@ h2 {
 
 .profile {
     padding-left: 200px;
+=======
+>>>>>>> 29a0248f881678564ade6384c3e875dd7445bc2a
 }

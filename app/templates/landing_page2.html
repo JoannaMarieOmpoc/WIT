@@ -6,25 +6,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- To make the website responsive -_-->
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-<<<<<<< HEAD
-=======
      <link href="http://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <link href="http://getbootstrap.com/examples/jumbotron-narrow/jumbotron-narrow.css" rel="stylesheet">
->>>>>>> 29a0248f881678564ade6384c3e875dd7445bc2a
     <link href='https://fonts.googleapis.com/css?family=Titillium+Web:400,300,600' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
     <link rel="stylesheet" href="../static/css/style.css">
     <link rel="stylesheet" href="css/footer-distributed-with-address-and-phones.css">
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
     <link href="http://fonts.googleapis.com/css?family=Cookie" rel="stylesheet" type="text/css">
-<<<<<<< HEAD
-=======
     <link href="http://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <link href="http://getbootstrap.com/examples/jumbotron-narrow/jumbotron-narrow.css" rel="stylesheet">
     <link href="../static/css/signup.css" rel="stylesheet">
->>>>>>> 29a0248f881678564ade6384c3e875dd7445bc2a
     <title>Landing Page</title>
 </head>
 
@@ -45,131 +39,26 @@
     </header>
     <div class="form" id="form">
         <ul class="tab-group">
-<<<<<<< HEAD
-            <li class="tab active"><a href="#signup">Sign Up</a></li>
-            <li class="tab"><a href="#login">Log In</a></li>
-=======
-            <li class="tab active"><a href="/showSignUp">Sign Up</a></li>
-            <li class="tab"><a href="/logging">Log In</a></li>
->>>>>>> 29a0248f881678564ade6384c3e875dd7445bc2a
+            <li class="tab "><a href="/showSignUp">Sign Up</a></li>
+            <li class="tab active"><a href="/logging">Log In</a></li>
         </ul>
 
         <div class="tab-content">
-            <div id="signup">
-                <h2>Sign Up for Free</h2>
-
-<<<<<<< HEAD
-                <form action="/" method="post">
-
-                    <div class="top-row">
-                        <div class="field-wrap">
-                            <label>
-                      First Name<span class="req">*</span>
-                    </label>
-                            <input type="text" required autocomplete="off" />
-                        </div>
-
-                        <div class="field-wrap">
-                            <label>
-                      Last Name<span class="req">*</span>
-                    </label>
-                            <input type="text" required autocomplete="off" />
-                        </div>
-
-                    </div>
 
 
-                    <div class="top-row">
-                        <div class="field-wrap">
-                            <label>
-                              Id Number<span class="req">*</span>
-                            </label>
-                            <input type="text" required autocomplete="off" />
-                        </div>
-
-                        <div class="field-wrap">
-                            <label>
-                              Course<span class="req">*</span>
-                            </label>
-                            <input type="text" required autocomplete="off" />
-                        </div>
-
-                    </div>
-
-                    <div class="field-wrap">
-                        <label>
-                        Email Address<span class="req">*</span>
-                      </label>
-                        <input type="email" required autocomplete="off" />
-                    </div>
-
-                    <div class="field-wrap">
-                        <label>
-                        Set A Password<span class="req">*</span>
-                      </label>
-                        <input type="password" required autocomplete="off" />
-                    </div>
-                    <button type="submit" class="button button-block" />Get Started</button>
-=======
-                <form action="/signUp" method="post">
-
-                   
-
-
-                     <div class="field-wrap">
-                       <label for="inputName" class="sr-only">Name</label>
-        <input type="name" name="inputName" id="inputName" class="form-control" placeholder="Name"  >
-                    </div>
-
-                    <div class="field-wrap">
-                        <label for="inputEmail"  class="sr-only">Email address</label>
-        <input type="email" name="inputEmail" id="inputEmail" class="form-control" placeholder="Email address" >
-                    </div>
-
-                    <div class="field-wrap">
-                         <label for="inputPassword" class="sr-only">Password</label>
-        <input type="password" name="inputPassword" id="inputPassword" class="form-control" placeholder="Password"  >
-                    </div>
-
-                   <button id="btnSignUp" type="submit" class="button button-block" />Get Started</button>
->>>>>>> 29a0248f881678564ade6384c3e875dd7445bc2a
-
-
-
-                </form>
-
-            </div>
-
-            <div id="login">
+             <div id="login">
                 <h2>Welcome Back!</h2>
 
-<<<<<<< HEAD
-                <form action="/" method="post">
-
-                    <div class="field-wrap">
-                        <label>
-                    Email Address<span class="req">*</span>
-                  </label>
-                        <input type="email" required autocomplete="off" />
-                    </div>
-
-                    <div class="field-wrap">
-                        <label>
-                    Password<span class="req">*</span>
-                  </label>
-                        <input type="password" required autocomplete="off" />
-=======
-                <form  action="/validateLogin" method="post">
+                <form class="form-signin" action="/validateLogin" method="post">
 
                     <div class="field-wrap">
                          <label for="inputEmail" class="sr-only">Email address</label>
-        <input type="email" name="inputEmail" id="inputEmail" class="form-control" placeholder="Email address" >
+        <input type="email" name="inputEmail" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
                     </div>
 
                     <div class="field-wrap">
                         <label for="inputPassword" class="sr-only">Password</label>
-        <input type="password" name="inputPassword" id="inputPassword" class="form-control" placeholder="Password" >
->>>>>>> 29a0248f881678564ade6384c3e875dd7445bc2a
+        <input type="password" name="inputPassword" id="inputPassword" class="form-control" placeholder="Password" required>
                     </div>
 
                     <p class="forgot"><a href="#">Forgot Password?</a></p>
@@ -179,6 +68,41 @@
                 </form>
 
             </div>
+
+
+            
+            <div id="signup">
+                <h2>Sign Up for Free</h2>
+
+                <form action="/signUp" method="post">
+
+                   
+
+
+                     <div class="field-wrap">
+                       <label for="inputName" class="sr-only">Name</label>
+        <input type="name" name="inputName" id="inputName" class="form-control" placeholder="Name" >
+                    </div>
+
+                    <div class="field-wrap">
+                        <label for="inputEmail"  class="sr-only">Email address</label>
+        <input type="email" name="inputEmail" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
+                    </div>
+
+                    <div class="field-wrap">
+                         <label for="inputPassword" class="sr-only">Password</label>
+        <input type="password" name="inputPassword" id="inputPassword" class="form-control" placeholder="Password" required>
+                    </div>
+
+                   <button id="btnSignUp" type="submit" class="button button-block" />Get Started</button>
+
+
+
+                </form>
+
+            </div>
+
+           
 
         </div>
     </div>
@@ -227,11 +151,7 @@
         <div class="footer-right">
 
             <p class="footer-company-about">
-<<<<<<< HEAD
-                <span>About the company</span>
-=======
                 <span>About the company</span> Lorem ipsum dolor sit amet, consectateur adispicing elit. Fusce euismod convallis velit, eu auctor lacus vehicula sit amet.
->>>>>>> 29a0248f881678564ade6384c3e875dd7445bc2a
             </p>
 
             <div class="footer-icons">

@@ -63,4 +63,46 @@ $(document).ready(function() {
             });
         } // End if
     });
+<<<<<<< HEAD
 });
+=======
+});
+
+
+
+$(function(){
+    $('#btnSignUp').click(function(){
+        
+        $.ajax({
+            url: '/signUp',
+            data: $('form').serialize(),
+            type: 'POST',
+            success: function(response){
+                console.log(response);
+            },
+            error: function(error){
+                console.log(error);
+            }
+        });
+    });
+});
+
+
+
+$(function(){
+    $('#btnSignIn1').click(function(){
+        
+        $.ajax({
+            url: '/validateLogin',
+            data: $('form').serialize(),
+            type: 'POST',
+            success: function(response){
+                console.log(response);
+            },
+            error: function(error){
+                console.log(error);
+            }
+        });
+    });
+});
+>>>>>>> 29a0248f881678564ade6384c3e875dd7445bc2a
