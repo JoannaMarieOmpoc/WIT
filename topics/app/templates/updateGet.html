@@ -1,0 +1,30 @@
+<html>
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" type="text/css" href="{{url_for('static',filename='style.css')}}">
+    <div style="width:130px; margin:0 auto; color: #6f492a; font-weight:bold;">
+        <font color="white"><h3>Please Enter Topic Name</h3></font>
+    </div><br><br>
+</head>
+   <body>
+
+        <div style="width:346px; margin:0 auto; color: black; font-weight:bold;">
+             <form action="/">
+                 <input type="submit" value="Home" />
+             </form>
+        </div>
+         <form action = "{{ url_for('updateGet') }}" method = "POST">
+
+         <div style="width:346px; margin:0 auto; color: black; font-weight:bold;">
+            <font color="white"><div class="container">
+            {% include 'message.html' %}
+            {% block body %}{% endblock%}
+            </div></font>
+
+            {{form.topicname.label}}: {{form.topicname}}<br><br>
+            {{form.submit}}
+         </div>
+         </form>
+
+   </body>
+</html>

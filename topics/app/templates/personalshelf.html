@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" type="text/css" href="{{url_for('static',filename='style.css')}}">
+</head>
+
+<body>
+    <form action = "/searchGet" method = "POST">
+    <li><input type="text" name = "search"/></li><br>
+    </form>
+
+    <br><br><br>
+    <div style="float:right; width:790px; margin:0 auto;">
+        <form action="/view">
+            <input type="submit" value="View All" />
+        </form>
+    </div>
+	<div style="width:340px; margin:0 auto;"><form action = "{{ url_for('adder') }}" method = "POST">
+    	<input type="submit" value="Add" />
+        <font color="white">
+                    <div class="container">
+                        {% include 'message.html' %}
+                        {% block body %}{% endblock%}
+                    </div>
+        </font>
+	</form></div><br>
+        <table  border = 1 style="margin: auto;">
+	<thead>
+		<td bgcolor="#f9ebf2"><font color="#b97a46">Rate</font></td>
+    	<td bgcolor="#f9ebf2"><font color="#b97a46">Title</font></td>
+    	<td bgcolor="#f9ebf2"><font color="#b97a46">Year Published</font></td>
+		<td bgcolor="#f9ebf2"><font color="#b97a46">Type</font></td>
+		<td bgcolor="#f9ebf2"><font color="#b97a46">Author</font></td>
+		<td bgcolor="#f9ebf2"><font color="#b97a46">Edition</font></td>
+		<td bgcolor="#f9ebf2"><font color="#b97a46">ISBN</font></td>
+		<td bgcolor="#f9ebf2"><font color="#b97a46">Rating</font></td>
+
+	</thead>
+		{% for stud in studs %}
+		<tr>
+			<form action = "{{ url_for('deletefunc') }}" method = "POST">
+
+				<td><input type="radio" name="rate" value=0 checked> None
+				<input type="radio" name="rate" value=1 /> 1
+				<input type="radio" name="rate" value=2 /> 2
+  				<input type="radio" name="rate" value=3 /> 3
+				<input type="radio" name="rate" value=4 /> 4
+				<input type="radio" name="rate" value=5 /> 5
+				<input type="submit" formaction="/" value="Submit">
+                </td>
+            <td bgcolor="#f9ebf2"><font color="#b97a46">{{stud[1]}}</font></td>
+            <td bgcolor="#f9ebf2"><font color="#b97a46">{{stud[2]}}</font></td>
+			<td bgcolor="#f9ebf2"><font color="#b97a46">{{stud[3]}}</font></td>
+			<td bgcolor="#f9ebf2"><font color="#b97a46">{{stud[4]}}</font></td>
+			<td bgcolor="#f9ebf2"><font color="#b97a46">{{stud[5]}}</font></td>
+			<td bgcolor="#f9ebf2"><font color="#b97a46">{{stud[6]}}</font></td>
+			<td bgcolor="#f9ebf2"><font color="#b97a46">{{stud[7]}}</font></td>
+			<td><input type="hidden" name="Store" value = {{stud[0]}}></td>
+			<td><input type ="submit" value ="Delete"></td>
+			<td><input type ="submit" formaction = "/updateBook" value ="Update"></td>
+			</form>
+		</tr>
+		{% endfor %}
+
+
+	</table>
+
+
+</body>
+
+
+
+</html>
+
+
+
+
+
+<div style="width:346px; margin:0 auto; color: black; font-weight:bold;">
+        <font color="white">
+            <div class="container">
+                {% include 'message.html' %}
+                {% block body %}{% endblock%}
+            </div>
+        </font>
+    <div class="container-fluid">
+        <div class="col-sm-8 col-sm-offset-2 text-center">
+            <form method="POST" name="add">
+                {{ form.hidden_tag() }}
+                {{ wtf.form_field(form.topicname) }}
+                {{ wtf.form_field(form.topicdisc) }}
+                <button class="btn btn-primary pull-right" type="submit">Submit</button>
+                <div class="clearfix"></div>
+            </form>
+        </div>
+    </div>
+
+
+
+
+
+
+	@app.route('/update', methods=['POST', 'GET'])
+def updatetopics():
+    form = TopicsForm()
+    if request.method == 'POST':
+        if form.validate():
+            topics.topicname = form.topicname.data
+            topics.topicdisc = form.topicdisc.data
+            db.session.add(topics)
+            db.session.commit()
+            result = Topics.query.order_by(Topics.topicname)
+            return redirect(url_for('topics.html', topics=result))
+    else:
+        form.topicname.data = topics.topicname
+        form.topicdisc.data = topics.topicdisc
+
+    return render_template('updatetopics.html', form=form)
+

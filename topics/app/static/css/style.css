@@ -1,0 +1,5 @@
+.body {
+    background-image: url(background.jpg) ;
+    min-height: 100%;
+    font-family: "Arial", sans-serif;
+}

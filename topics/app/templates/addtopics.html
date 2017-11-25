@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% import "bootstrap/wtf.html" as wtf %}
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Topics</title>
+
+
+    <link rel="stylesheet" href="{{ url_for('.static', filename='css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('.static', filename='css/simple-line-icons.css') }}">
+    <link rel="stylesheet" href="{{ url_for('.static', filename='css/font-awesome.min.css') }}">
+
+    <link rel="stylesheet" href="static/css/style.css">
+
+</head>
+<body>
+    <div class="container" style="padding-left: 450px; ">
+    <br><br><br><br><br><br>
+
+            <form method="POST" name="add">
+                {{ form.topicname }} {{ form.topicname.label }}<br>
+                {{ form.topicdisc }} {{ form.topicdisc.label }}<br>
+                {{ form.courseid }} {{ form.courseid.label }}<br>
+                {{ form.submit }}
+                <div class="clearfix"></div>
+            </form>
+        </div>
+
+    </div>
+</body>
+</html>
