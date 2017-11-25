@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/../alchemy/.idea/alchemy.iml" filepath="$PROJECT_DIR$/../alchemy/.idea/alchemy.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/WIT.iml" filepath="$PROJECT_DIR$/.idea/WIT.iml" />
     </modules>
   </component>
 </project>
