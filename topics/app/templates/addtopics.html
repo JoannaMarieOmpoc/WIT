@@ -13,23 +13,20 @@
     <link rel="stylesheet" href="{{ url_for('.static', filename='css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ url_for('.static', filename='css/simple-line-icons.css') }}">
     <link rel="stylesheet" href="{{ url_for('.static', filename='css/font-awesome.min.css') }}">
-
-    <link rel="stylesheet" href="static/css/style.css">
-
 </head>
 <body>
-    <div class="container" style="padding-left: 450px; ">
-    <br><br><br><br><br><br>
-
+    <div class="container-fluid">
+        <div class="col-sm-8 col-sm-offset-2 text-center">
+            <br><br><br><br><br><br><br>
             <form method="POST" name="add">
-                {{ form.topicname }} {{ form.topicname.label }}<br>
-                {{ form.topicdisc }} {{ form.topicdisc.label }}<br>
-                {{ form.courseid }} {{ form.courseid.label }}<br>
-                {{ form.submit }}
+                {{ form.hidden_tag() }}
+                {{ wtf.form_field(form.topicname) }}
+                {{ wtf.form_field(form.topicdisc) }}
+                {{ wtf.form_field(form.courseid) }}
+                <button class="btn btn-primary pull-right" type="submit">Submit</button>
                 <div class="clearfix"></div>
             </form>
         </div>
-
     </div>
 </body>
 </html>

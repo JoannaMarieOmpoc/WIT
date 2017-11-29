@@ -8,7 +8,7 @@
 
     <title>Topics</title>
 
-
+    <!-- Common plugins -->
     <link rel="stylesheet" href="{{ url_for('.static', filename='css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ url_for('.static', filename='css/simple-line-icons.css') }}">
     <link rel="stylesheet" href="{{ url_for('.static', filename='css/font-awesome.min.css') }}">
@@ -26,17 +26,19 @@
                         <thead>
                             <tr>
                                 <th colspan="2" style="text-align: center">Actions</th>
-                                <th style="text-align: center">Topic Name</th>
+                                <th style="text-align: center">Topic</th>
                                 <th style="text-align: center">Discussion</th>
+                                <th style="text-align: center">CourseId</th>
                             </tr>
                         </thead>
                         <tbody>
                             {% for r in topics %}
                                 <tr>
-                                    <td><a class="btn btn-sm btn-success" href="/edit/{{ r.id }}"><span class="glyphicon glyphicon-pencil"></span></a></td>
-                                    <td><a class="btn btn-sm btn-danger confirmation" href="/delete/{{ r.id }}"><span class="glyphicon glyphicon-trash"></span></a></td>
+                                    <td><a class="btn btn-sm btn-success" href="/edit/{{ r.topicid }}"><span class="glyphicon glyphicon-pencil"></span></a></td>
+                                    <td><a class="btn btn-sm btn-danger confirmation" href="/delete/{{ r.topicid }}"><span class="glyphicon glyphicon-trash"></span></a></td>
                                     <td style="text-align: center">{{ r.topicname }}</td>
                                     <td style="text-align: center">{{ r.topicdisc }}</td>
+                                    <td style="text-align: center">{{ r.courseid }}</td>
                                 </tr>
                             {% endfor %}
                         </tbody>
@@ -56,3 +58,4 @@
         }
     </script>
 </body>
+</html>
