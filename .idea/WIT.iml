@@ -5,6 +5,12 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="sqlalch" />
+    <orderEntry type="module" module-name="questions" />
+    <orderEntry type="module" module-name="questions" />
+    <orderEntry type="module" module-name="alchemy" />
+    <orderEntry type="module" module-name="pause" />
+    <orderEntry type="module" module-name="TOPICS" />
+    <orderEntry type="module" module-name="TOPICS" />
     <orderEntry type="module" module-name="TOPICS" />
   </component>
   <component name="TemplatesService">

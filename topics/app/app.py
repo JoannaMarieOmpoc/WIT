@@ -39,11 +39,6 @@ class TopicsForm(Form):
     topicdisc = StringField('Discussion', validators=[DataRequired()])
     courseid = StringField('Course Id', validators=[DataRequired()])
 
-class SearchForm(Form):
-    topicname = StringField('Topic', validators=[DataRequired()])
-    topicdisc = StringField('Discussion', validators=[DataRequired()])
-    courseid = IntegerField('Course id', validators=[DataRequired()])
-
 
 db.create_all()
 app.debug = True
