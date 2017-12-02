@@ -4,40 +4,51 @@
 	<title>Typing Game</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 	<style>
-		div {
+	div {
 			width: 100%;
 			text-align: center;
 		}
 	canvas {
 		display: inline;
-		border: 2px solid black;
-		background-color: black;
+		border: 1px #0066CC;
+		background-color: white;
 		position: absolute;
-    	top:0;
+    	top: 55px;
     	bottom: 0;
     	left: 0;
     	right: 0;
     	margin:auto;
 	}
+	button {
+		border-radius: 10px;
+		background-color: #0066CC;
+		font-style: "Century Gothic";
+		font-size: 20px;
+		color: white;
+		padding-right: 10px;
+		padding-left: 10px;
+		padding-bottom: 5px;
+		padding-top: 5px;
+	}
+
 	</style>
 </head>
-<body onload="loadGame()">
+<body onload="loadGame();">
 <script>
 	var canvas = document.createElement("canvas");
 	canvas.width = window.innerWidth * 0.9;
 	canvas.height = window.innerHeight * 0.9;
-	var pause_center_x = canvas.width * 0.97;
-	var pause_center_y = canvas.height * 0.07;
-	var pause_radius = 20;
-	var q = ["Initialize an integer array with name 'arr' and size 10.", "What operation gets the remainder of two numbers?"];
+	var qnum = 0;
+	//REMOVE THIS WHEN DATA IS PASSED FROM DATABASE
+	var q = ["Initialize an integer array with name 'arr' and size 10.", "What operation gets the remainder of two numbers?"]
 	var a = ["int arr[10];", "modulo"];
+	//_____________________________________________
 	var question;
 	var answer;
 	var entry = "";
-	var swtch = false;
+	var correctAnswer = false;
 	var pause = false;
 	var score = 0;
-	var x,y;
 // the following function stores the user's input and checks it
 document.onkeypress = function (e) {
   
@@ -64,48 +75,45 @@ if (!pause) {
 }
 };
 
-// the following function selects the buttons
-document.onclick = function (evt) {
-	var x = evt.clientX - canvas.getBoundingClientRect().left;
-	var y = evt.clientY - canvas.getBoundingClientRect().top;
-    debugger;
-	switch(buttonClicked(x, y)) {
-		case 1:
-			//alert("The pause button is clicked!");
-			pause = true;
-			break;
-		case 2:
-		break;
-	}
-	return false;
-};
+//accepts an array of strings to use in the game
+function acceptQuestion(qdata) {
+	q = qdata;
+}
+//accepts an array containing the corresponding answers
+function acceptAnswer(adata) {
+	a = adata;
+}
+// the following function pauses the game
+function setPauseTrue() {
+	pause = true;
+}
 
-// the following function determines which button is clicked
-
-function buttonClicked(posx, posy){
-	//return pos.x > rect.x && pos.x < rect.x+rect.width && pos.y < rect.y+rect.heigth && pos.y > rect.y
-	if (Math.sqrt(Math.pow(posx - pause_center_x, 2) + Math.pow(posy - pause_center_y, 2)) <= pause_radius)
-		return 1;
-	
+function setPauseFalse() {
+	pause = false;
 }
 
 // the following function compares entry and answer
 function checkAns() {
 	if (entry == answer)
-		swtch = true;
+		correctAnswer = true;
 	else
-		swtch = false;
+		correctAnswer = false;
+	qnum++;
 }
 // the following function sets question and corresponding answer
 function setQA() {
 	// to be changed into randow indeces
-	question = q[0];
-	answer = a[0];
+	question = q[qnum];
+	answer = a[qnum];
 }
 // initializes the game and game elements
-function loadGame() {
-	setQA();
+function loadGame(q, a) {
 	GameArea.start();
+	acceptQuestion(q)
+}
+
+function startGame() {
+	setQA();
 	Q = new stringDrop();
 }
 // this function generates what you can see
@@ -115,16 +123,13 @@ var GameArea = {
 			this.canvas = canvas;
 			this.context = this.canvas.getContext("2d");
 			this.context.font = "20pt Century Gothic";
-			this.context.fillStyle = "white";
+			this.context.fillStyle = "#0066CC";
 			this.context.strokeText("Score: " + score, 15, 30);
 			this.context.fillText(entry, 150, GameArea.canvas.height*0.9);
 			this.context.beginPath();
 			this.context.moveTo(0, GameArea.canvas.height*0.8);
 			this.context.lineTo(GameArea.canvas.width, GameArea.canvas.height*0.8);
-			this.context.strokeStyle = "white";
-			this.context.stroke();
-			this.context.beginPath();
-			this.context.arc(pause_center_x, pause_center_y, pause_radius, 0, 2*Math.PI, false);
+			this.context.strokeStyle = "#0066CC";
 			this.context.stroke();
 			document.body.insertBefore(this.canvas, document.body.childNodes[0]);
 			this.interval = setInterval(updateGameArea, 20);
@@ -135,16 +140,13 @@ var GameArea = {
 		clear : function() {
         	this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
         	this.context.font = "20pt Century Gothic";
-			this.context.fillStyle = "white";
+			this.context.fillStyle = "#0066CC";
 			this.context.strokeText("Score: " + score, 15, 30);
 			this.context.fillText(entry, 150, this.canvas.height*0.9);
 			this.context.beginPath();
 			this.context.moveTo(0, GameArea.canvas.height*0.8);
 			this.context.lineTo(this.canvas.width, GameArea.canvas.height*0.8);
-			this.context.strokeStyle = "white";
-			this.context.stroke();
-			this.context.beginPath();
-			this.context.arc(pause_center_x, pause_center_y, pause_radius, 0, 2*Math.PI, false);
+			this.context.strokeStyle = "#0066CC";
 			this.context.stroke();
 			this.context.fillStyle = 'rgba(225,225,225,0.7)';
 			if (pause == true)
@@ -162,7 +164,7 @@ function updateGameArea() {
 
 function stringDrop() {
 		this.context = GameArea.context;
-		this.dropSpeed = 0.1;
+		this.dropSpeed = 0.5;
 		this.initialYpos = 60;
 		this.initialXpos = 50 + Math.floor((Math.random() * GameArea.canvas.width/4));
 	this.update = function() {
@@ -184,17 +186,17 @@ function stringDrop() {
 	}
 	this.check = function() {
 		if ((this.initialYpos) >= GameArea.canvas.height * 0.8) {
-			//context = GameArea.context;
-			//context.font = "50px Arial";
-			//context.fillStyle = "Red";
-			//context.fillText("YOU LOSE", GameArea.canvas.width/2, GameArea.canvas.height/2);
-			this.reset();
+			context = GameArea.context;
+			context.font = "50px Century Gothic";
+			context.fillStyle = "#0066CC";
+			context.fillText("YOU LOSE", GameArea.canvas.width/2-120, GameArea.canvas.height/2-100);
+			question = "";
 		}
 		else {
-			if (swtch == true) {
+			if (correctAnswer == true) {
 				this.reset();
 				score++;
-				swtch = false;
+				correctAnswer = false;
 			}
 		}
 	}
@@ -208,5 +210,8 @@ function stringDrop() {
 	}
 }
 </script>
+<button onclick="startGame()">Start</button>
+<button onclick="setPauseTrue()">Pause</button>
+<button onclick="setPauseFalse()">Continue</button>
 </body>
 </html>
