@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/TOPICS/.idea/TOPICS.iml" filepath="$PROJECT_DIR$/TOPICS/.idea/TOPICS.iml" />
+      <module fileurl="file://$USER_HOME$/Desktop/topics/.idea/TOPICS.iml" filepath="$USER_HOME$/Desktop/topics/.idea/TOPICS.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/WIT.iml" filepath="$PROJECT_DIR$/.idea/WIT.iml" />
       <module fileurl="file://$PROJECT_DIR$/../../CSC/CSC 181/alchemy/.idea/alchemy.iml" filepath="$PROJECT_DIR$/../../CSC/CSC 181/alchemy/.idea/alchemy.iml" />
       <module fileurl="file://$PROJECT_DIR$/../../CSC/CSC 181/questions/.idea/questions.iml" filepath="$PROJECT_DIR$/../../CSC/CSC 181/questions/.idea/questions.iml" />

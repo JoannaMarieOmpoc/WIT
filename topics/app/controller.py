@@ -1,47 +1,8 @@
+from app import app
+from forms import TopicsForm
+from models import Topics
 from flask import Flask, render_template, request, redirect, url_for
-from flask_bootstrap import Bootstrap
-from flask_sqlalchemy import SQLAlchemy
-from flask_wtf import Form
-from wtforms import StringField, IntegerField, validators, ValidationError
-from wtforms.validators import DataRequired, Length
-from sqlalchemy import func
-
-app = Flask(__name__)
-
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://username:password@localhost/mydbs'
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-
-db = SQLAlchemy(app)
-
-bootstrap = Bootstrap(app)
-app.config['SECRET_KEY'] = 'wit'
-
-
-class Topics(db.Model):
-    __tablename__ = "topics"
-
-    topicid = db.Column(db.Integer, primary_key=True)
-    topicname = db.Column(db.String(50), nullable=False)
-    topicdisc = db.Column(db.String(500), nullable=False)
-    courseid = db.Column(db.String(30), nullable=False)
-
-    def __init__(self, topicname, topicdisc, courseid):
-        self.topicname = topicname
-        self.topicdisc = topicdisc
-        self.courseid = courseid
-
-    def __repr__(self):
-        return '<topicname {}>'.format(self.topicname)
-
-
-class TopicsForm(Form):
-    topicname = StringField('Topic', validators=[DataRequired()])
-    topicdisc = StringField('Discussion', validators=[DataRequired()])
-    courseid = StringField('Course Id', validators=[DataRequired()])
-
-
-db.create_all()
-app.debug = True
+from app import db
 
 
 @app.route('/', methods=['GET', 'POST'])

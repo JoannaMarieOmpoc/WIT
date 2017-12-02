@@ -15,15 +15,9 @@
     <link rel="stylesheet" href="{{ url_for('.static', filename='css/font-awesome.min.css') }}">
 </head>
 <body>
-
     <div class="container-fluid">
         <div class="col-sm-8 col-sm-offset-2 text-center">
             <br><br><br><br><br><br><br>
-            <div style="width:346px; margin:0 auto; color: #6f492a; font-weight:bold; padding-right: 1000px">
-             <form action="/">
-                 <input type="submit" value="Home" />
-             </form>
-            </div>
             <form method="POST" name="add">
                 {{ form.hidden_tag() }}
                 {{ wtf.form_field(form.topicname) }}
