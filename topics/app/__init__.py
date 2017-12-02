@@ -14,7 +14,7 @@ app.config['MYSQL_PASSWORD'] = DB_PASSWORD
 app.config['MYSQL_DB'] = DB_NAME
 app.config['MYSQL_HOST'] = DB_HOST
 app.config['SECRET_KEY'] = SECRET_KEY
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://{}:{}@{}/{}'.format(DB_USERNAME, DB_PASSWORD, DB_HOST, DB_NAME)
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://{}:{}@{}/{}'.format(DB_USERNAME, DB_PASSWORD, DB_HOST, DB_NAME)
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 mysql.init_app(app)
