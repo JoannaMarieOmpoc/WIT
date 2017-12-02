@@ -7,6 +7,7 @@
 
     <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="../static/css/adminbootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../static/css/adminbootstrap.css">
     <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css" rel="stylesheet">
     <style>
     body {
@@ -89,7 +90,7 @@
             </button>
        
 
-            <a class="pull-left" href="#" id="logo"><img src="../static/img/wit_logo.png"></a>
+            <a class="pull-left" href="{{ url_for('adminHome') }}" id="logo"><img src="../static/img/wit_logo.png"></a>
             
           </div>
        
@@ -100,9 +101,18 @@
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Courses<span class="caret"></span></a>
                 <ul class="dropdown-menu">
                   <li><a href="#">Discussions</a></li>
-                  <li><a href="#">Prelim/Midterm/Finals</a></li>
-                  <li><a href="#">Exams</a></li>
+                  <li><a href="#">Courses</a></li>
+                    <li><a href="#">Topics</a></li>
+                  <li><a class="active" href="{{ url_for('exams') }}">Exams</a></li>
                   <li><a href="#">Exercises</a></li>
+                </ul>
+              </li>
+                <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Manage Games<span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                  <li><a href="#">Typing Game</a></li>
+                  <li><a href="#">Matching Game</a></li>
+                    <li><a href="#">Impossible Game</a></li>
                 </ul>
               </li>
               <li><a href="#">Users</a></li>
