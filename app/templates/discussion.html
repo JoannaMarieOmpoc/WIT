@@ -28,7 +28,6 @@
         height: 800px;
         margin-left: 5%;
         color: black;
-        overflow:auto;
     }
     .tab-content{
         border-left: 1px solid #ddd;
@@ -58,15 +57,6 @@
         padding: 10px;
         margin-top: 15px;
         margin-right:145px
-    }
-    .center{
-        text-align:center;
-    }
-    .form-group{
-        text-align:center;
-    }
-    .form-control{
-        text-align:center;
     }
     </style>
 </head>
@@ -134,24 +124,39 @@
     <div class="container-course">
             <h2 class="margin">Exams</h2>
             <div class="control-group">
-                <h3 class="center">Edit</h3>
-                 <form name="editForm" id="editForm" action="/editexamquestion/{{ exam.examid }}/{{ question.questionid }}" method="POST" novalidate>
-                     <div class="form-group floating-label-form-group controls">
-                         <!--
-                         <input type="hidden" name="csrf-token" value="12345">
-                         -->
-                         <h4>Question ID</h4>
-                         <input type="text" class="form-control" placeholder="{{ question.questionid }}" value="{{ question.questionid }}" name=questionid id=questionid required data-validation-required-message="Please enter the id of the question">
-                         <h4>Question</h4>
-                         <input type="text" class="form-control" placeholder="{{ question.question }}" value="{{ question.question }}" name=question id=question required data-validation-required-message="Please enter the question">
-                         <h4>Answer</h4>
-                         <input type="text" class="form-control" placeholder="{{ question.answer }}" value="{{ question.answer }}" name=answer id=answer required data-validation-required-message="Please enter the answer of the question.">
-                         <h4>Difficulyty</h4>
-                         <input type="text" class="form-control" placeholder="{{ question.difficulty }}" value="{{ question.difficulty }}" name=difficulty id=difficulty required data-validation-required-message="Please enter the difficulty.">
-                     </div>
-                     <button type="submit" name="editexamquestion" id="editexamquestion" class="btn btn-info btn-med pull-right">
-                         Submit
-                     </button>
+                <table class="table table-bordered table-striped table-hover">
+
+                    <tr>
+                        <td class="text-center" colspan="12"><h3>Discussions</h3></td>
+                    </tr>
+                    <tr>
+                    <th class="text-center">
+                        Action
+                    </th>
+                    <th class="text-center">Discussion ID</th>
+                    <th class="text-center">Discussion Name</th>
+                    <th class="text-center">Content</th>
+                    <th class="text-center">Topic ID</th>
+                    </tr>
+                    {% for d in discussions %}
+                    <tr colspan="12">
+                        <td><a class="btn btn-sm btn-success" href="/editdiscussion/{{ d.discussionid }}" method="POST"><span class="glyphicon glyphicon-pencil"></span></a>
+                            <a class="btn btn-sm btn-danger confirmation" href="/deletediscussion/{{ d.discussionid }}"><span class="glyphicon glyphicon-trash"></span></a>
+                        </td>
+                        <td><a href="#"</a>{{ d.discussionid }}</td>
+
+                        <td><a>{{ d.discussionname }}</a></td>
+
+                        <td><a>{{ d.discontent }}</a></td>
+                        <td><a>{{ d.topicid }}</a></td>
+
+                    </tr>
+                    {% endfor %}
+                </table>
+
+                     <a href="{{ url_for('add_discussion') }}" class="btn btn-info btn-med">
+                         <span class="glyphicon glyphicon-plus"></span> Add Discussion
+                     </a>
             </div>
 
     </div>
@@ -159,6 +164,15 @@
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <script type="text/javascript">
+        var elems = document.getElementsByClassName('confirmation');
+        var confirmIt = function (e) {
+            if (!confirm('Are you sure?')) e.preventDefault();
+        };
+        for (var i = 0, l = elems.length; i < l; i++) {
+            elems[i].addEventListener('click', confirmIt, false);
+        }
+    </script>
 
 </body>
 </html>

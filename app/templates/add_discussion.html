@@ -28,7 +28,6 @@
         height: 800px;
         margin-left: 5%;
         color: black;
-        overflow:auto;
     }
     .tab-content{
         border-left: 1px solid #ddd;
@@ -62,11 +61,11 @@
     .center{
         text-align:center;
     }
-    .form-group{
-        text-align:center;
-    }
     .form-control{
-        text-align:center;
+        text-align: center;
+    }
+    .form-group{
+        text-align: center;
     }
     </style>
 </head>
@@ -132,26 +131,27 @@
 </nav>
 <div class="jumbotron">
     <div class="container-course">
-            <h2 class="margin">Exams</h2>
+            <h2 class="margin">Discussions</h2>
             <div class="control-group">
-                <h3 class="center">Edit</h3>
-                 <form name="editForm" id="editForm" action="/editexamquestion/{{ exam.examid }}/{{ question.questionid }}" method="POST" novalidate>
+                <h3 class="center">Add Discussion</h3>
+                 <form name="editForm" id="editForm" action="{{ url_for('add_discussion') }}" method="POST">
                      <div class="form-group floating-label-form-group controls">
                          <!--
                          <input type="hidden" name="csrf-token" value="12345">
                          -->
-                         <h4>Question ID</h4>
-                         <input type="text" class="form-control" placeholder="{{ question.questionid }}" value="{{ question.questionid }}" name=questionid id=questionid required data-validation-required-message="Please enter the id of the question">
-                         <h4>Question</h4>
-                         <input type="text" class="form-control" placeholder="{{ question.question }}" value="{{ question.question }}" name=question id=question required data-validation-required-message="Please enter the question">
-                         <h4>Answer</h4>
-                         <input type="text" class="form-control" placeholder="{{ question.answer }}" value="{{ question.answer }}" name=answer id=answer required data-validation-required-message="Please enter the answer of the question.">
-                         <h4>Difficulyty</h4>
-                         <input type="text" class="form-control" placeholder="{{ question.difficulty }}" value="{{ question.difficulty }}" name=difficulty id=difficulty required data-validation-required-message="Please enter the difficulty.">
+                         <h4>Discussion ID</h4>
+                         <input type="text" class="form-control" placeholder="Discussion ID" name=discussionid id=discussionid required data-validation-required-message="Please enter the id of the discussion.">
+                         <h4>Discussion Name</h4>
+                         <input type="text" class="form-control" placeholder="Discussion Name" name=discussionname id=discussionname required data-validation-required-message="Please enter the name of the discussion.">
+                         <h4>Content</h4>
+                         <input type="text" class="form-control" placeholder="Content" name=discontent id=discontent required data-validation-required-message="Please enter the content.">
+                         <h4>Topic ID</h4>
+                         <input type="text" class="form-control" placeholder="Topic ID" name=topicid id=topicid required data-validation-required-message="Please enter the Topic ID of the discussion.">
                      </div>
-                     <button type="submit" name="editexamquestion" id="editexamquestion" class="btn btn-info btn-med pull-right">
+                     <button type="submit" name="add_discussion" id="add_discussion" class="btn btn-info btn-med pull-right">
                          Submit
                      </button>
+                 </form>
             </div>
 
     </div>
