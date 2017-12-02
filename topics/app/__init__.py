@@ -23,4 +23,4 @@ db = SQLAlchemy(app)
 
 bootstrap = Bootstrap(app)
 
-from app import controller
+from run import controller
