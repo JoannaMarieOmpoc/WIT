@@ -34,8 +34,8 @@
                         <tbody>
                             {% for r in topics %}
                                 <tr>
-                                    <td><a class="btn btn-sm btn-success" href="/edit/{{ r.topicid }}"><span class="glyphicon glyphicon-pencil"></span></a></td>
-                                    <td><a class="btn btn-sm btn-danger confirmation" href="/delete/{{ r.topicid }}"><span class="glyphicon glyphicon-trash"></span></a></td>
+                                    <td><a class="btn btn-sm btn-success" href="/edittopics/{{ r.topicid }}"><span class="glyphicon glyphicon-pencil"></span></a></td>
+                                    <td><a class="btn btn-sm btn-danger confirmation" href="/deletetopics/{{ r.topicid }}"><span class="glyphicon glyphicon-trash"></span></a></td>
                                     <td style="text-align: center">{{ r.topicname }}</td>
                                     <td style="text-align: center">{{ r.topicdisc }}</td>
                                     <td style="text-align: center">{{ r.courseid }}</td>
@@ -48,14 +48,6 @@
         </div>
     </div>
 
-    <script type="text/javascript">
-        var elems = document.getElementsByClassName('confirmation');
-        var confirmIt = function (e) {
-            if (!confirm('Are you sure?')) e.preventDefault();
-        };
-        for (var i = 0, l = elems.length; i < l; i++) {
-            elems[i].addEventListener('click', confirmIt, false);
-        }
-    </script>
+     <script src = "../static/js/style.js"> </script>
 </body>
 </html>

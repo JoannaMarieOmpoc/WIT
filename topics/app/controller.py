@@ -11,20 +11,26 @@ def topics():
     return render_template('topics.html', topics=result1)
 
 
-@app.route('/add', methods=['POST', 'GET'])
+@app.route('/topics', methods=['GET', 'POST'])
+def topics():
+    result1 = Topics.query.order_by(Topics.courseid)
+    return render_template('topics.html', topics=result1)
+
+
+@app.route('/addtopics', methods=['POST', 'GET'])
 def addtopics():
     form = TopicsForm()
     if request.method == 'POST':
         if form.validate_on_submit():
-            topics = Topics(topicname=form.topicname.data, topicdisc=form.topicdisc.data, courseid=form.courseid.data)
+            topics = Topics(topicname=form.topicname.data, topicdisc=form.topicdisc.data, courseid=int(form.courseid.data))
             db.session.add(topics)
             db.session.commit()
-            result = Topics.query.order_by(Topics.courseid)
-            return redirect(url_for('topics', topics=result, form=form))
+            result1 = Topics.query.order_by(Topics.courseid)
+            return redirect(url_for('topics', topics=result1, form=form))
     return render_template('addtopics.html', form=form)
 
 
-@app.route('/edit/<topicid>', methods=['POST', 'GET'])
+@app.route('/edittopics/<topicid>', methods=['POST', 'GET'])
 def editrecords(topicid):
     topics = Topics.query.filter_by(topicid=topicid).first()
     form = TopicsForm()
@@ -34,8 +40,8 @@ def editrecords(topicid):
         topics.courseid = form.courseid.data
         db.session.add(topics)
         db.session.commit()
-        result = Topics.query.order_by(Topics.courseid)
-        return redirect(url_for('topics', topics=result, form=form))
+        result1 = Topics.query.order_by(Topics.courseid)
+        return redirect(url_for('topics', topics=result1, form=form))
     else:
 
         form.topicname.data = topics.topicname
@@ -44,13 +50,14 @@ def editrecords(topicid):
     return render_template('addtopics.html', form=form)
 
 
-@app.route('/delete/<topicid>', methods=['GET', 'POST'])
-def remove(topicid):
-    result = Topics.query.filter_by(topicid=topicid).first()
-    db.session.delete(result)
+@app.route('/deletetopics/<topicid>', methods=['GET', 'POST'])
+def removetopics(topicid):
+    result1 = Topics.query.filter_by(topicid=topicid).first()
+    db.session.delete(result1)
     db.session.commit()
     topics = Topics.query.order_by(Topics.topicname)
     return redirect(url_for('topics', topics=topics))
+
 
 
 if __name__ == '__main__':

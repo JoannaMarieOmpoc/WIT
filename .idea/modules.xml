@@ -2,12 +2,14 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$USER_HOME$/Desktop/topics/.idea/TOPICS.iml" filepath="$USER_HOME$/Desktop/topics/.idea/TOPICS.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../../Courses/.idea/Courses.iml" filepath="$PROJECT_DIR$/../../Courses/.idea/Courses.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/WIT.iml" filepath="$PROJECT_DIR$/.idea/WIT.iml" />
-      <module fileurl="file://$PROJECT_DIR$/../../CSC/CSC 181/alchemy/.idea/alchemy.iml" filepath="$PROJECT_DIR$/../../CSC/CSC 181/alchemy/.idea/alchemy.iml" />
+      <module fileurl="file://$USER_HOME$/Desktop/CSC/push/.idea/push.iml" filepath="$USER_HOME$/Desktop/CSC/push/.idea/push.iml" />
       <module fileurl="file://$PROJECT_DIR$/../../CSC/CSC 181/questions/.idea/questions.iml" filepath="$PROJECT_DIR$/../../CSC/CSC 181/questions/.idea/questions.iml" />
       <module fileurl="file://$USER_HOME$/CSC/CSC 181/questions/.idea/questions.iml" filepath="$USER_HOME$/CSC/CSC 181/questions/.idea/questions.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../sample/.idea/sample.iml" filepath="$PROJECT_DIR$/../sample/.idea/sample.iml" />
       <module fileurl="file://$USER_HOME$/Desktop/CSC/sqlalch/.idea/sqlalch.iml" filepath="$USER_HOME$/Desktop/CSC/sqlalch/.idea/sqlalch.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../../CSC/CSC 181/topics/.idea/topics.iml" filepath="$PROJECT_DIR$/../../CSC/CSC 181/topics/.idea/topics.iml" />
       <module fileurl="file://$USER_HOME$/CSC/CSC 181/topics/.idea/topics.iml" filepath="$USER_HOME$/CSC/CSC 181/topics/.idea/topics.iml" />
     </modules>
   </component>

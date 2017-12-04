@@ -5,14 +5,16 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="sqlalch" />
-    <orderEntry type="module" module-name="questions" />
-    <orderEntry type="module" module-name="questions" />
-    <orderEntry type="module" module-name="alchemy" />
     <orderEntry type="module" module-name="pause" />
-    <orderEntry type="module" module-name="TOPICS" />
-    <orderEntry type="module" module-name="TOPICS" />
-    <orderEntry type="module" module-name="TOPICS" />
-    <orderEntry type="module" module-name="TOPICS" />
+    <orderEntry type="module" module-name="sample" />
+    <orderEntry type="module" module-name="sample" />
+    <orderEntry type="module" module-name="sample" />
+    <orderEntry type="module" module-name="sample" />
+    <orderEntry type="module" module-name="sample" />
+    <orderEntry type="module" module-name="topics" />
+    <orderEntry type="module" module-name="questions" />
+    <orderEntry type="module" module-name="push" />
+    <orderEntry type="module" module-name="Courses" />
   </component>
   <component name="TemplatesService">
     <option name="TEMPLATE_CONFIGURATION" value="Jinja2" />
