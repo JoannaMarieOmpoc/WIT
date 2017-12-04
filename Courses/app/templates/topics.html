@@ -16,8 +16,8 @@
     <div class="table-title1">
         <a class="btn btn-primary pull-left" href="/addtopics"> <img src="../static/img/add.png" alt="Add Icon"></a>
         <form action="/adminHome">
-    <button class="btn btn-primary pull-left">Home</button>
-    </form>
+            <button class="btn btn-primary pull-left">Home</button>
+        </form>
     </div>
     <table class="table-fill">
         <thead>
@@ -25,7 +25,7 @@
                 <th colspan="2" class="text-center">Actions</th>
                 <th class="text-left">Topic</th>
                 <th class="text-left">Discussion</th>
-                <th class="text-left">Course ID</th>
+                <th class="text-left">Course ID sf</th>
 
             </tr>
         </thead>
@@ -39,7 +39,7 @@
                 <td style="text-align: center" class="confirmation">
                     <a href="/deletetopics/{{ r.topicid }}"><img src="../static/img/delete_icon.png" width="50%"></a>
                 </td>
-                 <td style="text-align: center">{{ r.topicname }}</td>
+                <td style="text-align: center">{{ r.topicname }}</td>
                 <td style="text-align: center">{{ r.topicdisc }}</td>
                 <td style="text-align: center">{{ r.courseid }}</td>
             </tr>
