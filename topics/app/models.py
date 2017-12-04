@@ -6,7 +6,7 @@ class Topics(db.Model):
     topicid = db.Column(db.Integer, primary_key=True)
     topicname = db.Column(db.String(50), nullable=False)
     topicdisc = db.Column(db.String(1000), nullable=False)
-    courseid = db.Column(db.Integer, db.ForeignKey(courses.courseid), nullable=False)
+    courseid = db.Column(db.Integer, db.ForeignKey(Courses.courseid), nullable=False)
 
     def __init__(self, topicname, topicdisc, courseid):
         self.topicname = topicname
