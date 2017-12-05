@@ -3514,6 +3514,10 @@ tbody.collapse.in {
 .dropup,
 .dropdown {
   position: relative;
+  padding: 0px;
+}
+.dropdown > a {
+  padding: 0px;
 }
 .dropdown-toggle:focus {
   outline: 0;
@@ -3525,7 +3529,6 @@ tbody.collapse.in {
   z-index: 1000;
   display: none;
   float: left;
-  min-width: 160px;
   padding: 5px 0;
   margin: 2px 0 0;
   font-size: 14px;
@@ -3552,7 +3555,6 @@ tbody.collapse.in {
 }
 .dropdown-menu > li > a {
   display: block;
-  padding: 3px 20px;
   clear: both;
   font-weight: normal;
   line-height: 1.42857143;
@@ -3602,7 +3604,6 @@ tbody.collapse.in {
 }
 .dropdown-header {
   display: block;
-  padding: 3px 20px;
   font-size: 12px;
   line-height: 1.42857143;
   color: #777;
@@ -3984,7 +3985,6 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 .nav > li > a {
   position: relative;
   display: block;
-  padding: 10px 15px;
 }
 .nav > li > a:hover,
 .nav > li > a:focus {
@@ -3992,11 +3992,11 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
   background-color: #eee;
 }
 .nav > li.disabled > a {
-  color: #777;
+  color: #000;
 }
 .nav > li.disabled > a:hover,
 .nav > li.disabled > a:focus {
-  color: #777;
+  color: #000;
   text-decoration: none;
   cursor: not-allowed;
   background-color: transparent;
@@ -4983,9 +4983,7 @@ a.badge:focus {
 .container-fluid .jumbotron {
   padding-right: 15px;
   padding-left: 15px;
-  border-radius: 6px;
-  border-top-left-radius: 0px;
-  border-top-right-radius: 0px;
+  border-radius: 0px;
 }
 .jumbotron .container {
   max-width: 100%;
