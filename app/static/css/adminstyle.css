@@ -43,5 +43,10 @@ body {
         margin-right:15%;
     }
     .navbar-nav{
-        margin-right:2%;
+        margin-right:3%;
+    }
+    .dropdown-toggle:active, .open .dropdown-toggle {
+        background:#FFF !important;
+        color:#000 !important;
+        padding: auto !important;
     }
