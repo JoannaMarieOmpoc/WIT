@@ -50,3 +50,13 @@ body {
         color:#000 !important;
         padding: auto !important;
     }
+    .form-group{
+        padding-top:0%;
+        padding-right:0%;
+    }
+    .add-header{
+        margin-top: 14%;
+    }
+    .marginicon{
+        top: 4px;
+    }

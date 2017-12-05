@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width = device-width, initial-scale=1">
+    <title>Admin</title>
+
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('.static', filename='css/adminboostrap.css') }}">
+    <link rel="stylesheet" type="text/css" href="../static/css/adminbootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../static/css/adminstyle.css">
+</head>
+<body>
+
+
+<div class="container">
+    <nav class="navbar navbar-default">
+            <div class="container-fluid">
+
+
+              <div class="navbar-header">
+
+
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+
+
+                  <span class="sr-only"></span>
+
+
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                </button>
+
+
+                <a class="pull-left" href="{{ url_for('adminHome') }}" id="logo"><img src="../static/img/wit_logo.png"></a>
+
+              </div>
+
+
+              <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                  <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Courses<span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                      <li><a href="{{ url_for('discussion') }}">Discussions</a></li>
+                      <li><a href="#">Courses</a></li>
+                        <li><a href="#">Topics</a></li>
+                      <li><a class="active" href="{{ url_for('exams') }}">Exams</a></li>
+                      <li><a href="#">Exercises</a></li>
+                    </ul>
+                  </li>
+                    <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Manage Games<span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                          <li><a href="#">Typing Game</a></li>
+                          <li><a href="#">Matching Game</a></li>
+                        <li><a href="#">Impossible Game</a></li>
+                    </ul>
+                  </li>
+                    <li><a href="#">Users</a></li>
+                </ul>
+                  <ul class="nav navbar-nav pull-right">
+                      <li><a id="admin" href="#">Admin</a></li>
+                      <li class="dropdown">
+                        <a href="#" id=#signout class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                            <span class="glyphicon glyphicon-triangle-bottom"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">Sign-out</a></li>
+                        </ul>
+                      </li>
+                  </ul>
+              </div>
+            </div>
+    </nav>
+<div class="jumbotron">
+    <div class="container-course">
+        <nav class="breadcrumb">
+          <a class="breadcrumb-item" href="#">Home</a>
+             <span class="glyphicon glyphicon-menu-right marginicon"></span>
+          <a class="breadcrumb-item" href="#">Manage Courses</a>
+             <span class="glyphicon glyphicon-menu-right marginicon"></span>
+          <a class="breadcrumb-item" href="#">{{ coursename }}</a>
+             <span class="glyphicon glyphicon-menu-right marginicon"></span>
+          <span class="breadcrumb-item active">Manage Exams</span>
+        </nav>
+            <div class="control-group">
+                <table class="table table-bordered table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <div class="control-group pull-left">
+                                    <form name="addForm" id="addForm" action="{{ url_for('addexam') }}" method="POST">
+                                         <div class="form-group floating-label-form-group controls pull-left">
+                                             <!--
+                                             <input type="hidden" name="csrf-token" value="12345">
+                                             -->
+                                             <h4>Add an exam</h4>
+                                             <input type="text" class="form-control" placeholder="Select the exam type" name=examtype id=examtype required data-validation-required-message="Please enter the type of the exam.">
+                                             </div>
+                                             <div class="add-header pull-right">
+                                                <button type="submit" name="addaexam" id="addaexam" class="btn btn-info btn-med pull-right">
+                                                    <span class="glyphicon glyphicon-plus"></span> Add Exam
+                                                </button>
+                                            </div>
+                                    </form>
+                            </div>
+                        </tr>
+                    </thead>
+                    <tr>
+                        <td class="text-center" colspan="12"><h3>Exams</h3></td>
+                    </tr>
+                    <tr>
+                        <th class="text-center">Exam ID</th>
+                        <th class="text-center">Exam Type</th>
+                        <th class="text-center">Course</th>
+                        <th class="text-center"></th>
+                    </tr>
+                    {% for e in exams %}
+                    <tr colspan="12">
+                        <td><a href="/examquestions/{{ e.examid }}"</a>{{ e.examid }}</td>
+                        <td><a>{{ e.examtype }}</a></td>
+                        <td><a>{{ e.courseid }}</a></td>
+                        <td class="text-center">
+                            <a class="btn btn-sm btn-danger confirmation" href="/deleteexam/{{ e.examid }}"><span class="glyphicon glyphicon-trash"></span>Delete</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
+
+    </div>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <script type="text/javascript">
+        var elems = document.getElementsByClassName('confirmation');
+        var confirmIt = function (e) {
+            if (!confirm('Are you sure?')) e.preventDefault();
+        };
+        for (var i = 0, l = elems.length; i < l; i++) {
+            elems[i].addEventListener('click', confirmIt, false);
+        }
+    </script>
+
+</body>
+</html>
