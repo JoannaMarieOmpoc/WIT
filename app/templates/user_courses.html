@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>My Courses</title>
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css" rel="stylesheet">
+    <link href="http://fonts.googleapis.com/css?family=Cookie" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" type="text/css" href="../static/css/mycourses.css">
+    <link rel="stylesheet" type="text/css" href="../static/css/adminbootstrap.css">
+    <style>
+
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <div class="container">
+            <img src="../static/img/wit_logo.png" alt="WIT Logo" class="logo">
+            <nav>
+                <ul>
+                    <li><a href="{{ url_for('UserHome') }}">Home</a></li>
+                    <li><a href="#">About</a></li>
+                    <li><a class="active" href="{{ url_for('mycourses') }}">My Courses</a></li>
+                    <li><a href="#">Games </a></li>
+                    <li><a href="#">Profile </a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    <div class="jumbotron">
+        <nav class="breadcrumb">
+              <a class="breadcrumb-item" href="#">Home</a>
+                 <span class="glyphicon glyphicon-menu-right marginicon"></span>
+              <a class="breadcrumb-item active" href="#">My Courses</a>
+        </nav>
+        <div class="container-course">
+
+            <h2 class="margin">Courses</h2>
+            <table class="table">
+                <thead>
+                <tr>
+                        <form name="addForm" id="addForm" action="{{ url_for('addcourseopt') }}" method="POST">
+                                <td>
+                                    <div class="form-group floating-label-form-group controls pull-left">
+                                        <label for="choosecourse">Add course:</label>
+                                          <select class="form-control" id="choosecourse" name=coursename1 id=coursename1>
+                                            <option value="" disabled selected>Select a course to add</option>
+                                              {% for course in courses %}
+                                              <option value="{{ courses.coursename }}">{{ courses.coursename }}</option>
+                                              {% endfor %}
+                                          </select>
+                                        <p class="help-block text-danger">
+                                    </div>
+                                    <div class="add">
+                                        <button type="submit" name="addcourse" id="addcourse" class="btn btn-info btn-med">
+                                                <span class="glyphicon glyphicon-plus"></span> Add
+                                        </button>
+                                    </div>
+                                </td>
+                        </form>
+                </tr>
+                </thead>
+            </table>
+            <div class="container-courses">
+                    <div class="row">
+                        <div class="course-menu">
+                        {% for course in courses %}
+                        <div class="col-md-3">
+                            <div class="course-preview">
+                                <h3 class="course-title">
+                                    <a href="{{ url_for('course', course_name=course.coursename) }}">
+                                    {{ course.coursename }}
+                                    </a>
+                                </h3>
+                                <h4 class="course-subtitle">
+                                    Description: {{ course.coursedesc }}
+                                </h4>
+                                <div class="withdrawcss">
+                                    <a class="confirmation" href="{{ removecourseopt }}">
+                                        <button type="submit" name="removecourse" id="removecourse" class="btn btn-info btn-med">
+                                            <span class="glyphicon glyphicon-trash"></span> Withdraw
+                                        </button>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                     </div>
+                    </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer-distributed">
+
+        <div class="footer-left">
+
+            <img src="../static/img/wit_logo.png" alt="wit logo" height="20%" ,width="20%">
+
+            <p class="footer-links">
+                <a href="#">Home</a> ·
+                <a href="#">Browse Courses</a> ·
+                <a href="#">Pricing</a> ·
+                <a href="#">About</a> ·
+                <a href="#">Faq</a> ·
+                <a href="#">Contact</a>
+            </p>
+
+            <p class="footer-company-name">WIT &copy; 2017</p>
+        </div>
+
+        <div class="footer-center">
+
+            <div>
+                <i class="fa fa-map-marker"></i>
+                <p><span>Tibanga</span>Iligan, Philippines</p>
+            </div>
+
+            <div>
+                <i class="fa fa-phone"></i>
+                <p>+639 0583 8123</p>
+            </div>
+
+            <div>
+                <i class="fa fa-envelope"></i>
+                <p><a href="mailto:support@company.com">support@wit.com</a></p>
+            </div>
+
+        </div>
+
+        <div class="footer-right">
+
+            <p class="footer-company-about">
+                <span>About the company</span> Lorem ipsum dolor sit amet, consectateur adispicing elit. Fusce euismod convallis velit, eu auctor lacus vehicula sit amet.
+            </p>
+
+            <div class="footer-icons">
+
+                <a href="#"><i class="fa fa-facebook"></i></a>
+                <a href="#"><i class="fa fa-twitter"></i></a>
+                <a href="#"><i class="fa fa-linkedin"></i></a>
+                <a href="#"><i class="fa fa-github"></i></a>
+
+            </div>
+
+        </div>
+
+    </footer>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
+</body>
+
+</html>
