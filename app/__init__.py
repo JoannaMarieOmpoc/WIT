@@ -1,18 +1,22 @@
 from flask import Flask
-from config import DB_USERNAME, DB_PASSWORD, DB_NAME, DB_HOST, SECRET_KEY
 from flask_sqlalchemy import SQLAlchemy
-
 from flask_bootstrap import Bootstrap
+from flask_login import LoginManager
 
 app = Flask(__name__)
 
-app.config['SECRET_KEY'] = SECRET_KEY
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://mysqladmin:1234@localhost/wit'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:1234@localhost/wit'
+
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
+app.secret_key = 'secret'
 
 db = SQLAlchemy(app)
 
-bootstrap = Bootstrap(app)
+lm = LoginManager()
+
+lm.init_app(app)
+
+Bootstrap(app)
 
 from app import controller

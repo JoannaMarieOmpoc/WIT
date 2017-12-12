@@ -1,40 +1,46 @@
-from app import app,db
+from app import app, db
+
+enroll = db.Table('Enrolled',
+                    db.Column('username', db.ForeignKey('Users.username')),
+                    db.Column('courseid', db.Integer, db.ForeignKey('Courses.courseid'))
+                  )
 
 class User(db.Model):
-	__tablename__ = 'Users'
-	username = db.Column(db.String(30), unique=True, primary_key=True, nullable=False)
-	usermail = db.Column(db.String(50), unique=True, nullable=False)
-	usertype = db.Column(db.String(10), nullable=False)
-	password = db.Column(db.String(50), nullable=False)
-	courses = db.relationship('Course', backref='User', secondary='Enrolled', lazy=True)
+    __tablename__ = 'Users'
 
-	def __init__(self, username, usermail, usertype, password):
-		self.username = username
-		self.usermail = usermail
-		self.usertype = usertype
-		self.password = password
+    username = db.Column(db.String(30), unique=True, primary_key=True, nullable=False)
+    usermail = db.Column(db.String(50), unique=True, nullable=False)
+    usertype = db.Column(db.String(10), nullable=False)
+    password = db.Column(db.String(50), nullable=False)
+    courses = db.relationship('Course', secondary=enroll, backref=db.backref('students', lazy='dynamic'))
 
-	def is_authenticated(self):
-		return True
+    def __init__(self, username, usermail, usertype, password):
+        self.username = username
+        self.usermail = usermail
+        self.usertype = usertype
+        self.password = password
 
-	def is_active(self):
-		return True
+    def is_authenticated(self):
+        return True
 
-	def is_anonymous(self):
-		return False
+    def is_active(self):
+        return True
 
-	def get_id(self):
-		return self.username
+    def is_anonymous(self):
+        return False
 
-	def __repr__(self):
-		return '<User %r>' % self.username
+    def get_id(self):
+        return self.username
+
+    def __repr__(self):
+        return '<User %r>' % self.username
 
 
 class Course(db.Model):
     __tablename__ = 'Courses'
 
     courseid = db.Column(db.Integer, primary_key=True)
-    coursename = db.Column(db.String(50), nullable=False)
+    coursename = db.Column(db.String(50), unique=True, nullable=False)
     coursedesc = db.Column(db.Text, nullable=False)
     users = db.relationship('User', backref='Course', secondary='Enrolled', lazy=True)
 
@@ -45,13 +51,14 @@ class Course(db.Model):
     def __repr__(self):
         return '<courseName {}>'.format(self.coursename)
 
+
 class Topic(db.Model):
     __tablename__ = 'Topics'
 
     topicid = db.Column(db.Integer, primary_key=True)
     topicname = db.Column(db.String(30), nullable=False)
     topicdisc = db.Column(db.Text, nullable=False)
-    courseid = db.Column(db.Integer, db.ForeignKey(Course.courseid), nullable=False)
+    courseid = db.Column(db.Integer, db.ForeignKey('Courses.courseid'), nullable=False)
 
     def __init__(self, topicname, topicdisc, courseid):
         self.topicname = topicname
@@ -77,16 +84,18 @@ class Question(db.Model):
         self.answer = answer
         self.examid = examid
 
+
 class Choice(db.Model):
-	__tablename__ = 'Choices'
+    __tablename__ = 'Choices'
 
-	choiceid = db.Column(db.Integer, primary_key=True)
-	choice = db.Column(db.String(100), nullable=False)
-	question = db.Column(db.Integer, db.ForeignKey('Questions.questionid'))
+    choiceid = db.Column(db.Integer, primary_key=True)
+    choice = db.Column(db.String(100), nullable=False)
+    question = db.Column(db.Integer, db.ForeignKey('Questions.questionid'))
 
-	def __init__(self, choice, question):
-		self.choice = choice
-		self.question = question
+    def __init__(self, choice, question):
+        self.choice = choice
+        self.question = question
+
 
 class Exam(db.Model):
     __tablename__ = 'Exams'
@@ -99,21 +108,32 @@ class Exam(db.Model):
         self.examtype = examtype
         self.courseid = courseid
 
+
+'''
 class Exercise(db.Model):
-	__tablename__ = 'Exercises'
+    __tablename__ = 'Exercises'
 
-	exerciseid = db.Column(db.Integer, primary_key=True)
-	questions = db.relationship('Question', backref='Exercises', lazy=True)
+    exerciseid = db.Column(db.Integer, primary_key=True)
+    topicid = db.Column(db.Integer, db.ForeignKey(Topic.topicid))
+    questions = db.relationship('Question', backref='Exercises', lazy=True)
+'''
 
+
+# convert to table
+'''
 class Enroll(db.Model):
-	__tablename__ = 'Enrolled'
+    __tablename__ = 'Enrolled'
 
-	user = db.Column(db.ForeignKey('Users.username'), primary_key=True)
-	course = db.Column(db.ForeignKey('Courses.courseid'), primary_key=True)
-	#enroll_date = db.Column('date', db.DateTime, default=datetime.utcnow)
+    user = db.Column(db.ForeignKey('Users.username'), primary_key=True)
+    course = db.Column(db.ForeignKey('Courses.courseid'), primary_key=True)
+    # enroll_date = db.Column('date', db.DateTime, default=datetime.utcnow)
 
-	user = db.relationship('User', backref='Enrolled')
-	course = db.relationship('Course', backref='Enrolled')
+    user = db.relationship('User', backref='Enrolled')
+    course = db.relationship('Course', backref='Enrolled')
 
+
+# create courseHAStopics and exerciseHASquestions and examHASquestions tables
+
+'''
 db.create_all()
 app.debug = True

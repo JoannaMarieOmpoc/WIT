@@ -3,12 +3,12 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width = device-width, initial-scale=1">
-    <title>Manage Courses</title>
+    <title>Admin</title>
 
     <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="{{ url_for('.static', filename='css/adminboostrap.css') }}">
-    <link rel="stylesheet" type="text/css" href="../static/css/adminbootstrap.css">
-    <link rel="stylesheet" type="text/css" href="../static/css/adminstyle.css">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('.static', filename='css/adminbootstrap.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('.static', filename='css/adminstyle.css') }}">
+
 </head>
 <body>
 
@@ -33,7 +33,7 @@
                 </button>
 
 
-                <a class="pull-left" href="{{ url_for('showadmindashboard') }}" id="logo"><img src="../static/img/wit_logo.png"></a>
+                <a class="pull-left" href="{{ admin }}" id="logo"><img src="{{ url_for('.static', filename='img/wit_logo.png') }}"></a>
 
               </div>
 
@@ -74,71 +74,72 @@
               </div>
             </div>
     </nav>
-
-<div class="jumbotron">
+    <div class="jumbotron">
     <div class="container-course">
         <nav class="breadcrumb">
           <a class="breadcrumb-item" href="{{ url_for('showadmindashboard') }}">Home</a>
              <span class="glyphicon glyphicon-menu-right marginicon"></span>
-          <a class="breadcrumb-item active">Manage Courses</a>
+          <a class="breadcrumb-item" href="{{ url_for('managecourses') }}">Manage Courses</a>
+             <span class="glyphicon glyphicon-menu-right marginicon"></span>
+          <a class="breadcrumb-item" href="/admin/{{coursename}}">{{ coursename }}</a>
+             <span class="glyphicon glyphicon-menu-right marginicon"></span>
+          <span class="breadcrumb-item active">Manage Exams</span>
         </nav>
-        <h2>Manage Courses</h2>
             <div class="control-group">
                 <table class="table table-bordered table-striped table-hover">
                     <thead>
                         <tr>
-                            <a href="{{ url_for('addcourse') }}" class="btn btn-info btn-med">
-                                <span class="glyphicon glyphicon-plus"></span> Add a course
-                            </a>
+                            <div class="control-group pull-left">
+                                    <form name="addForm" id="addForm" action="{{ url_for('addexam', coursename=coursename) }}" method="POST">
+                                         <div class="form-group floating-label-form-group controls pull-left">
+                                             <div class="pull-left">
+                                                    <label for="addexam">Add an exam</label>
+                                                      <select class="form-control" id="addexam" name=examtype id=examtype>
+                                                        <option value="" disabled selected>Select the exam type...</option>
+                                                          <option value="Prelim">Prelim</option>
+                                                          <option value="Midterm">Midterm</option>
+                                                          <option value="Finals">Finals</option>
+                                                      </select>
+                                             </div>
+                                             <div class="add-header pull-right addaexam">
+                                                <button type="submit" name="addaexam" id="addaexam" class="btn btn-info btn-med pull-right">
+                                                    <span class="glyphicon glyphicon-plus"></span> Add Exam
+                                                </button>
+                                            </div>
+                                    </form>
+                            </div>
                         </tr>
                     </thead>
+                    <tr>
+                        <td class="text-center" colspan="12"><h3>Exams</h3></td>
+                    </tr>
+                    <tr>
+                        <th class="text-center">Exam ID</th>
+                        <th class="text-center">Exam Type</th>
+                        <th class="text-center"></th>
+                    </tr>
+                    {% for e in exams %}
+                    <tr colspan="12">
+                        <td><a href="/examquestions/{{ e.examid }}"</a>{{ e.examid }}</td>
+                        <td><a>{{ e.examtype }}</a></td>
+                        <td class="text-center">
+                            <form method='POST' action="/admin/{{ coursename }}/manageexams/deleteexam/{{ e.examid }}">
+                                <button class="btn btn-sm btn-danger confirmation">
+                                    <span class="glyphicon glyphicon-trash"></span>Delete
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
                 </table>
-                    <div class="container-courses">
-                        <div class="row">
-                            <div class="course-menu">
-                            {% for course in courses %}
-                            <div class="col-md-3">
-                                <div class="course-preview">
-                                    <h3 class="course-title">
-                                        <a href="{{ url_for('coursePage', coursename=course.coursename) }}">
-                                        {{ course.coursename }}
-                                        </a>
-                                    </h3>
-                                    <h4 class="course-subtitle">
-                                        Course ID: {{ course.courseid }}
-                                        <br/>
-                                        Description: {{ course.coursedesc }}
-                                    </h4>
-                                    <div class="withdrawcss">
-                                        <span style="float:left;">
-                                        <form class="confirmation" method='POST' action="/admin/managecourses/removecourse/{{ course.courseid }}">
-                                            <button type="submit" name="removecourse" id="removecourse" class="btn btn-info btn-med">
-                                                <span class="glyphicon glyphicon-trash"></span> Delete
-                                            </button>
-                                        </form>
-                                        </span>
-                                        <span style="float:right;">
-                                        <form class="" action="/admin/managecourses/editcourse/{{ course.courseid }}">
-                                            <button type="submit" name="editcourse" id="editcourse" class="btn btn-info btn-med">
-                                                <span class="glyphicon glyphicon-edit"></span> Edit
-                                            </button>
-                                        </form>
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-                            {% endfor %}
-                         </div>
-                        </div>
-                    </div>
             </div>
-
+            </div>
+        </div>
     </div>
 </div>
-
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-<script type="text/javascript">
+    <script type="text/javascript">
         var elems = document.getElementsByClassName('confirmation');
         var confirmIt = function (e) {
             if (!confirm('Are you sure?')) e.preventDefault();
@@ -146,6 +147,6 @@
         for (var i = 0, l = elems.length; i < l; i++) {
             elems[i].addEventListener('click', confirmIt, false);
         }
-</script>
+    </script>
 </body>
 </html>

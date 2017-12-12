@@ -1,15 +1,38 @@
-{% extends "layouts/base.html" %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>WIT | Log In</title>
 
-{% block body %}
-    <form method="POST" action="">
-        <div class="form-group">
-            <label for="username">Username</label>
-            <input type="text" class="form-control" name="username">
-        </div>
-        <div class="form-group">
-            <label for="password">Password</label>
-            <input type="password" class="form-control" name="password">
-        </div>
-        <p><input type="submit" value="Submit" class="btn btn-primary"></p>
-    </form>
-{% endblock %}
+   
+    <link href="http://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <link href="http://getbootstrap.com/examples/jumbotron-narrow/jumbotron-narrow.css" rel="stylesheet">
+    <link href="../static/css/signup.css" rel="stylesheet">
+    <script src="../static/js/jquery-1.11.2.js"></script>
+    <script src="../static/js/signIn.js"></script>
+  </head>
+
+  <body>
+
+    <div class="container">
+      <div class="tab-content">
+        <div id="login">
+          <h2>Log In to WIT</h2>
+                <form action="/login" method="POST">
+                    <div class="field-wrap">
+                    <label for="inputName" class="sr-only">Username or Email</label>
+                    <input type="name" name="inputName" id="inputName" class="form-control" placeholder="Userame or Email" required>
+                    </div>
+
+                    <div class="field-wrap">
+                    <label for="inputPassword" class="sr-only">Password</label>
+                    <input type="password" name="inputPassword" id="inputPassword" class="form-control" placeholder="Password" required>
+                    </div>
+
+                    <button id="btnLogIn" type="submit" class="button button-block" />Log In</button>
+                </form>
+        </div>      
+      </div>
+    </div>
+  </body>
+</html>
