@@ -1,8 +1,8 @@
 $(function() {
 
-    function set(key, value) { localStorage.setItem(key, value); }
+    function set(key, value) { window.localStorage.setItem(key, value); }
 
-    function get(key) { return localStorage.getItem(key); }
+    function get(key) { return window.localStorage.getItem(key); }
 
     function increase(el) { set(el, parseInt(get(el)) + 1); }
 
