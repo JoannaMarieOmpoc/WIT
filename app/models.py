@@ -5,6 +5,11 @@ enroll = db.Table('Enrolled',
                     db.Column('courseid', db.Integer, db.ForeignKey('Courses.courseid'))
                   )
 
+haschoices = db.Table('hasChoices',
+                      db.Column('questionid', db.ForeignKey('Questions.questionid')),
+                      db.Column('choiceid', db.ForeignKey('Choices.choiceid'))
+                      )
+
 class User(db.Model):
     __tablename__ = 'Users'
 
@@ -77,6 +82,7 @@ class Question(db.Model):
     question = db.Column(db.String(100), nullable=False)
     answer = db.Column(db.String(100), nullable=False)
     examid = db.Column(db.Integer, db.ForeignKey('Exams.examid'), nullable=False)
+    choices = db.relationship('Choice', secondary=haschoices, backref=db.backref('questions', lazy='dynamic'))
 
     def __init__(self, question, difficulty, answer, examid):
         self.question = question
