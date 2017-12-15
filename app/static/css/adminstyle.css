@@ -71,9 +71,10 @@ body {
     .course-preview{
         display: block;
         border: 1px solid #333;
-        height: 300px;
+        height: 270px;
         padding-left: 10px;
         overflow: auto;
+        margin-bottom: 1%;
     }
     .course-subtitle{
         padding-left: 10px;
@@ -83,4 +84,5 @@ body {
         position: absolute;
         bottom: 15px;
         right: 25px;
+        display: inline;
     }

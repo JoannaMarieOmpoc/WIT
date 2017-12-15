@@ -5,11 +5,18 @@ enroll = db.Table('Enrolled',
                     db.Column('courseid', db.Integer, db.ForeignKey('Courses.courseid'))
                   )
 
-haschoices = db.Table('hasChoices',
+questionHasChoices = db.Table('questionHasChoices',
                       db.Column('questionid', db.ForeignKey('Questions.questionid')),
                       db.Column('choiceid', db.ForeignKey('Choices.choiceid'))
                       )
-
+examHasQuestions = db.Table('examHasQuestions',
+                            db.Column('examid', db.ForeignKey('Exams.examid')),
+                            db.Column('questionid', db.ForeignKey('Questions.questionid'))
+                            )
+exerciseHasQuestions = db.Table('exerciseHasQuestions',
+                                db.Column('exerciseid', db.ForeignKey('Exercises.exerciseid')),
+                                db.Column('questionid', db.ForeignKey('Questions.questionid'))
+                                )
 class User(db.Model):
     __tablename__ = 'Users'
 
@@ -61,7 +68,7 @@ class Topic(db.Model):
     __tablename__ = 'Topics'
 
     topicid = db.Column(db.Integer, primary_key=True)
-    topicname = db.Column(db.String(30), nullable=False)
+    topicname = db.Column(db.String(30), unique=True, nullable=False)
     topicdisc = db.Column(db.Text, nullable=False)
     courseid = db.Column(db.Integer, db.ForeignKey('Courses.courseid'), nullable=False)
 
@@ -81,14 +88,12 @@ class Question(db.Model):
     difficulty = db.Column(db.String(30), nullable=False)
     question = db.Column(db.String(100), nullable=False)
     answer = db.Column(db.String(100), nullable=False)
-    examid = db.Column(db.Integer, db.ForeignKey('Exams.examid'), nullable=False)
-    choices = db.relationship('Choice', secondary=haschoices, backref=db.backref('questions', lazy='dynamic'))
+    choices = db.relationship('Choice', secondary=questionHasChoices, backref=db.backref('questions', lazy='dynamic'))
 
-    def __init__(self, question, difficulty, answer, examid):
+    def __init__(self, question, difficulty, answer):
         self.question = question
         self.difficulty = difficulty
         self.answer = answer
-        self.examid = examid
 
 
 class Choice(db.Model):
@@ -109,20 +114,23 @@ class Exam(db.Model):
     examid = db.Column(db.Integer, primary_key=True)
     examtype = db.Column(db.String(30), nullable=False)
     courseid = db.Column(db.Integer, db.ForeignKey('Courses.courseid'), nullable=False)
+    questions = db.relationship('Question', secondary=examHasQuestions, backref=db.backref('exam', lazy='dynamic'))
 
     def __init__(self, examtype, courseid):
         self.examtype = examtype
         self.courseid = courseid
 
 
-'''
+
 class Exercise(db.Model):
     __tablename__ = 'Exercises'
 
     exerciseid = db.Column(db.Integer, primary_key=True)
     topicid = db.Column(db.Integer, db.ForeignKey(Topic.topicid))
-    questions = db.relationship('Question', backref='Exercises', lazy=True)
-'''
+    questions = db.relationship('Question', secondary=exerciseHasQuestions, backref=db.backref('exercise', lazy='dynamic'))
+
+    def __init__(self, topicid):
+        self.topicid = topicid
 
 
 # convert to table

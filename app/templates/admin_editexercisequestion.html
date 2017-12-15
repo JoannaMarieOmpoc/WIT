@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>Admin Dashboard</title>
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link type="text/css" rel="stylesheet" href="{{ url_for('.static', filename='css/bootstrap.min.css') }}">
+    <link type="text/css" rel="stylesheet prefetch" href="{{ url_for('.static', filename='css/materialize.min.css') }}">
+    <link rel='stylesheet prefetch' href='https://fonts.googleapis.com/icon?family=Material+Icons'>
+    <link type="text/css" rel="stylesheet" href="css/style.css">
+    <link type="text/css" rel="stylesheet" href="..static/css/style.css">
+    <link type="text/css" rel="stylesheet" href="{{ url_for('.static', filename='css/style.css') }}">
+    <link type="text/css" rel="stylesheet" href="{{ url_for('.static', filename='css/adminstylenew.css')}}">
+</head>
+
+<body>
+  <div class="navbar-fixed">
+  <nav>
+    <div class="nav-wrapper blue">
+      <ul>
+        <li><a href="#!" onclick="return hideshow();"><i class="material-icons">menu</i></a></li>
+        <li><a href="{{ url_for('showadmindashboard') }}" class="title"><img src="{{ url_for('.static', filename='img/wit_logo.png')}}"></a></li>
+      </ul>
+      <ul class="right">
+          <li class="dropdown">
+            <a href="#" id=#signout class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                <i class="material-icons">arrow_drop_down</i>
+            </a>
+            <ul class="dropdown-menu">
+                <li><a href="{{ url_for('logout')}}">Log-out</a></li>
+            </ul>
+          </li>
+      </ul>
+    </div>
+  </nav>
+</div>
+<div class="brown hide" style="height: 200px;"></div>
+<ul id="hidemenu" class="side-nav fixed transparent z-depth-0">
+    <li class="active"><a href="{{ url_for('showadmindashboard') }}"><i class="material-icons blue-text text-darken-1">dashboard</i>Dashboard</a></li>
+    <li><a href="{{ url_for('adminList')}}"><i class="material-icons">supervisor_account</i>Admin</a></li>
+  <li><div class="divider"></div></li>
+    <li><a href="{{ url_for('managecourses')}}"><i class="material-icons">school</i>Courses</a></li>
+  <li><a href="#"><i class="material-icons">games</i>Games</a></li>
+    <li><a href="{{url_for('manageUsers')}}"><i class="material-icons">person</i>Users</a></li>
+</ul>
+
+<div class="main">
+    <div class="container-fluid">
+        <div class="row">
+        <nav class="breadcrumb">
+          <a class="breadcrumb-item" href="{{ url_for('showadmindashboard') }}">Home</a>
+             <span class="glyphicon glyphicon-menu-right marginicon"></span>
+          <a class="breadcrumb-item" href="{{ url_for('managecourses') }}">Manage Courses</a>
+              <span class="glyphicon glyphicon-menu-right marginicon"></span>
+          <a class="breadcrumb-item" href="/admin/{{coursename}}">{{ coursename }}</a>
+              <span class="glyphicon glyphicon-menu-right marginicon"></span>
+          <a class="breadcrumb-item" href="/admin/{{coursename}}/managetopics">Manage Topics</a>
+             <span class="glyphicon glyphicon-menu-right marginicon"></span>
+          <a class="breadcrumb-item" href="/admin/{{coursename}}/managetopics">{{ topicname }}</a>
+             <span class="glyphicon glyphicon-menu-right marginicon"></span>
+            <a class="breadcrumb-item" href="/admin/{{coursename}}/managetopics/{{topicname}}/manageexercises">Manage Exercises</a>
+            <span class="glyphicon glyphicon-menu-right marginicon"></span>
+            <a class="breadcrumb-item" href="/admin/{{coursename}}/managetopics/{{topicname}}/manageexercises/{{exerciseid}}">Exercise {{exerciseid}}</a>
+             <span class="glyphicon glyphicon-menu-right marginicon"></span>
+            <span class="breadcrumb-item active">Edit Exercise Question</span>
+        </nav>
+        <h2 class="margin">Edit Question</h2>
+
+            <form name="addForm" id="addForm" action="{{ url_for('editExerciseQuestion', coursename=coursename, topicname=topicname, exerciseid=exerciseid, questionid=question.questionid) }}" method="POST">
+                <div class="form-group floating-label-form-group controls">
+                    <h5>Question</h5>
+                    <input type="text" class="form-control" value="{{ question.question }}" name=question id=question required data-validation-required-message="Please enter the question.">
+                    <h5>Choices</h5>
+                    <input type="text" class="form-control" placeholder="choice" value="{{question.choices[0].choice}}" name=choices1 id=choices1 required data-validation-required-message="Please enter a choice.">
+                    <input type="text" class="form-control" placeholder="choice" value="{{question.choices[1].choice}}" name=choices2 id=choices2 required data-validation-required-message="Please enter a choice.">
+                    <input type="text" class="form-control" placeholder="choice" value="{{question.choices[2].choice}}" name=choices3 id=choices3 required data-validation-required-message="Please enter a choice.">
+
+                    <h5>Answer</h5>
+                    <input type="text" class="form-control" value="{{ question.answer }}" name=answer id=answer required data-validation-required-message="Please enter the answer.">
+
+                    <label for="difficulty"><h5>Difficulty</h5></label>
+                        <select class="form-control" id="difficulty" name=difficulty>
+                            <option value="{{ question.difficulty }}" selected>{{ question.difficulty }}</option>
+                            <option value="Easy">Easy</option>
+                            <option value="Moderate">Moderate</option>
+                            <option value="Hard">Hard</option>
+                        </select>
+                <button type="submit" name="add_course" id="add_course" class="btn btn-info btn-med pull-right">
+                    Submit
+                </button>
+            </form>
+        </div>
+
+    </div>
+</div>
+</div>
+<script src="{{ url_for('.static', filename='js/jquery.min.js')}}"></script>
+  <script src="{{ url_for('.static', filename='js/bootstrap.min.js')}}"></script>
+  <script src="{{ url_for('.static', filename='js/materialize.min.js')}}"></script>
+  <script>
+      function hideshow() {
+    var x = document.getElementById("hidemenu");
+    if (x.style.display === "none") {
+        x.style.display = "block";
+    } else {
+        x.style.display = "none";
+    }
+    }
+  </script>
+
+
+</body>
+</html>
