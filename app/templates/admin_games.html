@@ -11,6 +11,7 @@
     <link type="text/css" rel="stylesheet" href="..static/css/style.css">
     <link type="text/css" rel="stylesheet" href="{{ url_for('.static', filename='css/style.css') }}">
     <link type="text/css" rel="stylesheet" href="{{ url_for('.static', filename='css/adminstylenew.css')}}">
+
 </head>
 
 <body>
@@ -19,7 +20,7 @@
     <div class="nav-wrapper blue">
       <ul>
         <li><a href="#!" onclick="return hideshow();"><i class="material-icons">menu</i></a></li>
-        <li><a href="{{ url_for('showadmindashboard') }}" class="title"><img src="{{ url_for('.static', filename='img/wit_logo2.png')}}"></a></li>
+        <li><a href="{{ url_for('showadmindashboard') }}" class="title"><img src="../static/img/wit_logo2.png"></a></li>
       </ul>
       <ul class="right">
           <li class="dropdown">
@@ -44,65 +45,71 @@
     <li><a href="{{url_for('manageUsers')}}"><i class="material-icons">person</i>Users</a></li>
 </ul>
 
-    <div class="main">
-    <div class="container-fluid">
-        <div class="row">
+<div class="main">
+  <div class="container-fluid">
+    <div class="row">
         <nav class="breadcrumb">
           <a class="breadcrumb-item" href="{{ url_for('showadmindashboard') }}">Home</a>
-              <span class="glyphicon glyphicon-menu-right marginicon"></span>
-          <a class="breadcrumb-item" href="{{ url_for('managecourses') }}">Manage Courses</a>
-              <span class="glyphicon glyphicon-menu-right marginicon"></span>
-          <a class="breadcrumb-item" href="/admin/{{coursename}}">{{ coursename }}</a>
-              <span class="glyphicon glyphicon-menu-right marginicon"></span>
-          <a class="breadcrumb-item" href="/admin/{{coursename}}/managetopics">Manage Topics</a>
-             <span class="glyphicon glyphicon-menu-right marginicon"></span>
-          <a class="breadcrumb-item" href="/admin/{{coursename}}/managetopics">{{ topic.topicname }}</a>
-             <span class="glyphicon glyphicon-menu-right marginicon"></span>
-            <span class="breadcrumb-item active">Manage Exercises</span>
+            <span><span class="glyphicon glyphicon-menu-right marginicon"></span></span>
+          <a class="breadcrumb-item active">Manage Courses</a>
         </nav>
-                <table class="table table-bordered table-striped table-hover">
-                    <table class="bordered highlight">
-                    <thead>
-                        <tr>
-                            </a>
-                            <form method='POST' action="/admin/{{coursename}}/managetopics/{{topic.topicname}}/manageexercises/addexercise">
-                                <button class="btn btn-sm btn-info">
-                                    <span class="glyphicon glyphicon-plus"></span> Add an exercise
-                                </button>
-                            </form>
-                        </tr>
-                    </thead>
-                    <tr>
-                        <td class="text-center" colspan="12"><h3>Exercises</h3></td>
-                    </tr>
-                    <tr>
-                        <th class="text-center">Exercise ID</th>
-                        <th class="text-center">Manage Questions</th>
-                        <th class="text-center"></th>
-                    </tr>
-                    {% for e in exercises %}
-                    <tr class="text-center" colspan="12">
-                        <td class="text-center"><a href="{{ url_for('exercisePage', coursename=coursename, topicname=topic.topicname, exerciseid=e.exerciseid)}}">{{ e.exerciseid }}</a></td>
-                        <td class="text-center"><a href="{{ url_for('exercisePage', coursename=coursename, topicname=topic.topicname, exerciseid=e.exerciseid)}}">Questions</a></td>
-                        <td class="text-center">
-                            <form method='POST' action="/admin/{{coursename}}/managetopics/{{topic.topicname}}/manageexercises/{{e.exerciseid}}/deleteexercise">
-                                <button class="btn btn-sm btn-danger confirmation">
-                                    <span class="glyphicon glyphicon-trash"></span>Delete
-                                </button>
-                            </form>
-                        </td>
-                    </tr>
-                    {% endfor %}
-                </table>
+        <h2>Manage Games</h2>
+            <div class="col s12 m12">
+                <div class="card green white-text">
+                    <div class="card-content valign-wrapper">
+                        <div class="card-text">
+                            <h6>Machine Problem</h6>
+                            <p>Manage Machine Problem Questions</p>
+                        </div>
+                        <div class="card-icon">
+                            <i class="material-icons medium valign">games</i>
+                        </div>
+                    </div>
+              <div class="card-action">
+                <a href="#">View Machine Problem</a>
+              </div>
             </div>
+        </div>
+        <div class="col s12 m12">
+            <div class="card green white-text">
+                <div class="card-content valign-wrapper">
+                    <div class="card-text">
+                        <h6>Matching Game</h6>
+                        <p>Manage Matching Game Questions</p>
+                    </div>
+                    <div class="card-icon">
+                        <i class="material-icons medium valign">games</i>
+                    </div>
+                </div>
+                <div class="card-action">
+                    <a href="#">View Matching Game</a>
+                </div>
+            </div>
+        </div>
+        <div class="col s12 m12">
+            <div class="card green white-text">
+                <div class="card-content valign-wrapper">
+                    <div class="card-text">
+                        <h6>Typing Game</h6>
+                        <p>Manage Typing Game Questions</p>
+                    </div>
+                    <div class="card-icon">
+                        <i class="material-icons medium valign">games</i>
+                    </div>
+                </div>
+                <div class="card-action">
+                    <a href="{{url_for('admintypinggame')}}">View Typing Game</a>
+                </div>
             </div>
         </div>
     </div>
+  </div>
 </div>
+
 <script src="{{ url_for('.static', filename='js/jquery.min.js')}}"></script>
   <script src="{{ url_for('.static', filename='js/bootstrap.min.js')}}"></script>
   <script src="{{ url_for('.static', filename='js/materialize.min.js')}}"></script>
-  <script>
+    <script>
       function hideshow() {
     var x = document.getElementById("hidemenu");
     if (x.style.display === "none") {
@@ -112,7 +119,7 @@
     }
     }
   </script>
-    <script type="text/javascript">
+<script type="text/javascript">
         var elems = document.getElementsByClassName('confirmation');
         var confirmIt = function (e) {
             if (!confirm('Are you sure?')) e.preventDefault();
@@ -120,6 +127,6 @@
         for (var i = 0, l = elems.length; i < l; i++) {
             elems[i].addEventListener('click', confirmIt, false);
         }
-    </script>
+</script>
 </body>
 </html>

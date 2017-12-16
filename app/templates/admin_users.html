@@ -20,7 +20,7 @@
     <div class="nav-wrapper blue">
       <ul>
         <li><a href="#!" onclick="return hideshow();"><i class="material-icons">menu</i></a></li>
-        <li><a href="{{ url_for('showadmindashboard') }}" class="title"><img src="../static/img/wit_logo.png"></a></li>
+        <li><a href="{{ url_for('showadmindashboard') }}" class="title"><img src="../static/img/wit_logo2.png"></a></li>
       </ul>
       <ul class="right">
           <li class="dropdown">
@@ -41,7 +41,7 @@
     <li><a href="{{ url_for('adminList')}}"><i class="material-icons">supervisor_account</i>Admin</a></li>
   <li><div class="divider"></div></li>
   <li><a href="{{ url_for('managecourses')}}"><i class="material-icons">school</i>Courses</a></li>
-  <li><a href="#"><i class="material-icons">games</i>Games</a></li>
+  <li><a href="{{ url_for('adminGames')}}"><i class="material-icons">games</i>Games</a></li>
     <li><a href="{{url_for('manageUsers')}}"><i class="material-icons">person</i>Users</a></li>
 </ul>
 

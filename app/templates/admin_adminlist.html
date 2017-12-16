@@ -20,7 +20,7 @@
     <div class="nav-wrapper blue">
       <ul>
         <li><a href="#!" onclick="return hideshow();"><i class="material-icons">menu</i></a></li>
-        <li><a href="{{ url_for('showadmindashboard') }}" class="title"><img src="../static/img/wit_logo.png"></a></li>
+        <li><a href="{{ url_for('showadmindashboard') }}" class="title"><img src="../static/img/wit_logo2.png"></a></li>
       </ul>
       <ul class="right">
           <li class="dropdown">
@@ -41,7 +41,7 @@
     <li class="active"><a href="{{ url_for('adminList')}}"><i class="material-icons">supervisor_account</i>Admin</a></li>
   <li><div class="divider"></div></li>
     <li><a href="{{ url_for('managecourses')}}"><i class="material-icons">school</i>Courses</a></li>
-  <li><a href="#"><i class="material-icons">games</i>Games</a></li>
+  <li><a href="{{ url_for('adminGames')}}"><i class="material-icons">games</i>Games</a></li>
     <li><a href="{{url_for('manageUsers')}}"><i class="material-icons">person</i>Users</a></li>
 </ul>
 
@@ -80,20 +80,11 @@
                     <td colspan="4">{{user.usermail}}</td>
                       <td colspan="4">
                       <div class="pull-right">
-                        <span class="pull-left">
-                        <form class="confirmation" method='POST' action="/admin/adminlist/removeadmin/{{ user.username }}">
-                          <button type="submit" name="removecourse" id="removecourse" class="btn btn-primary btn-xs">
-                              <span class="glyphicon glyphicon-trash"></span> Delete
-                          </button>
-                        </form>
-                        </span>
-                        <span class="pull-right">
                           <form class="" action="/admin/adminlist/editadmin/{{ user.username }}">
                               <button type="submit" name="editcourse" id="editcourse" class="btn btn-primary btn-xs">
                                   <span class="glyphicon glyphicon-edit"></span> Edit
                               </button>
                           </form>
-                        </span>
                       </div>
                       </td>
                   </tr>

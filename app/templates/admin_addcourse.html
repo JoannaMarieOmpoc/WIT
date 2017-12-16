@@ -19,7 +19,7 @@
     <div class="nav-wrapper blue">
       <ul>
         <li><a href="#!" onclick="return hideshow();"><i class="material-icons">menu</i></a></li>
-        <li><a href="{{ url_for('showadmindashboard') }}" class="title"><img src="{{ url_for('.static', filename='img/wit_logo.png')}}"></a></li>
+        <li><a href="{{ url_for('showadmindashboard') }}" class="title"><img src="{{ url_for('.static', filename='img/wit_logo2.png')}}"></a></li>
       </ul>
       <ul class="right">
           <li class="dropdown">
@@ -40,7 +40,7 @@
     <li><a href="{{ url_for('adminList')}}"><i class="material-icons">supervisor_account</i>Admin</a></li>
   <li><div class="divider"></div></li>
     <li><a href="{{ url_for('managecourses')}}"><i class="material-icons">school</i>Courses</a></li>
-  <li><a href="#"><i class="material-icons">games</i>Games</a></li>
+  <li><a href="{{ url_for('adminGames')}}"><i class="material-icons">games</i>Games</a></li>
     <li><a href="{{url_for('manageUsers')}}"><i class="material-icons">person</i>Users</a></li>
 </ul>
 <div class="main">
@@ -57,11 +57,11 @@
 
             <form name="addForm" id="addForm" action="{{ url_for('addcourse') }}" method="POST">
                 <div class="form-group floating-label-form-group controls">
-                    <h4>Course Name</h4>
+                    <h6>Course Name</h6>
                     <input type="text" class="form-control" placeholder="Course name" name=coursename id=coursename required data-validation-required-message="Please enter the name of the course.">
                     <br />
                     <br />
-                    <h4>Description</h4>
+                    <h6>Description</h6>
                     <input type="text" class="form-control" placeholder="Description" name=description id=description required data-validation-required-message="Please enter the description.">
                     <br />
                     <br />
