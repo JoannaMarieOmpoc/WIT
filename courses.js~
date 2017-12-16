@@ -1,0 +1,8 @@
+function createCourseDiv(course) {
+	var courseDiv = document.createElement('div');
+	var courseTitle = document.createTextNode(course);
+	courseDiv.appendChild(courseTitle);
+	courseDiv.setAttribute('id', 'courseDiv');
+	courseDiv.setAttribute('onclick', )
+	
+}

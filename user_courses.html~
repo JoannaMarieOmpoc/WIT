@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+	{% block script%}
+	<script type="text/javascript" src="/static/js/courses_js.js"></script>
+	{% endblock %}
+	<style>
+	.courseDiv {
+	width: 25%;
+	height: 25%;
+	margin: 10px 10px 10px 10px;
+	padding: 5px 5px 5px 5px;
+	border-radius: 5px;
+	background-color: rgba(4, 106, 143, 60);
+}
+	</style>
+    <title>WIT | {% block title %}My Courses{% endblock %}</title>
+	}
+</head>
+<body onload="initialize()">
+    {% extends "master.html" %}
+    {% block content %}
+    <div class="content">
+	{% for course in courses %}
+	<a style = "display: block;" href="{{ url_for('displayCourse', course = course[0]) }}">{{ course[1] }}<div class="courseDiv"></div></a>
+	{% endfor %}
+    </div>
+    {% endblock %}
+</body>
+</html>

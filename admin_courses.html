@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+table {
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 60%;
+    margin-left: auto;
+    margin-right: auto;
+    width: 70%;
+}
+
+.content {
+    margin-top: 70px;
+}
+
+td, thead.tr {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+tr:hover {background-color: #ddd;}
+
+th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #9AECF5;
+    color: black;
+}
+
+button {
+    color: black;
+    padding: 5px 5px;
+    margin: 5px 0;
+    border: none;
+    cursor: pointer;
+    width: 30%;
+}
+
+button:hover {
+    opacity: 0.9;
+}
+</style>
+{% block title %} Admin Courses {% endblock %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<script type="text/javascript">
+        var elems = document.getElementsByClassName('confirmation');
+        var confirmIt = function (e) {
+            if (!confirm('Are you sure?')) e.preventDefault();
+        };
+        for (var i = 0, l = elems.length; i < l; i++) {
+            elems[i].addEventListener('click', confirmIt, false);
+        }
+</script>
+</head>
+<body>
+{% extends "admin_master.html" %}
+
+{% block content %}
+<div class="content">
+<div class="jumbotron">
+    <div class="container-course">
+        <nav class="breadcrumb">
+          <a class="breadcrumb-item" href="{{ url_for('showAdminDashboard') }}">Home</a>
+             <span class="glyphicon glyphicon-menu-right marginicon"></span>
+          <a class="breadcrumb-item active">Manage Courses</a>
+        </nav>
+            <div class="control-group">
+                <table class="table table-bordered table-striped table-hover" style="margin-left: auto; margin-right: auto">
+                    <thead>
+                        <tr>
+                            <a href="{{ url_for('addCourse') }}"  class="btn btn-info btn-med">
+                                <span class="glyphicon glyphicon-plus"></span> Add a course
+                            </a>
+                        </tr>
+                    </thead>
+                </table>
+                    <div class="container-courses">
+                        <div class="row">
+                            <div class="course-menu">
+                                <table>
+<tr>
+<th>Course ID</th>
+<th>Course Name</th>
+<th>Course Description</th>
+<th>Options</th>
+</tr>
+<tbody>
+{% for course in courses %}
+                            <tr>
+<td> {{ course.courseid }} </td>
+<td> {{ course.coursename }} </td>
+<td> {{ course.coursedesc }} </td>
+<td>
+    <span style="float: left;">
+    <form action="/admin/managecourses/editcourse/{{ course.coursename }}">
+    <button type="submit" style="margin: 5px 5px 5px 5px;" name="editcourse" id="editcourse" class="btn btn-info btn-med">
+    <span class="glyphicon glyphicon-edit"></span> Edit
+    </button>
+    </form>
+    </span>
+    <span style="float: right;">
+    <form class="confirmation" action="/admin/managecourses">
+    <button type="submit" value="{{ course.courseid }}" style="margin: 5px 5px 5px 5px;" name="removecourse" class="btn btn-info btn-med">
+    <span class="glyphicon glyphicon-trash"></span> Delete
+    </button>
+    </form>
+    </span>
+</td>
+</tr>
+                            {% endfor %}
+                            </tbody>
+</table>
+                         </div>
+                        </div>
+                    </div>
+            </div>
+
+    </div>
+</div>
+</div>
+{% endblock %}
+</body>
+</html>

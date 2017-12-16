@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+	{% block script%}
+	<script type="text/javascript" src="/static/js/courses_js.js"></script>
+	{% endblock %}
+    <title>WIT | {% block title %}Games{% endblock %}</title>
+	}
+</head>
+<body onload="initialize()">
+    {% extends "master.html" %}
+    {% block content %}
+    <div class="content">
+        <form action="/">
+        <button>Typing Game</button>
+        </form>
+
+        <form action="/">
+        <button>Typing Game</button>
+        </form>
+
+        <form action="/">
+        <button>Typing Game</button>
+        </form>
+    </div>
+    {% endblock %}
+</body>
+</html>

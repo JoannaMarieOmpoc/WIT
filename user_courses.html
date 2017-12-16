@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>WIT | {% block title %}My Courses{% endblock %}</title>
+</head>
+<body>
+    {% extends "master.html" %}
+    <nav class="breadcrumb">
+    <a class="breadcrumb-item" href="{{ url_for('showadmindashboard') }}">Home</a>
+    <span class="glyphicon glyphicon-menu-right marginicon"></span>
+    <a class="breadcrumb-item active">My Courses</a>
+    </nav>
+    {% block content %}
+    <div class="content">
+	{% for course in courses %}
+	<a style = "display: block;" href="{{ url_for('displayCourse', course = course[0]) }}"> {{ course[1] }} <div class="courseDiv"></div></a>
+	{% endfor %}
+    </div>
+    {% endblock %}
+</body>
+</html>
