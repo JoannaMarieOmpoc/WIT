@@ -1,8 +1,9 @@
 from app import app, db, lm
 from flask import Flask, render_template, redirect, request, url_for
-from models import User, Course, Topic, Question, Choice, Exam, Exercise
+from models import User, Course, Topic, Question, Choice, Exam, Exercise, Game
 from flask_login import login_required, login_user, logout_user, current_user
 from app import db
+from  sqlalchemy.sql.expression import func, select
 
 @lm.user_loader
 def getUser(name):
@@ -10,11 +11,11 @@ def getUser(name):
 
 @app.route('/', methods=['POST', 'GET'])
 def main():
-    '''
-    admin = User(username='admin', usermail='admin@gmail.com', usertype='admin', password='adminpass')
-    db.session.add(admin)
-    db.session.commit()
-    '''
+    admintest = User.query.filter_by(username='admin').first()
+    if admintest is None:
+        admin = User(username='admin', usermail='admin@gmail.com', usertype='admin', password='adminpass')
+        db.session.add(admin)
+        db.session.commit()
     return render_template('landing_page.html')
 
 @app.route('/error/<e>', methods=['POST', 'GET'])
@@ -72,15 +73,53 @@ def showDashboard(user):
 
 @app.route('/<user>/courses')
 @login_required
-def enrolledCourses():
+def enrolledCourses(user):
     courses = current_user.courses
-    return render_template('user_courses.html', courses = courses)
+    coursesoption = Course.query.order_by().all()
+    return render_template('user_courses.html', user=user, courses=courses, coursesoption=coursesoption)
 
-@app.route('/<user>/courses)/<course>')
+@app.route('/<user>/courses/<coursename>')
 @login_required
-def displayCourse(course):
-    topics = Topic.query.filter_by(courseid=course).all()
-    return render_template('user_showCourse.html', topics = topics)
+def displayCourse(coursename, user):
+    course = Course.query.filter_by(coursename=coursename).first()
+    topics = Topic.query.filter_by(courseid=course.courseid).all()
+    return render_template('user_showCourse.html', topics = topics, course=course, user=user)
+
+@app.route('/<user>/courses/addcourse', methods=['POST'])
+def userAddcourse(user):
+    if request.method == 'POST':
+        coursename2 = request.form.get('coursename1')
+        coursefind = Course.query.filter_by(coursename=coursename2).first()
+        usercourses = current_user.courses
+        for i in usercourses:
+            if i.coursename is coursefind.coursename:
+                return redirect(url_for('enrolledCourses', user=user))
+
+        current_user.courses.append(coursefind)
+        db.session.commit()
+        return redirect(url_for('enrolledCourses', user=user))
+
+@app.route('/<user>/courses/removecourse/<coursename>', methods=['POST', 'GET'])
+def userRemovecourse(user, coursename):
+    if request.method == 'POST':
+        course = Course.query.filter_by(coursename=coursename).first()
+        current_user.courses.remove(course)
+        db.session.commit()
+        return redirect(url_for('enrolledCourses', user=user))
+
+@app.route('/<user>/courses/<coursename>/topic/<topicid>', methods=['POST', 'GET'])
+def user_Topic(user, coursename, topicid):
+    topic = Topic.query.filter_by(topicid=topicid).first()
+    exercises = Exercise.query.filter_by(topicid=topicid).all()
+    return render_template('user_Topic.html', topic=topic, coursename=coursename, exercises=exercises, user=user)
+
+@app.route('/<user>/courses/<coursename>/topic/<topicname>/exercise/<exerciseid>', methods=['POST', 'GET'])
+def user_takeExercise(user, coursename, topicname, exerciseid):
+    topic = Topic.query.filter_by(topicname=topicname).first()
+    exercise1 = Exercise.query.filter_by(exerciseid=exerciseid).first()
+    questionss = exercise1.questions.select.order_by(func.rand())
+    return render_template('user_exercise.html', topic=topic, exercise=exercise1, questions=questionss)
+
 
 @app.route('/<user>/exams')
 @login_required
@@ -141,17 +180,6 @@ def editAdmin(username):
         return redirect(url_for('adminList', users=users))
     else:
         return render_template('admin_editadmin.html', user=admin)
-
-@app.route('/admin/adminlist/removeadmin/<username>', methods=['POST', 'GET'])
-@login_required
-def removeadmin(username):
-    users = User.query.filter_by(usertype='admin').all()
-    if request.method == 'POST':
-        admin = User.query.filter_by(username=username).first()
-        db.session.add(admin)
-        db.session.commit()
-    return redirect(url_for(adminList, users=users))
-
 
 @app.route('/admin/managecourses')
 @login_required
@@ -458,6 +486,73 @@ def deleteExamQuestion(coursename, examid, questionid):
     exam = Exam.query.filter_by(examid=examid).first()
     questions = exam.questions
     return redirect(url_for('manageExamQuestions', coursename=coursename, examid=examid, questions=questions))
+
+@app.route('/admin/games')
+@login_required
+def adminGames():
+    typinggametest = Game.query.filter_by(gamename='typingGame').first()
+    matchinggametest = Game.query.filter_by(gamename='matchingGame').first()
+    machineproblemtest = Game.query.filter_by(gamename='machineProblem').first()
+    if typinggametest is None:
+        typinggame = Game(gamename='typingGame')
+        db.session.add(typinggame)
+        db.session.commit()
+    if matchinggametest is None:
+        matchinggame = Game(gamename='matchingGame')
+        db.session.add(matchinggame)
+        db.session.commit()
+    if machineproblemtest is None:
+        machineproblem = Game(gamename='machineProblem')
+        db.session.add(machineproblem)
+        db.session.commit()
+
+    return render_template('admin_games.html')
+
+@app.route('/admin/games/typinggame')
+@login_required
+def admintypinggame():
+    typinggame = Game.query.filter_by(gamename='typingGame').first()
+    questions = typinggame.questions
+    return render_template('admin_typinggame.html', typinggame=typinggame, questions=questions)
+
+@app.route('/admin/games/typinggame/addquestion', methods=['POST' , 'GET'])
+@login_required
+def addTypingQuestion():
+    typinggame = Game.query.filter_by(gamename='typingGame').first()
+    if request.method == 'POST':
+        question = request.form['question']
+        answer = request.form['answer']
+        difficulty = request.form.get("difficulty")
+        newquestion = Question(question=question, answer=answer, difficulty=difficulty)
+        db.session.add(newquestion)
+        typinggame.questions.append(newquestion)
+        db.session.commit()
+        return redirect(url_for('admintypinggame'))
+    return render_template('admin_typinggamequestion.html')
+
+@app.route('/admin/games/typinggame/editquestion/<questionid>', methods=['POST', 'GET'])
+@login_required
+def editTypingQuestion(questionid):
+    typinggame = Game.query.filter_by(gamename='typingGame').first()
+    question = Question.query.filter_by(questionid=questionid).first()
+    if request.method == 'POST':
+        question.question = request.form['question']
+        question.answer = request.form['answer']
+        question.difficulty = request.form.get("difficulty")
+        db.session.commit()
+        return redirect(url_for('admintypinggame'))
+    else:
+        return render_template('admin_edittypinggamequestion.html', question=question)
+
+@app.route('/admin/games/typinggame/deletequestion/<questionid>', methods=['POST', 'GET'])
+@login_required
+def deleteTypingQuestion(questionid):
+    typinggame = Game.query.filter_by(gamename='typingGame').first()
+    question = Question.query.filter_by(questionid=questionid).first()
+    typinggame.questions.remove(question)
+    db.session.delete(question)
+    db.session.commit()
+    return redirect(url_for('admintypinggame'))
 
 
 

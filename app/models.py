@@ -17,6 +17,12 @@ exerciseHasQuestions = db.Table('exerciseHasQuestions',
                                 db.Column('exerciseid', db.ForeignKey('Exercises.exerciseid')),
                                 db.Column('questionid', db.ForeignKey('Questions.questionid'))
                                 )
+
+gameHasQuestions = db.Table('gameHasQuestions',
+                            db.Column('gameid', db.ForeignKey('Games.gameid')),
+                            db.Column('questionid', db.ForeignKey('Questions.questionid'))
+                            )
+
 class User(db.Model):
     __tablename__ = 'Users'
 
@@ -54,7 +60,6 @@ class Course(db.Model):
     courseid = db.Column(db.Integer, primary_key=True)
     coursename = db.Column(db.String(50), unique=True, nullable=False)
     coursedesc = db.Column(db.Text, nullable=False)
-    users = db.relationship('User', backref='Course', secondary='Enrolled', lazy=True)
 
     def __init__(self, coursename, coursedesc):
         self.coursename = coursename
@@ -79,6 +84,16 @@ class Topic(db.Model):
 
     def __repr__(self):
         return '<topicid {}>'.format(self.topicid)
+
+class Game(db.Model):
+    __tablename__ = 'Games'
+
+    gameid = db.Column(db.Integer, primary_key=True)
+    gamename = db.Column(db.String(30), unique=True)
+    questions = db.relationship('Question', secondary=gameHasQuestions, backref=db.backref('game', lazy='dynamic'))
+
+    def __init__(self, gamename):
+        self.gamename = gamename
 
 
 class Question(db.Model):
