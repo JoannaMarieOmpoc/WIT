@@ -1,0 +1,40 @@
+{
+    "name": "Mock Exam",
+    "description": "Let's Review",
+    "questions": [
+        {
+            "text": "Which of the following is correct about C#?",
+            "options": [
+                ["C# is a modern, general-purpose, object-oriented programming language developed by Microsoft.", false],
+                ["C# was developed by Anders Hejlsberg and his team during the development of .Net Framework.", false],
+                ["C# is designed for Common Language Infrastructure (CLI).", false],
+                ["All of the above.", true]
+            
+            ]
+        },
+        {
+            "text": "Which of the following converts a type to a byte value in C#?",
+            "options": [
+                 [" ToSingle", false],
+                ["ToByte", true],
+                ["ToChar", false],
+                ["ToDateTime", false]
+            ]
+        },
+        {
+            "text": "Which of the following converts a floating point or integer type to a decimal type in C#?",
+            "options": [
+                ["ToDecimal", true],
+                ["ToDouble", false]
+            ]
+        },
+        
+        {
+            "text": "Which of the following method copies the actual value of an argument into the formal parameter of the function?",
+            "options": [
+                ["Value parameters", true],
+                ["Reference parameters", false]
+            ]
+        }
+    ]
+}
