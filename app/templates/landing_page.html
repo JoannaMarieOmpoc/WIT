@@ -1,194 +1,417 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="no-js">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- To make the website responsive -_-->
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link href='https://fonts.googleapis.com/css?family=Titillium+Web:400,300,600' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
-    <link rel="stylesheet" href="../static/css/style.css">
-    <link rel="stylesheet" href="css/footer-distributed-with-address-and-phones.css">
-    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
+    <!-- meta character set -->
+    <meta charset="utf-8">
+    <!-- Always force latest IE rendering engine or request Chrome Frame -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>WIT</title>
+    <!-- Meta Description -->
+    <meta name="description" content="Blue One Page Creative HTML5 Template">
+    <meta name="keywords" content="one page, single page, onepage, responsive, parallax, creative, business, html5, css3, css3 animation">
+    <meta name="author" content="Muhammad Morshed">
+
+    <!-- Mobile Specific Meta -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- CSS
+        ================================================== -->
     <link href="http://fonts.googleapis.com/css?family=Cookie" rel="stylesheet" type="text/css">
-    <title>Landing Page</title>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,700' rel='stylesheet' type='text/css'>
+
+    <!-- Fontawesome Icon font -->
+    <link rel="stylesheet" href="../static/css/font-awesome.min.css">
+    <!-- bootstrap.min -->
+    <link rel="stylesheet" href="../static/css/jquery.fancybox.css">
+    <!-- bootstrap.min -->
+    <link rel="stylesheet" href="../static/css/bootstrap.min.css">
+    <!-- bootstrap.min -->
+    <link rel="stylesheet" href="../static/css/owl.carousel.css">
+    <!-- bootstrap.min -->
+    <link rel="stylesheet" href="../static/css/slit-slider.css">
+    <!-- bootstrap.min -->
+    <link rel="stylesheet" href="../static/css/animate.css">
+    <!-- Main Stylesheet -->
+    <link rel="stylesheet" href="../static/css/main.css">
+
+    <!-- Modernizer Script for old Browsers -->
+    <script src="../static/js/modernizr-2.6.2.min.js"></script>
+
 </head>
 
-<body>
-    <header class="v-header container">
-        <div class="fullscreen-video-wrap">
-            <video src="../static/img/Untitled.mov" autoplay="true" loop="true"></video>
-        </div>
-        <div class="header-overlay"></div>
-        <div class="header-content">
-            <img src="../static/img/wit_logo.png" alt="wit logo">
+<body id="body">
 
-            <h1>Interactive Tutorial for CSC Subjects</h1>
-            <p> Web Interactive Tutorial for Computer Science Courses in MSU-IIT School of Computer Studies. It is an interactive learning assistant created to make learning more fun</p>
-            <a href="#form" class="btn" id="buttones">Register Now</a>
+    <!-- preloader -->
+    <div id="preloader">
+        <div class="loder-box">
+            <div class="battery"></div>
+        </div>
+    </div>
+    <!-- end preloader -->
+
+    <!--
+        Fixed Navigation
+        ==================================== -->
+    <header id="navigation" class="navbar-inverse navbar-fixed-top animated-header">
+        <div class="container">
+            <div class="navbar-header">
+                <!-- responsive nav button -->
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                <!-- /responsive nav button -->
+
+                <!-- logo -->
+                <h1 class="navbar-brand">
+                    <img src="../static/img/logo/wit_logo.png" alt="wit logo" width="40%">
+                </h1>
+                <!-- /logo -->
+            </div>
+
+            <!-- main nav -->
+            <nav class="collapse navbar-collapse navbar-right" role="navigation">
+                <ul id="nav" class="nav navbar-nav">
+                    <li><a href="{{url_for('main')}}">Home</a></li>
+                    <li><a href="#service">About</a></li>
+                    <li><a href="#testimonials">Testimonials</a></li>
+                    <li><a href="#contact">Contact Us</a></li>
+                    <li><a href="#register">Register / Log-In</a></li>
+                </ul>
+            </nav>
+            <!-- /main nav -->
 
         </div>
     </header>
-    <div class="form" id="form">
-        <ul class="tab-group">
-            <li class="tab active"><a href="#signup">Sign Up</a></li>
-            <li class="tab"><a href="#login">Log In</a></li>
-        </ul>
 
-        <div class="tab-content">
-            <div id="signup">
-                <h2>Sign Up for Free</h2>
+    <!--
+        End Fixed Navigation
+        ==================================== -->
+    <section id="home">
+        <main class="site-content" role="main">
+            <header class="v-header container1">
+                <div class="fullscreen-video-wrap">
+                    <video src="../static/img/Untitled.mov" autoplay="true" loop="true"></video>
+                </div>
+                <div class="header-overlay"></div>
+                <div class="header-content">
+                    <img src="../static/img/logo/wit_logo.png" alt="wit logo">
 
-                <form action="/" method="post">
+                    <strong><h1>Interactive Tutorial for CSC Subjects</h1></strong>
+                    <p> Web Interactive Tutorial for Computer Science Courses in MSU-IIT School of Computer Studies. It is an interactive learning assistant created to make learning more fun</p>
+                    <br>
+                    <br>
+                    <a href="#form" class="btn1" id="buttones">REGISTER NOW!</a>
 
-                    <div class="top-row">
-                        <div class="field-wrap">
-                            <label>
-                      First Name<span class="req">*</span>
-                    </label>
-                            <input type="text" required autocomplete="off" />
+                </div>
+            </header>
+        </main>
+
+    </section>
+    <br>
+    <!-- Service section -->
+    <section id="service">
+        <div class="container">
+            <div class="row">
+
+                <div class="sec-title text-center">
+                    <h2 class="wow animated bounceInLeft">Why Choose WIT?</h2>
+                    <p class="wow animated bounceInRight">Key Features</p>
+                </div>
+
+                <div class="col-md-3 col-sm-6 col-xs-12 text-center wow animated zoomIn">
+                    <div class="service-item">
+                        <div class="service-icon">
+                            <i class="fa fa-home fa-3x"></i>
+                        </div>
+                        <h3>Support</h3>
+                        <p>24/7 Support from the Best Students of MSU - IIT , Computer Science Department</p>
+                    </div>
+                </div>
+
+                <div class="col-md-3 col-sm-6 col-xs-12 text-center wow animated zoomIn" data-wow-delay="0.3s">
+                    <div class="service-item">
+                        <div class="service-icon">
+                            <i class="fa fa-tasks fa-3x"></i>
+                        </div>
+                        <h3>Mock Exams</h3>
+                        <p>We make sure that you will surely ace that upcoming Prelim, Midterm and Final Exam! </p>
+                    </div>
+                </div>
+
+                <div class="col-md-3 col-sm-6 col-xs-12 text-center wow animated zoomIn" data-wow-delay="0.6s">
+                    <div class="service-item">
+                        <div class="service-icon">
+                            <i class="fa fa-clock-o fa-3x"></i>
+                        </div>
+                        <h3>Games</h3>
+                        <p>You deserve a break! Play our educational Games. You Learn while you Play! Isn't that cool?</p>
+                    </div>
+                </div>
+
+                <div class="col-md-3 col-sm-6 col-xs-12 text-center wow animated zoomIn" data-wow-delay="0.9s">
+                    <div class="service-item">
+                        <div class="service-icon">
+                            <i class="fa fa-heart fa-3x"></i>
                         </div>
 
-                        <div class="field-wrap">
-                            <label>
-                      Last Name<span class="req">*</span>
-                    </label>
-                            <input type="text" required autocomplete="off" />
-                        </div>
+                        <h3>Experience</h3>
+                        <p>Wa nako kabalo unsa akong ibutang dri. Hahaha </p>
+                    </div>
+                </div>
 
+            </div>
+        </div>
+    </section>
+    <!-- end Service section -->
+    <br>
+    <br>
+    <!-- Testimonial section -->
+    <section id="testimonials" class="parallax">
+        <div class="overlay">
+            <div class="container">
+                <div class="row">
+
+                    <div class="sec-title text-center white wow animated fadeInDown">
+                        <h2>What people say</h2>
                     </div>
 
-
-                    <div class="top-row">
-                        <div class="field-wrap">
-                            <label>
-                              Id Number<span class="req">*</span>
-                            </label>
-                            <input type="text" required autocomplete="off" />
+                    <div id="testimonial" class=" wow animated fadeInUp">
+                        <div class="testimonial-item text-center">
+                            <img src="../static/img/member-2.jpg" alt="Our Clients">
+                            <div class="clearfix">
+                                <span>Prof. Malik Maulana</span>
+                                <p> Best tutorial for students who are having a hard time in their CSC Subjects especially to the students in MSU - IIT. The developers of this tutorial deserves to pass! </p>
+                            </div>
                         </div>
-
-                        <div class="field-wrap">
-                            <label>
-                              Course<span class="req">*</span>
-                            </label>
-                            <input type="text" required autocomplete="off" />
+                        <div class="testimonial-item text-center">
+                            <img src="../static/img/member-1.png" alt="Our Clients">
+                            <div class="clearfix">
+                                <span>Marques Brownlee </span>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+                                    consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+                            </div>
                         </div>
-
+                        <div class="testimonial-item text-center">
+                            <img src="../static/img/member-3.jpg" alt="Our Clients">
+                            <div class="clearfix">
+                                <span>Dindo T. Tenoria</span>
+                                <p> As a student of MSU - IIT , this website is very useful to us. It really gives you that confidence that you will really get that perfect score in your exam. Thank you guys! Ang laki ng tulong nito! Sinabi ko na sa mga kaklase
+                                    ko na mag register na sila dito para ma perfect din nila yung mga exams! hehe God Bless and thank you again guys!</p>
+                            </div>
+                        </div>
                     </div>
 
-                    <div class="field-wrap">
-                        <label>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- end Testimonial section -->
+
+
+    <section id="register">
+        <div class="form" id="form">
+            <ul class="tab-group">
+                <li class="tab active"><a href="#signup">Sign Up</a></li>
+                <li class="tab"><a href="#login">Log In</a></li>
+            </ul>
+
+            <div class="tab-content">
+                <div id="signup">
+                    <h2>Sign Up for Free</h2>
+                    <form action="/signup" method="post">
+                        <div class="top-row">
+                            <div class="field-wrap">
+                                <label>
+                      Username<span class="req">*</span>
+                    </label>
+                                <input type="text" name="username" required autocomplete="off" />
+                            </div>
+
+                            <div class="field-wrap">
+                                <label>
                         Email Address<span class="req">*</span>
                       </label>
-                        <input type="email" required autocomplete="off" />
-                    </div>
+                                <input type="email" name="usermail" required autocomplete="off" />
+                            </div>
 
-                    <div class="field-wrap">
-                        <label>
-                        Set A Password<span class="req">*</span>
+                            <div class="field-wrap">
+                                <label>
+                        Set Password<span class="req">*</span>
                       </label>
-                        <input type="password" required autocomplete="off" />
+                                <input type="password" name="userpass" required autocomplete="off" />
+                            </div>
+
+                            <div class="field-wrap">
+                                <label>
+                            Confirm Password<span class="req">*</span>
+                          </label>
+                                <input type="password" name="userpassconfirm" required autocomplete="off" />
+                            </div>
+                            <button type="submit" class="button button-block" />Get Started</button>
+                    </form>
                     </div>
-                    <button type="submit" class="button button-block" />Get Started</button>
+                </div>
 
+                <div id="login">
+                    <h2>Welcome Back!</h2>
 
+                    <form action="/login" method="post">
 
-                </form>
-
-            </div>
-
-            <div id="login">
-                <h2>Welcome Back!</h2>
-
-                <form action="/" method="post">
-
-                    <div class="field-wrap">
-                        <label>
-                    Email Address<span class="req">*</span>
+                        <div class="field-wrap">
+                            <label>
+                    Username<span class="req">*</span>
                   </label>
-                        <input type="email" required autocomplete="off" />
-                    </div>
+                            <input type="text" name="loginname" required autocomplete="off" />
+                        </div>
 
-                    <div class="field-wrap">
-                        <label>
+                        <div class="field-wrap">
+                            <label>
                     Password<span class="req">*</span>
                   </label>
-                        <input type="password" required autocomplete="off" />
+                            <input type="password" name="loginpass" required autocomplete="off" />
+                        </div>
+
+                        <p class="forgot"><a href="#">Forgot Password?</a></p>
+
+                        <button class="button button-block" />Log In</button>
+
+                    </form>
+
+                </div>
+
+            </div>
+        </div>
+    </section>
+    <!-- Social section -->
+    <section id="social" class="parallax">
+        <div class="overlay">
+            <div class="container">
+                <div class="row">
+
+                    <div class="sec-title text-center white wow animated fadeInDown">
+                        <h2>FOLLOW US</h2>
+                        <p>Beautifully simple follow buttons to help you get followers on</p>
                     </div>
 
-                    <p class="forgot"><a href="#">Forgot Password?</a></p>
+                    <ul class="social-button">
+                        <li class="wow animated zoomIn"><a href="#"><i class="fa fa-thumbs-up fa-2x"></i></a></li>
+                        <li class="wow animated zoomIn" data-wow-delay="0.3s"><a href="#"><i class="fa fa-twitter fa-2x"></i></a></li>
+                        <li class="wow animated zoomIn" data-wow-delay="0.6s"><a href="#"><i class="fa fa-dribbble fa-2x"></i></a></li>
+                    </ul>
 
-                    <button class="button button-block" />Log In</button>
-
-                </form>
-
+                </div>
             </div>
-
         </div>
-    </div>
+    </section>
+    <!-- end Social section -->
+    <br>
+    <br>
+    <!-- Contact section -->
+    <section id="contact">
+        <div class="container">
+            <div class="row">
+
+                <div class="sec-title text-center wow animated fadeInDown">
+                    <h2>Contact</h2>
+                    <p>Leave a Message</p>
+                </div>
 
 
+                <div class="col-md-7 contact-form wow animated fadeInLeft">
+                    <form action="#" method="post">
+                        <div class="input-field">
+                            <input type="text" name="name" class="form-control" placeholder="Your Name...">
+                        </div>
+                        <div class="input-field">
+                            <input type="email" name="email" class="form-control" placeholder="Your Email...">
+                        </div>
+                        <div class="input-field">
+                            <input type="text" name="subject" class="form-control" placeholder="Subject...">
+                        </div>
+                        <div class="input-field">
+                            <textarea name="message" class="form-control" placeholder="Messages..."></textarea>
+                        </div>
+                        <button type="submit" id="submit" class="btn btn-blue btn-effect">Send</button>
+                    </form>
+                </div>
 
-    <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
-    <script src="../static/js/index.js"></script>
-    <footer class="footer-distributed">
+                <div class="col-md-5 wow animated fadeInRight">
+                    <address class="contact-details">
+                            <h3>Contact Us</h3>                     
+                            <p><i class="fa fa-pencil"></i>WIT Inc.<span>Tibanga, Iligan City</span> <span>Lanao Del Norte </span><span>Philippines</span></p><br>
+                            <p><i class="fa fa-phone"></i>Phone: (+639) 05-838-2987 </p>
+                            <p><i class="fa fa-envelope"></i>testing@wit.com</p>
+                        </address>
+                </div>
 
-        <div class="footer-left">
-
-            <img src="../static/img/wit_logo.png" alt="wit logo" height="20%" ,width="20%">
-
-            <p class="footer-links">
-                <a href="#">Home</a> ·
-                <a href="#">Browse Courses</a> ·
-                <a href="#">Pricing</a> ·
-                <a href="#">About</a> ·
-                <a href="#">Faq</a> ·
-                <a href="#">Contact</a>
-            </p>
-
-            <p class="footer-company-name">WIT &copy; 2017</p>
+            </div>
         </div>
+    </section>
+    <!-- end Contact section -->
+    <br>
+    <br>
 
-        <div class="footer-center">
+    </main>
 
-            <div>
-                <i class="fa fa-map-marker"></i>
-                <p><span>Tibanga</span>Iligan, Philippines</p>
+    <footer id="footer">
+        <div class="container">
+            <div class="row text-center">
+                <div class="footer-content">
+                    <div class="wow animated fadeInDown">
+                        <p>newsletter signup</p>
+                        <p>Get Cool Stuff! We hate spam!</p>
+                    </div>
+                    <form action="#" method="post" class="subscribe-form wow animated fadeInUp">
+                        <div class="input-field">
+                            <input type="email" class="subscribe form-control" placeholder="Enter Your Email...">
+                            <button type="submit" class="submit-icon">
+                                    <i class="fa fa-paper-plane fa-lg"></i>
+                                </button>
+                        </div>
+                    </form>
+                    <div class="footer-social">
+                        <ul>
+                            <li class="wow animated zoomIn"><a href="#"><i class="fa fa-thumbs-up fa-3x"></i></a></li>
+                            <li class="wow animated zoomIn" data-wow-delay="0.3s"><a href="#"><i class="fa fa-twitter fa-3x"></i></a></li>
+                            <li class="wow animated zoomIn" data-wow-delay="0.6s"><a href="#"><i class="fa fa-skype fa-3x"></i></a></li>
+                            <li class="wow animated zoomIn" data-wow-delay="0.9s"><a href="#"><i class="fa fa-dribbble fa-3x"></i></a></li>
+                            <li class="wow animated zoomIn" data-wow-delay="1.2s"><a href="#"><i class="fa fa-youtube fa-3x"></i></a></li>
+                        </ul>
+                    </div>
+
+
+                </div>
             </div>
-
-            <div>
-                <i class="fa fa-phone"></i>
-                <p>+639 0583 8123</p>
-            </div>
-
-            <div>
-                <i class="fa fa-envelope"></i>
-                <p><a href="mailto:support@company.com">support@wit.com</a></p>
-            </div>
-
         </div>
-
-        <div class="footer-right">
-
-            <p class="footer-company-about">
-                <span>About the company</span>
-            </p>
-
-            <div class="footer-icons">
-
-                <a href="#"><i class="fa fa-facebook"></i></a>
-                <a href="#"><i class="fa fa-twitter"></i></a>
-                <a href="#"><i class="fa fa-linkedin"></i></a>
-                <a href="#"><i class="fa fa-github"></i></a>
-
-            </div>
-
-        </div>
-
     </footer>
 
-
+    <!-- Essential jQuery Plugins
+        ================================================== -->
+    <!-- Main jQuery -->
+    <script src="../static/js/jquery-1.11.1.min.js"></script>
+    <!-- Twitter Bootstrap -->
+    <script src="../static/js/bootstrap.min.js"></script>
+    <!-- Single Page Nav -->
+    <script src="../static/js/jquery.singlePageNav.min.js"></script>
+    <!-- jquery.fancybox.pack -->
+    <script src="../static/js/jquery.fancybox.pack.js"></script>
+    <!-- Google Map API -->
+    <script src="http://maps.google.com/maps/api/js?sensor=false"></script>
+    <!-- Owl Carousel -->
+    <script src="../static/js/owl.carousel.min.js"></script>
+    <!-- jquery easing -->
+    <script src="../static/js/jquery.easing.min.js"></script>
+    <!-- Fullscreen slider -->
+    <script src="../static/js/jquery.slitslider.js"></script>
+    <script src="../static/js/jquery.ba-cond.min.js"></script>
+    <!-- onscroll animation -->
+    <script src="../static/js/wow.min.js"></script>
+    <!-- Custom Functions -->
+    <script src="../static/js/main.js"></script>
 </body>
 
 </html>

@@ -23,7 +23,8 @@ header ::after {
 .logo {
     float: left;
     padding: 10px 0px;
-    width: 10%
+    width: 10%;
+    height: 10%;
 }
 
 pic {
