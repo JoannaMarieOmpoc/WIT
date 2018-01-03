@@ -11,7 +11,7 @@
     <meta charset="utf-8">
     <!-- Always force latest IE rendering engine or request Chrome Frame -->
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>WIT | Home </title>
+    <title>WIT | My Courses </title>
     <!-- Meta Description -->
     <meta name="description" content="Blue One Page Creative HTML5 Template">
     <meta name="keywords" content="one page, single page, onepage, responsive, parallax, creative, business, html5, css3, css3 animation">
@@ -44,29 +44,31 @@
     <!-- Modernizer Script for old Browsers -->
     <script src="../static/js/modernizr-2.6.2.min.js"></script>
     <link rel="stylesheet" type="text/css" href="../static/css/mycourses.css">
-<style>
-
-    .jumbotron{
-        margin-top: 4.8%;
-        width: 100%;
-        height: 1200px;
-    }
-    .add{
-        margin-top: 1px;
-    }
-    #addcourse{
-        padding-bottom: 15px;
-    }
-    .withdrawcss{
-       position: absolute;
-       top: 155px;
-       right: 25px;
-    }
-    .panel{
-        height: 200px;
-     }
-
-</style>
+    <style>
+        .jumbotron {
+            margin-top: 4.8%;
+            width: 100%;
+            height: 1200px;
+        }
+        
+        .add {
+            margin-top: 1px;
+        }
+        
+        #addcourse {
+            padding-bottom: 15px;
+        }
+        
+        .withdrawcss {
+            position: absolute;
+            top: 155px;
+            right: 25px;
+        }
+        
+        .panel {
+            height: 200px;
+        }
+    </style>
 </head>
 
 <body id="body">
@@ -104,9 +106,9 @@
             <!-- main nav -->
             <nav class="collapse navbar-collapse navbar-right">
                 <ul id="nav" class="nav navbar-nav">
-                   <li><a href="{{ url_for('showDashboard', user = user)}}">Home</a></li>
+                    <li><a href="{{ url_for('showDashboard', user = user)}}">Home</a></li>
+                    <li><a href="{{url_for('enrolledCourses', user=user)}}">My Courses</a></li>
                     <li><a href="{{ url_for('games', user = user)}}">Games</a></li>
-                    <li><a href="{{url_for('enrolledCourses', user=user)}}">Courses</a></li>
                     <li><a href="{{url_for('exams', user = user)}}">Mock Exam</a></li>
                     <li><a href="{{ url_for('profile', user = user)}}">Profile</a></li>
                     <li><a href="{{ url_for('logout')}}">Logout</a></li>
@@ -121,25 +123,25 @@
     <!--
         End Fixed Navigation
         ==================================== -->
-<main class="site-content" role="main">
+    <main class="site-content" role="main">
 
-    <div class="jumbotron">
-        <nav class="breadcrumb">
-              <a class="breadcrumb-item" href="{{url_for('showDashboard', user=user)}}">Home</a>
-                 <span class="glyphicon glyphicon-menu-right marginicon"></span>
-              <a class="breadcrumb-item active" href="#">My Courses</a>
-        </nav>
-        <div class="container-course">
+        <div class="jumbotron">
+            <nav class="breadcrumb">
+                <a class="breadcrumb-item" href="{{url_for('showDashboard', user=user)}}">Home</a>
+                <span class="glyphicon glyphicon-menu-right marginicon"></span>
+                <a class="breadcrumb-item active" href="#">My Courses</a>
+            </nav>
+            <div class="container-course">
 
-            <h2 class="margin">Courses</h2>
-            <table class="table">
-                <thead>
-                <tr>
-                        <form name="addForm" id="addForm" action="{{ url_for('userAddcourse', user=user) }}" method="POST">
+                <h2 class="margin">Courses</h2>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <form name="addForm" id="addForm" action="{{ url_for('userAddcourse', user=user) }}" method="POST">
                                 <td>
                                     <div class="form-group floating-label-form-group controls pull-left">
                                         <label for="choosecourse"></label>
-                                          <select class="form-control" id="choosecourse" name=coursename1 id=coursename1>
+                                        <select class="form-control" id="choosecourse" name=coursename1 id=coursename1>
                                             <option value="" disabled selected>Select a course to add</option>
                                               {% for course in coursesoption %}
                                               <option value="{{ course.coursename }}">{{ course.coursename }}</option>
@@ -153,43 +155,43 @@
                                         </button>
                                     </div>
                                 </td>
-                        </form>
-                </tr>
-                </thead>
-            </table>
-            <div class="container-courses">
+                            </form>
+                        </tr>
+                    </thead>
+                </table>
+                <div class="container-courses">
                     <div class="row">
                         <div class="course-menu">
-                        {% for course in courses %}
-                        <div class="col-md-4">
-                            <div class="panel panel-default">
-                                <div class="panel-heading">
-                                <h3 class="panel-title">
-                                    <a href="{{ url_for('displayCourse', coursename=course.coursename, user=user) }}">
+                            {% for course in courses %}
+                            <div class="col-md-4">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h3 class="panel-title">
+                                            <a href="{{ url_for('displayCourse', coursename=course.coursename, user=user) }}">
                                     {{ course.coursename }}
                                     </a>
-                                </h3>
-                                </div>
-                                <h4 class="panel-body">
-                                    Description: {{ course.coursedesc }}
-                                </h4>
-                                <div class="withdrawcss">
-                                    <form class="confirmation" method="POST" action="{{url_for('userRemovecourse', coursename=course.coursename, user=user) }}">
-                                        <button type="submit" name="removecourse" id="removecourse" class="btn btn-info btn-med">
+                                        </h3>
+                                    </div>
+                                    <h4 class="panel-body">
+                                        Description: {{ course.coursedesc }}
+                                    </h4>
+                                    <div class="withdrawcss">
+                                        <form class="confirmation" method="POST" action="{{url_for('userRemovecourse', coursename=course.coursename, user=user) }}">
+                                            <button type="submit" name="removecourse" id="removecourse" class="btn btn-info btn-med">
                                             <span class="glyphicon glyphicon-trash"></span> Withdraw
                                         </button>
-                                    </form>
+                                        </form>
+                                    </div>
                                 </div>
                             </div>
+                            {% endfor %}
                         </div>
-                        {% endfor %}
-                     </div>
                     </div>
+                </div>
             </div>
         </div>
-    </div>
-        </main>
-      <footer id="footer">
+    </main>
+    <footer id="footer">
         <div class="container">
             <div class="row text-center">
                 <div class="footer-content">
@@ -244,15 +246,15 @@
     <script src="../static/js/wow.min.js"></script>
     <!-- Custom Functions -->
     <script src="../static/js/main.js"></script>
-            <script type="text/javascript">
+    <script type="text/javascript">
         var elems = document.getElementsByClassName('confirmation');
-        var confirmIt = function (e) {
+        var confirmIt = function(e) {
             if (!confirm('Are you sure?')) e.preventDefault();
         };
         for (var i = 0, l = elems.length; i < l; i++) {
             elems[i].addEventListener('click', confirmIt, false);
         }
-</script>
+    </script>
 
 </body>
 

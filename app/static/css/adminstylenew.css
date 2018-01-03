@@ -36,3 +36,6 @@
         border: 0.5px solid !important;
         margin-bottom: 5px;
     }
+    .bordered highlight{
+        width:100%;
+    }

@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html lang="en" class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html lang="en" class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html lang="en" class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html lang="en" class="no-js">
+<!--<![endif]-->
+
+<head>
+    <!-- meta character set -->
+    <meta charset="utf-8">
+    <!-- Always force latest IE rendering engine or request Chrome Frame -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>WIT | {{name}} </title>
+    <!-- Meta Description -->
+    <meta name="description" content="Blue One Page Creative HTML5 Template">
+    <meta name="keywords" content="one page, single page, onepage, responsive, parallax, creative, business, html5, css3, css3 animation">
+    <meta name="author" content="Muhammad Morshed">
+
+    <!-- Mobile Specific Meta -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- CSS
+		================================================== -->
+
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <!-- Fontawesome Icon font
+
+    <link rel="stylesheet" href="../static/css/font-awesome.min.css">
+    <!-- bootstrap.min -->
+    <link rel="stylesheet" type="text/css" href="{{ url_for('.static', filename='css/jquery.fancybox.css')}}">
+    <!-- bootstrap.min -->
+    <link rel="stylesheet" type="text/css" href="{{ url_for('.static', filename='css/bootstrap.min.css')}}">
+    <!-- bootstrap.min -->
+
+    <!-- bootstrap.min -->
+    <link rel="stylesheet" type="text/css" href="{{ url_for('.static', filename='css/slit-slider.css')}}">
+    <!-- bootstrap.min -->
+    <link rel="stylesheet" type="text/css" href="{{ url_for('.static', filename='css/animate.css')}}">
+    <!-- Main Stylesheet -->
+    <link rel="stylesheet" type="text/css" href="{{ url_for('.static', filename='css/mainnew.css')}}">
+
+    <!-- Modernizer Script for old Browsers
+    <script src="../static/js/modernizr-2.6.2.min.js"></script>
+    -->
+    <link rel="stylesheet" type="text/css" href="{{ url_for('.static', filename='css/mycourses.css')}}">
+    <style>
+        .jumbotron {
+            margin-top: 4.8%;
+            width: 100%;
+            height: auto;
+        }
+        .radiob {
+            right: 50%;
+            bottom: 1px;
+        }
+        .radio{
+            margin-left: 2%;
+        }
+        .question-correct:after {
+            content: "✓";
+            font-size: 30px;
+            color: green;
+            padding-left: 10px;
+        }
+
+        .question-incorrect:after {
+            content: "✗";
+            font-size: 30px;
+            color: red;
+            padding-left: 10px;
+        }
+    </style>
+</head>
+
+<body id="body">
+
+    <!-- preloader -->
+    <div id="preloader">
+        <div class="loder-box">
+            <div class="battery"></div>
+        </div>
+    </div>
+    <!-- end preloader -->
+
+    <!--
+        Fixed Navigation
+        ==================================== -->
+    <header id="navigation" class="navbar-inverse navbar-fixed-top animated-header">
+        <div class="container">
+            <div class="navbar-header">
+                <!-- responsive nav button -->
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+						<span class="sr-only">Toggle navigation</span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+                    </button>
+                <!-- /responsive nav button -->
+
+                <!-- logo -->
+                <h1 class="navbar-brand">
+                    <img src="{{ url_for('.static', filename='img/wit_logo.png')}}" alt="wit logo" width="40%">
+                </h1>
+                <!-- /logo -->
+            </div>
+
+            <!-- main nav -->
+            <nav class="collapse navbar-collapse navbar-right">
+                <ul id="nav" class="nav navbar-nav">
+                    <li><a href="{{ url_for('showDashboard', user = user)}}">Home</a></li>
+                    <li><a href="{{url_for('enrolledCourses', user=user)}}">My Courses</a></li>
+                    <li><a href="{{ url_for('games', user = user)}}">Games</a></li>
+                    <li><a href="{{url_for('exams', user = user)}}">Mock Exam</a></li>
+                    <li><a href="{{ url_for('profile', user = user)}}">Profile</a></li>
+                    <li><a href="{{ url_for('logout')}}">Logout</a></li>
+
+
+                </ul>
+            </nav>
+            <!-- /main nav -->
+
+        </div>
+    </header>
+    <!--
+        End Fixed Navigation
+        ==================================== -->
+    <main class="site-content" role="main">
+
+        <div class="jumbotron">
+            <nav class="breadcrumb">
+                <a class="breadcrumb-item" href="{{url_for('showDashboard', user=user)}}">Home</a>
+                <span class="glyphicon glyphicon-menu-right marginicon"></span>
+                <a class="breadcrumb-item" href="{{url_for('exams', user=user)}}">Mock Exam</a>
+                <span class="glyphicon glyphicon-menu-right marginicon"></span>
+                <a class="breadcrumb-item active" href="#">{{name}}</a>
+
+            </nav>
+            <div class="container-course">
+
+                <h2 class="margin">Mock Exam</h2>
+                <h3 class="margin"> {{quiz['name']}} - Checking ({{correct}} / {{total}}) </h3>
+                        {% for question, choice in question_answer %}
+                        <div class="col-md-12">
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">
+                                            <h3 class="panel-title">
+                                                {% set outer_loop = loop %}
+                                                <p>
+                                                    {{loop.index}} {{question['text']|safe}}
+                                                </p>
+                                            </h3>
+                                        </div>
+                                        <h4 class="panel-body" style="margin-left: 3%;">
+                                            {% for answer in question['options'] %}
+                                                <p {% if answer[1] %} class="question-correct" {% elif not answer[1] %} class="question-incorrect" {% endif %}>
+                                                    {{answer[0]|safe}} {% if answer == choice %} - <strong> Chosen </strong> {% endif %}
+                                                </p>
+                                            {% endfor %}
+                                            </h4>
+                                    </div>
+                        </div>
+                        {% endfor %}
+            </div>
+    </main>
+    <footer id="footer">
+        <div class="container">
+            <div class="row text-center">
+                <div class="footer-content">
+                    <div class="wow animated fadeInDown">
+                        <p>newsletter signup</p>
+                        <p>Get Cool Stuff! We hate spam!</p>
+                    </div>
+                    <form action="#" method="post" class="subscribe-form wow animated fadeInUp">
+                        <div class="input-field">
+                            <input type="email" class="subscribe form-control" placeholder="Enter Your Email...">
+                            <button type="submit" class="submit-icon">
+									<i class="fa fa-paper-plane fa-lg"></i>
+								</button>
+                        </div>
+                    </form>
+                    <div class="footer-social">
+                        <ul>
+                            <li class="wow animated zoomIn"><a href="#"><i class="fa fa-thumbs-up fa-3x"></i></a></li>
+                            <li class="wow animated zoomIn" data-wow-delay="0.3s"><a href="#"><i class="fa fa-twitter fa-3x"></i></a></li>
+                            <li class="wow animated zoomIn" data-wow-delay="0.6s"><a href="#"><i class="fa fa-skype fa-3x"></i></a></li>
+                            <li class="wow animated zoomIn" data-wow-delay="0.9s"><a href="#"><i class="fa fa-dribbble fa-3x"></i></a></li>
+                            <li class="wow animated zoomIn" data-wow-delay="1.2s"><a href="#"><i class="fa fa-youtube fa-3x"></i></a></li>
+                        </ul>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Essential jQuery Plugins
+		================================================== -->
+    <!-- Main jQuery -->
+     <!-- Essential jQuery Plugins
+		================================================== -->
+    <!-- Main jQuery -->
+    <script src="{{url_for('.static', filename='js/jquery-1.11.1.min.js')}}"></script>
+    <!-- Twitter Bootstrap -->
+    <script src="{{url_for('.static', filename='js/bootstrap.min.js')}}"></script>
+
+    <script src="{{url_for('.static', filename='js/jquery.fancybox.pack.js')}}"></script>
+    <!-- Google Map API -->
+    <script src="http://maps.google.com/maps/api/js?sensor=false"></script>
+    <!-- Owl Carousel -->
+    <script src="{{url_for('.static', filename='js/owl.carousel.js')}}"></script>
+    <script src="{{url_for('.static', filename='js/owl.navigation.js')}}"></script>
+
+    <!-- jquery easing -->
+    <script src="{{url_for('.static', filename='js/jquery.easing.min.js')}}"></script>
+    <!-- Fullscreen slider -->
+    <script src="{{url_for('.static', filename='js/jquery.slitslider.js')}}"></script>
+    <script src="{{url_for('.static', filename='js/jquery.ba-cond.min.js')}}"></script>
+    <!-- onscroll animation -->
+    <script src="{{url_for('.static', filename='js/wow.min.js')}}"></script>
+    <!-- Custom Functions -->
+    <script src="{{url_for('.static', filename='js/main.js')}}"></script>
+    <script type="text/javascript">
+        var elems = document.getElementsByClassName('confirmation');
+        var confirmIt = function(e) {
+            if (!confirm('Are you sure?')) e.preventDefault();
+        };
+        for (var i = 0, l = elems.length; i < l; i++) {
+            elems[i].addEventListener('click', confirmIt, false);
+        }
+    </script>
+
+</body>
+
+</html>

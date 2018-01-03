@@ -11,7 +11,7 @@
     <meta charset="utf-8">
     <!-- Always force latest IE rendering engine or request Chrome Frame -->
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>WIT | Home </title>
+    <title>WIT | {{topic.topicname}} </title>
     <!-- Meta Description -->
     <meta name="description" content="Blue One Page Creative HTML5 Template">
     <meta name="keywords" content="one page, single page, onepage, responsive, parallax, creative, business, html5, css3, css3 animation">
@@ -44,31 +44,35 @@
     <!-- Modernizer Script for old Browsers -->
     <script src="../static/js/modernizr-2.6.2.min.js"></script>
     <link rel="stylesheet" type="text/css" href="{{ url_for('.static', filename='css/mycourses.css')}}">
-<style>
-
-    .jumbotron{
-        margin-top: 4.8%;
-        width: 100%;
-        height: 1200px;
-    }
-    .add{
-        margin-top: 1px;
-    }
-    #addcourse{
-        padding-bottom: 15px;
-    }
-    .withdrawcss{
-       position: absolute;
-       top: 155px;
-       right: 25px;
-    }
-    .panel{
-        height: 200px;
-     }
-    .exe{
-        margin-top: 20px;
-    }
-</style>
+    <style>
+        .jumbotron {
+            margin-top: 4.8%;
+            width: 100%;
+            height: 1200px;
+        }
+        
+        .add {
+            margin-top: 1px;
+        }
+        
+        #addcourse {
+            padding-bottom: 15px;
+        }
+        
+        .withdrawcss {
+            position: absolute;
+            top: 155px;
+            right: 25px;
+        }
+        
+        .panel {
+            height: 200px;
+        }
+        
+        .exe {
+            margin-top: 20px;
+        }
+    </style>
 </head>
 
 <body id="body">
@@ -106,7 +110,7 @@
             <!-- main nav -->
             <nav class="collapse navbar-collapse navbar-right">
                 <ul id="nav" class="nav navbar-nav">
-                   <li><a href="{{ url_for('showDashboard', user=user)}}">Home</a></li>
+                    <li><a href="{{ url_for('showDashboard', user=user)}}">Home</a></li>
                     <li><a href="{{ url_for('games', user=user)}}">Games</a></li>
                     <li><a href="{{url_for('enrolledCourses', user=user)}}">Courses</a></li>
                     <li><a href="{{url_for('exams', user=user)}}">Mock Exam</a></li>
@@ -123,29 +127,29 @@
     <!--
         End Fixed Navigation
         ==================================== -->
-<main class="site-content" role="main">
+    <main class="site-content" role="main">
 
-    <div class="jumbotron">
-        <nav class="breadcrumb">
-              <a class="breadcrumb-item" href="{{url_for('showDashboard', user=user)}}">Home</a>
-                 <span class="glyphicon glyphicon-menu-right marginicon"></span>
-              <a class="breadcrumb-item" href="{{url_for('enrolledCourses', user=user)}}">My Courses</a>
+        <div class="jumbotron">
+            <nav class="breadcrumb">
+                <a class="breadcrumb-item" href="{{url_for('showDashboard', user=user)}}">Home</a>
+                <span class="glyphicon glyphicon-menu-right marginicon"></span>
+                <a class="breadcrumb-item" href="{{url_for('enrolledCourses', user=user)}}">My Courses</a>
                 <span class="glyphicon glyphicon-menu-right marginicon"></span>
                 <a class="breadcrumb-item" href="{{url_for('displayCourse', coursename=coursename, user=user)}}">{{coursename}}</a>
                 <span class="glyphicon glyphicon-menu-right marginicon"></span>
-            <a class="breadcrumb-item active" href="#">{{ topic.topicname }}</a>
-        </nav>
-        <div class="container-course">
-            <div class="container-courses">
+                <a class="breadcrumb-item active" href="#">{{ topic.topicname }}</a>
+            </nav>
+            <div class="container-course">
+                <div class="container-courses">
                     <div class="row">
                         <div class="col-md-12">
                             <div class="panel panel-default">
                                 <div class="panel-heading text-center">
-                                <h2 class="panel-title">
-                                    <a href="{{ url_for('user_Topic', coursename=coursename, user=user, topicid=topic.topicid) }}">
+                                    <h2 class="panel-title">
+                                        <a href="{{ url_for('user_Topic', coursename=coursename, user=user, topicid=topic.topicid) }}">
                                         {{ topic.topicname }}
                                     </a>
-                                </h2>
+                                    </h2>
                                 </div>
                                 <div class="panel-body" style="overflow:auto;">
                                     <h3>Discussion: {{ topic.topicdisc }}</h3>
@@ -162,15 +166,15 @@
                                     {% endfor %}
                                 </div>
                             </div>
-                            </div>
                         </div>
-                     </div>
+                    </div>
+                </div>
+            </div>
         </div>
-    </div>
-    </div>
-    </div>
-</main>
-      <footer id="footer">
+        </div>
+        </div>
+    </main>
+    <footer id="footer">
         <div class="container">
             <div class="row text-center">
                 <div class="footer-content">
