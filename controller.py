@@ -121,7 +121,7 @@ def enrolledCourses(user):
 @login_required
 def displayCourse(coursename, user):
     course = Course.query.filter_by(coursename=coursename).first()
-    topics = Topic.query.filter_by(courseid=course.courseid).all()
+    topics = Topic.query.filter_by(courseid=course.coursename).all()
     return render_template('user_showCourse.html', topics = topics, course=course, user=user)
 
 ################################################################()
@@ -160,17 +160,51 @@ def user_Topic(user, coursename, topicname):
 
 ################################################################
 
-@app.route('/<user>/courses/<coursename>/topic/<topicname>/exercise/<exerciseid>', methods=['POST', 'GET'])
-def user_takeExercise(user, coursename, topicname, exerciseid):
-    if request.method == "POST":
-        result = userTakesExercise(exerciseid, current_user.username, request.form['score'])
+@app.route('/saveScore', methods=['POST'])
+@login_required
+def saveScore():
+        data = request.get_json()
+        score = data[0]
+        exerciseid = data[1]
+        exercise = userTakesExercise.query.filter_by(exer_id=exerciseid).first()
+        if exercise is None:
+            result = userTakesExercise(exerciseid, current_user.username, score)
+            db.session.add(result)
+            db.session.commit()
+            return redirect('user_Topic', user = user, coursename = coursename, topicname=topicname)
+        else:
+            if exercise.score < score:
+                exercise.score = score
+                db.session.commit()
+
         db.session.add(result)
-        db.session.commit()
+        db.session.commit() 
+        return redirect('user_Topic', user = user, coursename = coursename, topicname=topicname)
+
+################################################################
+
+@app.route('/<user>/courses/<coursename>/topic/<topicname>/exercise/<exerciseid>', methods=['POST', 'GET'])
+def user_takeExercise(user, exerciseid, coursename, topicname):
+    if request.method == "POST":
         return redirect(url_for('user_takeExercise'))
     else:
         topic = Topic.query.filter_by(topicname=topicname).first()
-        questions = topic.questions
-        return render_template('typing_game.html', questions = questions)
+        exercise = Exercise.query.filter_by(topicid=topic.topicname).first()
+        questions = ['q']
+        answers =['a']
+        data = exercise.questions
+        for d in data:
+            q = d.question
+            a = d.answer
+            questions.append(q)
+            answers.append(a)
+        length = len(q)
+        if exercise.gametype == 3:
+            return render_template('impossible_game.html', questions = questions, answers= answers, length = length, exerciseid=exerciseid)
+        elif exercise.gametype == 1:
+            return render_template('typing_game.html', questions=questions, answers=answers, length = length, exerciseid=exerciseid)
+        else:
+            return render_template('memory_game.html', questions = questions)
 
 ################################################################()
 
@@ -178,14 +212,19 @@ def user_takeExercise(user, coursename, topicname, exerciseid):
 @login_required
 def exams(user):
     courses = current_user.courses
-    return render_template('user_exams.html', user = user, courses = courses)
+    return render_template('user_exams.html', courses = courses)
 
 ################################################################
 
-#@app.route('<user>/exams/<examid>')
-#@login_required
-#def takeExams(user, examid):
+@app.route('/<user>/exams/<examid>')
+def user_takeExams(user, examid):
+    quiz = copy.deepcopy(quizzes[id])
+    questions = list(enumerate(quiz["questions"]))
+    random.shuffle(questions)
+    quiz["questions"] = map(lambda t: t[1], questions)
+    ordering = map(lambda t: t[0], questions)
 
+    return flask.render_template('exam.html', name=name, id=id, user=user, quiz=quiz, quiz_ordering=json.dumps(ordering))
 ################################################################()
 
 @app.route('/<user>/games')
@@ -372,9 +411,28 @@ def addtopic(coursename):
         topic = Topic(topicname=topicname, topicdisc=topicdisc, courseid=course.coursename)
         db.session.add(topic)
         db.session.commit()
+        exercise = Exercise(topicid=topicname, gametype=request.form['type'])
+        db.session.add(exercise)
+        db.session.commit()
+        topic.exercises.append(exercise)
+        db.session.commit()
+        course = Course.query.filter_by(coursename=coursename).first()
+        ttopics = Topic.query.filter_by(courseid=coursename).count()
+        topics = course.topics
+        count = 0
+        for topic in topics:
+            exercises = topic.exercises
+            for exercise in exercises:
+                scores = userTakesExercise.query.filter_by(exer_id=exercise.exerciseid).all()
+                for score in scores:
+                    if score is not None and score.score > 0:
+                        count = count + 1
+        course.progress = (count/ttopics)*100
+        db.session.commit()
         return redirect(url_for('manageTopics', coursename=coursename))
     else:
-        return render_template('admin_addtopic.html', coursename=coursename)
+        types = Game.query.all()
+        return render_template('admin_addtopic.html', coursename=coursename, types = types)
 
 ################################################################
 
@@ -407,25 +465,16 @@ def edittopic(coursename, topicname):
 @login_required
 def manageExercises(coursename, topicname):
     topic = Topic.query.filter_by(topicname=topicname).first()
-    exercises = Exercise.query.filter_by(topicid=topic.topicname).all()
-    games = Game.query.all()
-    return render_template('admin_exercises.html', topic=topic, coursename=coursename, exercises=exercises, games = games)
-
-################################################################
-
-@app.route('/admin/<coursename>/managetopics/<topicname>/manageexercises/addexercise', methods=['POST', 'GET'])
-@login_required
-def addExercise(coursename, topicname):
-    topic = Topic.query.filter_by(topicname=topicname).first()
     if request.method == 'POST':
-        exercise = Exercise(topicid=topic.topicname, gametype=request.form['type'])
-        db.session.add(exercise)
-        db.session.commit()
-        questions = exercise.questions
-        return redirect(url_for('exercisePage', topicname=topicname, coursename=coursename,
-                            exerciseid=exercise.exerciseid, questions=questions))
+        exercises = topic.exercises
+        for exercise in exercises:
+            exercise.gametype = request.form['type']
+            db.session.commit()
+        return redirect(url_for('manageTopics', coursename=coursename, topicname=topicname))
     else:
-        return render_template('')
+        exercises = topic.exercises
+        games = Game.query.all()
+        return render_template('admin_exercises.html', topicname=topicname, coursename=coursename, exercises=exercises, games=games)
 
 ################################################################
 
@@ -444,6 +493,7 @@ def deleteExercise(coursename, topicname, exerciseid):
 @login_required
 def exercisePage(coursename, topicname, exerciseid):
     exercise = Exercise.query.filter_by(exerciseid=exerciseid).first()
+    questions = exercise.questions
     return render_template('admin_addexercise.html', topicname=topicname, coursename=coursename, exercise=exercise,
                        questions=questions)
 
@@ -455,11 +505,29 @@ def exercisePage(coursename, topicname, exerciseid):
 def manageExerciseQuestion(coursename, topicname, exerciseid):
     exercise = Exercise.query.filter_by(exerciseid=exerciseid).first()
     if request.method == 'POST':
+        question = Question.query.get(request.form['action'])
+        exercise.questions.remove(question)
         db.session.commit()
         return redirect(url_for('exercisePage', topicname=topicname, coursename=coursename, exerciseid=exerciseid))
     else:
-        return render_template('admin_manageexercisequestion.html', topicname=topicname, coursename=coursename,
+        return render_template('admin_manageexercisequestions.html', topicname=topicname, coursename=coursename,
                        exerciseid=exerciseid)
+
+################################################################
+
+@app.route('/admin/<coursename>/managetopics/<topicname>/manageexercises/<exerciseid>/manageexercisequestion/addquestion', methods=['POST', 'GET'])
+@login_required
+def addExerciseQuestion(coursename, topicname, exerciseid):
+    exercise = Exercise.query.filter_by(exerciseid=exerciseid).first()
+    if request.method == 'POST':
+        question = Question.query.get(request.form['action'])
+        exercise.questions.append(question)
+        db.session.commit()
+        return redirect(url_for('exercisePage', topicname=topicname, coursename=coursename, exerciseid=exerciseid))
+    else:
+        questions = Question.query.filter_by(topic_id=topicname).all()
+        return render_template('admin_addexercisequestion.html', topicname=topicname, coursename=coursename,
+                       exerciseid=exerciseid, questions=questions)
 
 ################################################################
 
@@ -483,6 +551,7 @@ def addexam(coursename):
             exam = Exam(examtype=examtype, courseid=course.coursename)
             db.session.add(exam)
             db.session.commit()
+            course.exams.append(exam)
             return redirect(url_for('manageExamQuestions', examid=exam.examid, coursename=coursename))
         else:
             return redirect(url_for('manageExams', coursename=coursename))
@@ -507,8 +576,8 @@ def deleteexam(coursename, examid):
 @app.route('/admin/<coursename>/manageexams/<examid>/managequestions', methods=['POST', 'GET'])
 @login_required
 def manageExamQuestions(coursename, examid):
+    exam = Exam.query.filter_by(examid=examid).first()
     if request.method == "POST":
-        exam = Exam.query.get(examid)
         delete = Question.query.get(request.form['action'])
         exam.questions.remove(delete)
         db.session.commit()
@@ -524,14 +593,16 @@ def manageExamQuestions(coursename, examid):
 @app.route('/admin/<coursename>/manageexams/<examid>/managequestions/addquestions', methods=['POST', 'GET'])
 @login_required
 def addExamQuestions(coursename, examid):
+    exam = Exam.query.filter_by(examid=examid).first()
     if request.method == 'POST':
         question = Question.query.get(request.form['action'])
-        exam = Exam.query.get(examid)
         exam.questions.append(question)
         db.session.commit()
-        return redirect(url_for('manageExamQuestions', coursename = coursename, examid=examid))
+        return redirect(url_for('manageExamQuestions', coursename=coursename, examid=examid))
     else:
-        return render_template('admin_addexamquestion.html')
+        questions = Question.query.all()
+        return render_template('admin_addexamquestions.html',coursename=coursename,
+                       examid=examid, questions=questions)
         
 
 ################################################################
@@ -558,24 +629,59 @@ def adminGames():
 
 ################################################################
 
-@app.route('/admin/games/typinggame')
+@app.route('/admin/games/impossiblegame', methods=['POST', 'GET'])
 @login_required
-def admintypinggame():
-    typinggame = Game.query.filter_by(gamename='typingGame').first()
-    questions = typinggame.questions
-    return render_template('admin_typinggame.html', typinggame=typinggame, questions=questions)
+def manageImpossible():
+    game = Game.query.filter_by(gamename='Impossible')
+    if request.method == 'POST':
+        question = Question.query.get(request.form['remove'])
+        game.questions.remove(question)
+        db.session.commit()
+        return redirect(url_for('adminGames'))
+    else:
+        questions = game.questions
+        return render_template('admin_impossible.html', questions = questions)
+
+################################################################
+
+@app.route('/admin/games/impossiblegame/addquestion', methods=['POST' , 'GET'])
+@login_required
+def addImpossibleQuestion():
+    game = Game.query.filter_by(gamename='typingGame').first()
+    if request.method == 'POST':
+        question = Question.query.get(request.form['add'])
+        return redirect(url_for('manageImposible'))
+    else:
+        questions = Question.query.all()
+        return render_template('admin_impossiblequestion.html', questions = questions)
+
+################################################################
+
+@app.route('/admin/games/typinggame', methods=['POST', 'GET'])
+@login_required
+def manageTyping():
+    game = Game.query.filter_by(gamename='Typing').first()
+    if request.method == 'POST':
+        question = Question.query.get(request.form['remove'])
+        game.questions.remove(question)
+        db.session.commit()
+        return redirect(url_for('adminGames'))
+    else:
+        questions = game.questions
+        return render_template('admin_typing.html', questions = questions)
 
 ################################################################
 
 @app.route('/admin/games/typinggame/addquestion', methods=['POST' , 'GET'])
 @login_required
 def addTypingQuestion():
-    typinggame = Game.query.filter_by(gamename='typingGame').first()
+    game = Game.query.filter_by(gamename='typingGame').first()
     if request.method == 'POST':
         question = Question.query.get(request.form['select'])
         return redirect(url_for('admintypinggame'))
     else:
-        return render_template('admin_typinggamequestion.html')
+        questions = Question.query.all()
+        return render_template('admin_typingquestion.html')
 
 ################################################################
 
@@ -586,13 +692,17 @@ def addquestions():
         question = Question(request.form['question'], request.form['topic'], request.form['difficulty'], request.form['answer'])
         db.session.add(question)
         db.session.commit()
+        choice1 = Choice(request.form['choice1'], question.questionid)
+        choice2 = Choice(request.form['choice2'], question.questionid)
+        choice3 = Choice(request.form['choice3'], question.questionid)
+        question.choices.append(choice1)
+        question.choices.append(choice2)
+        question.choices.append(choice3)
+        db.session.commit()
         questions = Question.query.all()
         return redirect(url_for('manageQuestions'))
     else:
-        return render_template('admin_addquestions.html')
+        topics = Topic.query.all()
+        return render_template('admin_addquestions.html', topics=topics)
 
 ################################################################
-
-#@app.route('/gameScoreReceiver')
-#@login_required
-#def gameStoreScore():

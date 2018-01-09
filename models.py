@@ -10,17 +10,17 @@ questionHasChoices = db.Table('questionHasChoices',
                       db.Column('choiceid', db.ForeignKey('Choices.choiceid'))
                       )
 examHasQuestions = db.Table('examHasQuestions',
-                            db.Column('examid', db.ForeignKey('Exams.examid')),
-                            db.Column('questionid', db.ForeignKey('Questions.questionid'))
+                            db.Column('examid', db.ForeignKey('Exams.examid'), primary_key=True),
+                            db.Column('questionid', db.ForeignKey('Questions.questionid'), primary_key=True)
                             )
 exerciseHasQuestions = db.Table('exerciseHasQuestions',
-                                db.Column('exerciseid', db.ForeignKey('Exercises.exerciseid')),
-                                db.Column('questionid', db.ForeignKey('Questions.questionid'))
+                                db.Column('exerciseid', db.ForeignKey('Exercises.exerciseid'), primary_key=True),
+                                db.Column('questionid', db.ForeignKey('Questions.questionid'), primary_key=True)
                                 )
 
 gameHasQuestions = db.Table('gameHasQuestions',
-                            db.Column('gameid', db.ForeignKey('Games.gameid')),
-                            db.Column('questionid', db.ForeignKey('Questions.questionid'))
+                            db.Column('gameid', db.ForeignKey('Games.gameid'), primary_key=True),
+                            db.Column('questionid', db.ForeignKey('Questions.questionid'), primary_key=True)
                             )
 
 class User(db.Model):
@@ -145,7 +145,7 @@ class Exercise(db.Model):
     __tablename__ = 'Exercises'
 
     exerciseid = db.Column(db.Integer, primary_key=True)
-    topicid = db.Column(db.String(30), db.ForeignKey(Topic.topicname))
+    topicid = db.Column(db.String(30), db.ForeignKey(Topic.topicname), unique=True)
     gametype = db.Column(db.Integer, db.ForeignKey(Game.gameid))
     questions = db.relationship('Question', secondary=exerciseHasQuestions, backref=db.backref('exercise', lazy='dynamic'))
 
