@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>Admin Dashboard</title>
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link type="text/css" rel="stylesheet" href="{{ url_for('.static', filename='css/bootstrap.min.css') }}">
+    <link type="text/css" rel="stylesheet prefetch" href="{{ url_for('.static', filename='css/materialize.min.css') }}">
+    <link rel='stylesheet prefetch' href='https://fonts.googleapis.com/icon?family=Material+Icons'>
+    <link type="text/css" rel="stylesheet" href="css/style.css">
+    <link type="text/css" rel="stylesheet" href="..static/css/style.css">
+    <link type="text/css" rel="stylesheet" href="{{ url_for('.static', filename='css/styleadmin.css') }}">
+    <link type="text/css" rel="stylesheet" href="{{ url_for('.static', filename='css/adminstylenew.css')}}">
+</head>
+
+<body>
+  <div class="navbar-fixed">
+  <nav>
+    <div class="nav-wrapper blue">
+      <ul>
+        <li><a href="#!" onclick="return hideshow();"><i class="material-icons">menu</i></a></li>
+        <li><a href="{{ url_for('showadmindashboard') }}" class="title"><img src="{{ url_for('.static', filename='img/wit_logo2.png')}}"></a></li>
+      </ul>
+      <ul class="right">
+          <li class="dropdown">
+            <a href="#" id=#signout class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                <i class="material-icons">arrow_drop_down</i>
+            </a>
+            <ul class="dropdown-menu">
+                <li><a href="{{ url_for('logout')}}">Log-out</a></li>
+            </ul>
+          </li>
+      </ul>
+    </div>
+  </nav>
+</div>
+<div class="brown hide" style="height: 200px;"></div>
+<ul id="hidemenu" class="side-nav fixed transparent z-depth-0">
+    <li class="active"><a href="{{ url_for('showadmindashboard') }}"><i class="material-icons blue-text text-darken-1">dashboard</i>Dashboard</a></li>
+    <li><a href="{{ url_for('adminList')}}"><i class="material-icons">supervisor_account</i>Admin</a></li>
+  <li><div class="divider"></div></li>
+    <li><a href="{{ url_for('managecourses')}}"><i class="material-icons">school</i>Courses</a></li>
+  <li><a href="{{ url_for('adminGames')}}"><i class="material-icons">games</i>Games</a></li>
+    <li><a href="{{url_for('manageUsers')}}"><i class="material-icons">person</i>Users</a></li>
+</ul>
+
+<div class="main">
+    <div class="container-fluid">
+        <div class="row">
+        <nav class="breadcrumb">
+          <a class="breadcrumb-item" href="{{ url_for('showadmindashboard') }}">Home</a>
+              <span class="glyphicon glyphicon-menu-right marginicon"></span>
+          <a class="breadcrumb-item" href="{{ url_for('adminGames') }}">Manage Games</a>
+             <span class="glyphicon glyphicon-menu-right marginicon"></span>
+          <span class="breadcrumb-item active">Typing Game</span>
+
+        </nav>
+        <h2>Manage Questions</h2>
+
+                <table class="table table-bordered table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <a href="{{ url_for('addTypingQuestion') }}" class="btn btn-info btn-med">
+                                <span class="glyphicon glyphicon-plus"></span> Add a question
+                            </a>
+                        </tr>
+                    </thead>
+                </table>
+
+                <div class="col-md-12">
+                    <table class="table table-bordered table-striped table-hover">
+                        <thead>
+                            <tr>
+                                <th class="col-md-3">
+                                    Question
+                                </th>
+                                <th class="col-md-3">
+                                    Answers
+                                </th>
+                                <th class="col-md-2">
+                                    Difficulty
+                                </th>
+                                <th class="col-md-4">
+
+                                </th>
+
+                            </tr>
+                        </thead>
+                        {% for question in questions %}
+                        <tbody>
+                            <tr>
+                                <td class="col-md-3">
+                                    <h6 class="question-size">{{loop.index}}<span>. </span> {{question.question}}</h6>
+                                </td>
+                                <td class="col-md-3">
+                                    <h6 class="question-size">
+                                     {{ question.answer }}
+                                    </h6>
+                                </td>
+                                <td class="col-md-2">
+                                    <h6 class="question-size">
+                                 {{ question.difficulty }}
+                                    </h6>
+                                </td>
+                                <td class="col-md-4" style="align-content: center;">
+                                    <h6 class="question-size">
+                                    <a href="{{ url_for('editTypingQuestion', questionid=question.questionid) }}">
+                                            <button type="submit" name="editquestion" id="editquestion" class="btn btn-success btn-xs">
+                                                <span class="glyphicon glyphicon-edit"></span> Edit
+                                            </button>
+                                    </a>
+                                    <a href="{{ url_for('deleteTypingQuestion', questionid=question.questionid) }}">
+                                            <button type="submit" name="deletequestion" id="deletequestion" class="btn btn-danger btn-xs confirmation">
+                                                <span class="glyphicon glyphicon-trash"></span> Delete
+                                            </button>
+                                    </a>
+                                    </h6>
+                                </td>
+                            </tr>
+                        </tbody>
+                        {% endfor %}
+                    </table>
+                    </div>
+                </div>
+            </div>
+
+    </div>
+</div>
+
+<script src="{{ url_for('.static', filename='js/jquery.min.js')}}"></script>
+  <script src="{{ url_for('.static', filename='js/bootstrap.min.js')}}"></script>
+  <script src="{{ url_for('.static', filename='js/materialize.min.js')}}"></script>
+  <script>
+      function hideshow() {
+    var x = document.getElementById("hidemenu");
+    if (x.style.display === "none") {
+        x.style.display = "block";
+    } else {
+        x.style.display = "none";
+    }
+    }
+  </script>
+<script type="text/javascript">
+        var elems = document.getElementsByClassName('confirmation');
+        var confirmIt = function (e) {
+            if (!confirm('Are you sure?')) e.preventDefault();
+        };
+        for (var i = 0, l = elems.length; i < l; i++) {
+            elems[i].addEventListener('click', confirmIt, false);
+        }
+</script>
+</body>
+</html>

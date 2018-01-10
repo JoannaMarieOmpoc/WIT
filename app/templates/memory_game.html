@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Memory Game</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
+    <link rel="stylesheet" href="{{ url_for('.static', filename='css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('.static', filename='css/simple-line-icons.css') }}">
+    <link rel="stylesheet" href="{{ url_for('.static', filename='css/font-awesome.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('.static', filename='css/pace.css') }}">
+    <link rel="stylesheet" href="{{ url_for('.static', filename='css/landing-style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('.static', filename='css/help.css') }}">
+    <link rel="stylesheet" href="{{ url_for('.static', filename='css/sidebar.css') }}">
+    <link rel="stylesheet" href="{{ url_for('.static', filename='js/sidebar.js') }}">
+    <link rel='stylesheet prefetch' href='https://fonts.googleapis.com/css?family=Anton'>
+    <link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css'>
+    <link rel="stylesheet" href="../static/css/game_style.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+
+</head>
+
+<body>
+    <h1 class="navbar-brand">
+        <a href="{{ url_for('showDashboard', user=user) }}"><img src="img/witLogo.png" alt="wit logo" width="100%"></a>
+    </h1>
+    <div class="wrap">
+        <div class="game"></div>
+
+        <div class="modal">
+            <div class="modal" align="center">
+                <h2 class="winner">You Rock!</h2>
+                <button class="restart">Play Again?</button>
+                <a href="{{ url_for('games', user=user) }}">Go Home</a>
+            </div>
+        </div>
+    </div>
+    <!-- End Wrap -->
+    <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+    <script src="../static/js/game_index.js"></script>
+</body>
+
+</html>
