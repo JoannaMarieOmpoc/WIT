@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+{% extends "admin_master.html" %}
+<head>
+  <title>{% block title %}Topics{% endblock %}</title>
+</head>
+<body>
+{% block content %}
+<div class="main">
+    <div class="container-fluid">
+        <div class="row">
+        <nav class="breadcrumb">
+          <a class="breadcrumb-item" href="{{ url_for('showadmindashboard') }}">Home</a>
+             <span class="glyphicon glyphicon-menu-right marginicon"></span>
+          <a class="breadcrumb-item" href="{{ url_for('managecourses') }}">Manage Courses</a>
+              <span class="glyphicon glyphicon-menu-right marginicon"></span>
+          <a class="breadcrumb-item" href="/admin/{{coursename}}">{{ coursename }}</a>
+              <span class="glyphicon glyphicon-menu-right marginicon"></span>
+          <a class="breadcrumb-item" href="/admin/{{coursename}}/managetopics">Manage Topics</a>
+             <span class="glyphicon glyphicon-menu-right marginicon"></span>
+          <span class="breadcrumb-item active">Edit Topic</span>
+        </nav>
+            <h2>Edit Topic</h2>
+
+                 <form name="editForm" id="editForm" action="/admin/{{coursename}}/managetopics/edittopic/{{topic.topicname}}>" method="POST" novalidate>
+                     <div class="form-group floating-label-form-group controls">
+                         <h4>Topic</h4>
+                         <input type="text" class="form-control" value="{{topic.topicname}}" name=topicname id=topicname required data-validation-required-message="Please enter the topic.">
+                         <h4>Content</h4>
+                         <textarea name=discussion id=discussion cols="220" rows="15">{{topic.topicdisc}}</textarea>
+                         <button type="submit" name="edittopic" id="edittopic" class="btn btn-info btn-med pull-right">
+                         Submit
+                         </button>
+                     </div>
+            </div>
+
+    </div>
+</div>
+
+<script src="{{ url_for('.static', filename='js/jquery.min.js')}}"></script>
+  <script src="{{ url_for('.static', filename='js/bootstrap.min.js')}}"></script>
+  <script src="{{ url_for('.static', filename='js/materialize.min.js')}}"></script>
+  <script>
+      function hideshow() {
+    var x = document.getElementById("hidemenu");
+    if (x.style.display === "none") {
+        x.style.display = "block";
+    } else {
+        x.style.display = "none";
+    }
+    }
+  </script>
+<script type="text/javascript">
+        var elems = document.getElementsByClassName('confirmation');
+        var confirmIt = function (e) {
+            if (!confirm('Are you sure?')) e.preventDefault();
+        };
+        for (var i = 0, l = elems.length; i < l; i++) {
+            elems[i].addEventListener('click', confirmIt, false);
+        }
+</script>
+{% endblock %}
+</body>
+</html>

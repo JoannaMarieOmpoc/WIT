@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+{% extends "admin_master.html" %}
+<head>
+    <title><{% block title %}Users{% endblock %}</title>
+</head>
+<body>
+    {% block content %}
+    <div class="main">
+        <div class="container-fluid">
+            <div class="row">
+                <nav class="breadcrumb">
+                    <a class="breadcrumb-item" href="{{ url_for('showadmindashboard') }}">Home</a>
+                    <span><span class="glyphicon glyphicon-menu-right marginicon"></span></span>
+                    <a class="breadcrumb-item active">Users List</a>
+                </nav>
+                <div class="col s12 m12">
+                    <div class="card">
+                        <table class="bordered highlight">
+                            <thead>
+                                <tr>
+                                    <th colspan="6">Username</th>
+                                    <th colspan="6">User Email</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for user in users %}
+                                <tr>
+                                    <td colspan="6">{{user.username}}</td>
+                                    <td colspan="6">{{user.usermail}}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endblock %}
+</body>
+</html>

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+{% extends "admin_master.html" %}
+<head>
+  <title>{% block title %}Topics{% endblock %}</title>
+</head>
+<body>
+{% block content %}
+<div class="main">
+    <div class="container-fluid">
+        <div class="row">
+        <nav class="breadcrumb">
+          <a class="breadcrumb-item" href="{{ url_for('showadmindashboard') }}">Home</a>
+             <span class="glyphicon glyphicon-menu-right marginicon"></span>
+          <a class="breadcrumb-item" href="{{ url_for('managecourses') }}">Manage Courses</a>
+            <span class="glyphicon glyphicon-menu-right marginicon"></span>
+          <a class="breadcrumb-item" href="/admin/{{coursename}}">{{ coursename }}</a>
+              <span class="glyphicon glyphicon-menu-right marginicon"></span>
+          <span class="breadcrumb-item active">Manage Topics</span>
+        </nav>
+        <h2>Manage Topics</h2>
+
+                <table class="table table-bordered table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <a href="{{ url_for('addtopic', coursename=coursename) }}" class="btn btn-info btn-med">
+                                <span class="glyphicon glyphicon-plus"></span> Add a topic
+                            </a>
+                        </tr>
+                    </thead>
+                </table>
+                {% for topic in topics %}
+                <div class="col s12 m12">
+                    <div class="card blue white-text">
+                        <div class="card-content valign-wrapper">
+                            <div class="card-text">
+                              <h6>{{loop.index}}<span>. </span> {{topic.topicname}}</h6>
+                              <p>{{ topic.topicdisc}}</p>
+                            </div>
+                            <div class="card-icon">
+                              <i class="material-icons medium valign">description</i>
+                            </div>
+                        </div>
+                        <div class="card-action">
+                            <a href="#">View {{topic.topicname}}</a>
+                            <h3 class="card-button pull-right">
+                                <span class="pull-right">
+                                    <form class="confirmation" method='POST' action="/admin/{{ coursename }}/managetopics/deletetopic/{{ topic.topicname }}">
+                                        <button type="submit" name="removetopic" id="removetopic" class="btn btn-info btn-sm">
+                                            <span class="glyphicon glyphicon-trash"></span> Delete
+                                        </button>
+                                    </form>
+                                </span>
+                                <span class="pull-right">
+                                    <form action="/admin/{{ coursename }}/managetopics/edittopic/{{ topic.topicname }}">
+                                        <button type="submit" name="editcourse" id="editcourse" class="btn btn-info btn-sm">
+                                            <span class="glyphicon glyphicon-edit"></span> Edit
+                                        </button>
+                                    </form>
+                                </span>
+                                <span class="pull-right">
+                                    <form action="/admin/{{ coursename }}/managetopics/{{ topic.topicname }}/manageexercises">
+                                        <button type="submit" name="manageexercises" id="manageexercises" class="btn btn-info btn-sm">
+                                            Manage Exercises
+                                        </button>
+                                    </form>
+                                </span>
+                            </h3>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+                </div>
+            </div>
+    </div>
+</div>
+{% endblock %}
+</body>
+</html>

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+{% extends "admin_master.html" %}
+<head>
+  <title>{% block title %}Courses{% endblock %}</title>
+</head>
+<body>
+{% block content %}
+<div class="main">
+      <div class="container-fluid">
+          <div class="row">
+        <nav class="breadcrumb">
+          <a class="breadcrumb-item" href="{{ url_for('showadmindashboard') }}">Home</a>
+              <span class="glyphicon glyphicon-menu-right marginicon"></span>
+          <a class="breadcrumb-item" href="{{ url_for('managecourses')}}">Manage Courses</a>
+             <span class="glyphicon glyphicon-menu-right marginicon"></span>
+            <a class="breadcrumb-item active">{{ course.coursename }}</a>
+        </nav>
+        <h2 style="text-align: center;">{{ course.coursename }}</h2>
+        <h4 style="text-align:center;">
+             {{ course.coursedesc }}
+        </h4>
+            <div class="col s12 m6">
+        <div class="card blue white-text">
+          <div class="card-content valign-wrapper">
+            <div class="card-text">
+              <h6>Exams</h6>
+              <p>Manage Exams
+                <br/>
+                {% for exam in exams %}
+                {{ exam.examtype }}
+                  <br/>
+                {% endfor %}
+              </p>
+            </div>
+            <div class="card-icon">
+              <i class="material-icons medium valign">school</i>
+            </div>
+          </div>
+          <div class="card-action">
+            <a href="{{ url_for('manageExams', coursename=course.coursename)}}">View Exams</a>
+          </div>
+        </div>
+      </div>
+      <div class="col s12 m6">
+        <div class="card green white-text">
+          <div class="card-content valign-wrapper">
+            <div class="card-text">
+              <h6>Topics</h6>
+              <p>Manage Topics
+                  <br/>
+                {% for topic in topics %}
+                {{ topic.topicname }}
+                <br/>
+                {% endfor %}
+              </p>
+            </div>
+            <div class="card-icon">
+              <i class="material-icons medium valign">note</i>
+            </div>
+          </div>
+          <div class="card-action">
+            <a href="{{ url_for('manageTopics', coursename=course.coursename)}}">View Topics</a>
+          </div>
+        </div>
+      </div>
+
+        </div>
+    </div>
+</div>
+
+    </div>
+</div>
+
+<script src="{{ url_for('.static', filename='js/jquery.min.js')}}"></script>
+  <script src="{{ url_for('.static', filename='js/bootstrap.min.js')}}"></script>
+  <script src="{{ url_for('.static', filename='js/materialize.min.js')}}"></script>
+  <script>
+      function hideshow() {
+    var x = document.getElementById("hidemenu");
+    if (x.style.display === "none") {
+        x.style.display = "block";
+    } else {
+        x.style.display = "none";
+    }
+    }
+  </script>
+<script type="text/javascript">
+        var elems = document.getElementsByClassName('confirmation');
+        var confirmIt = function (e) {
+            if (!confirm('Are you sure?')) e.preventDefault();
+        };
+        for (var i = 0, l = elems.length; i < l; i++) {
+            elems[i].addEventListener('click', confirmIt, false);
+        }
+</script>
+{% endblock %}
+</body>
+</html>

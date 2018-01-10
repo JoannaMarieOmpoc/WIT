@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+{% extends "admin_master.html" %}
+<head>
+    <title>{% block title %}Admins{% endblock %}</title>
+</head>
+<body>
+{% block content %}
+<div class="main">
+        <div class="container-fluid">
+            <div class="row">
+                <nav class="breadcrumb">
+                    <a class="breadcrumb-item" href="{{ url_for('showadmindashboard') }}">Home</a>
+                    <span class="glyphicon glyphicon-menu-right marginicon"></span>
+                    <a class="breadcrumb-item" href="{{ url_for('adminList') }}">Manage Admin</a>
+                    <span class="glyphicon glyphicon-menu-right marginicon"></span>
+                    <a class="breadcrumb-item active">Edit admin</a>
+                </nav>
+                <h2 class="margin">Add new admin</h2>
+
+                <form name="addForm" id="addForm" action="{{ url_for('editAdmin', username=user.username) }}" method="POST">
+                    <div class="form-group floating-label-form-group controls">
+                        <h4>Username</h4>
+                        <input type="text" class="form-control" value="{{ user.username }}" name=username id=username required data-validation-required-message="Please enter the name of the course.">
+                        <br />
+                        <h4>User Email</h4>
+                        <input type="text" class="form-control" value="{{ user.usermail }}" name=usermail id=usermail required data-validation-required-message="Please enter the name of the course.">
+                        <br />
+                        <h4>Password</h4>
+                        <input type="text" class="form-control" value="{{ user.password }}" name=password id=password required data-validation-required-message="Please enter the name of the course.">
+                        <br />
+                    </div>
+                    <button type="submit" name="edit_admin" id="edit_admin" class="btn btn-info btn-med pull-right">
+                    Submit
+                </button>
+                </form>
+            </div>
+
+        </div>
+    </div>
+    </div>
+{% endblock %}
+</body>
+</html>

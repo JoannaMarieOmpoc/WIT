@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+{% extends "admin_master.html" %}
+<head>
+  <title>{% block title %}Courses{% endblock %}</title>
+</head>
+<body>
+{% block content %}
+<div class="main">
+      <div class="container-fluid">
+          <div class="row">
+                <nav class="breadcrumb">
+                  <a class="breadcrumb-item" href="{{ url_for('showadmindashboard') }}">Home</a>
+                      <span class="glyphicon glyphicon-menu-right marginicon"></span>
+                  <a class="breadcrumb-item" href="{{ url_for('managecourses')}}">Manage Courses</a>
+                     <span class="glyphicon glyphicon-menu-right marginicon"></span>
+                    <a class="breadcrumb-item active">{{ course.coursename }}</a>
+                </nav>
+                <h2 class="margin">Edit Course</h2>
+                <div class="control-group">
+                     <form id="editForm" action="{{ url_for('editcourse', courseid=course.courseid) }}" method="POST" novalidate>
+                         <div class="form-group floating-label-form-group controls">
+                             <h4>Course Name</h4>
+                             <input type="text" class="form-control"  value="{{ course.coursename }}" name=coursename id=coursename required data-validation-required-message="Please enter the name of the course.">
+                             <br />
+                             <br />
+                             <h4>Description</h4>
+                             <input type="text" class="form-control"  value="{{ course.coursedesc }}" name=coursedesc id=coursedesc required data-validation-required-message="Please enter the description.">
+                             <br />
+                             <br />
+                         </div>
+                         <button type="submit" class="btn btn-info btn-med pull-right">
+                             Submit
+                         </button>
+                </div>
+
+          </div>
+        </div>
+    </div>
+{% endblock %}
+</body>
+</html>

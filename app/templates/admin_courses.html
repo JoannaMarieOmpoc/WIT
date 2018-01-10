@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+{% extends "admin_master.html" %}
+<head>
+  <title>{% block title %}Courses{% endblock %}</title>
+</head>
+<body>
+{% block content %}
+<div class="main">
+  <div class="container-fluid">
+    <div class="row">
+        <nav class="breadcrumb">
+          <a class="breadcrumb-item" href="{{ url_for('showadmindashboard') }}">Home</a>
+            <span><span class="glyphicon glyphicon-menu-right marginicon"></span></span>
+          <a class="breadcrumb-item active">Manage Courses</a>
+        </nav>
+        <h2>Manage Courses</h2>
+        <table class="table table-bordered table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <a href="{{ url_for('addcourse') }}" class="btn btn-info btn-med">
+                                <span class="glyphicon glyphicon-plus"></span> Add a course
+                            </a>
+                        </tr>
+                    </thead>
+        </table>
+        {% for course in courses %}
+      <div class="col s12 m12">
+        <div class="card blue white-text">
+          <div class="card-content valign-wrapper">
+            <div class="card-text">
+              <h6>{{loop.index}} {{course.coursename}}</h6>
+              <p>
+                  <br/>
+                  Description: {{ course.coursedesc }}
+              </p>
+            </div>
+            <div class="card-icon">
+              <i class="material-icons medium valign">book</i>
+            </div>
+          </div>
+          <div class="card-action">
+            <a href="{{ url_for('coursePage', coursename=course.coursename)}}">View {{course.coursename}}</a>
+              <div class="card-button pull-right">
+                  <span class="pull-left">
+                  <form class="confirmation" method='POST' action="/admin/managecourses/removecourse/{{ course.courseid }}">
+                    <button type="submit" name="removecourse" id="removecourse" class="btn btn-primary btn-xs">
+                        <span class="glyphicon glyphicon-trash"></span> Delete
+                    </button>
+                  </form>
+                  </span>
+                  <span class="pull-right">
+                    <form class="" action="/admin/managecourses/editcourse/{{ course.courseid }}">
+                        <button type="submit" name="editcourse" id="editcourse" class="btn btn-primary btn-xs">
+                            <span class="glyphicon glyphicon-edit"></span> Edit
+                        </button>
+                    </form>
+                  </span>
+                    </div>
+                </div>
+              </div>
+          </div>
+        {% endfor %}
+    </div>
+</div>
+
+<script src="{{ url_for('.static', filename='js/jquery.min.js')}}"></script>
+  <script src="{{ url_for('.static', filename='js/bootstrap.min.js')}}"></script>
+  <script src="{{ url_for('.static', filename='js/materialize.min.js')}}"></script>
+    <script>
+      function hideshow() {
+    var x = document.getElementById("hidemenu");
+    if (x.style.display === "none") {
+        x.style.display = "block";
+    } else {
+        x.style.display = "none";
+    }
+    }
+  </script>
+<script type="text/javascript">
+        var elems = document.getElementsByClassName('confirmation');
+        var confirmIt = function (e) {
+            if (!confirm('Are you sure?')) e.preventDefault();
+        };
+        for (var i = 0, l = elems.length; i < l; i++) {
+            elems[i].addEventListener('click', confirmIt, false);
+        }
+</script>
+{% endblock %}
+</body>
+</html>

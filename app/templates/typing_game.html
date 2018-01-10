@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Typing</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	<style>
+	div {
+			width: 100%;
+			text-align: center;
+		}
+	canvas {
+		display: inline;
+		border: 1px #0066CC;
+		background-color: white;
+		position: absolute;
+    	top: 55px;
+    	bottom: 0;
+    	left: 0;
+    	right: 0;
+    	margin:auto;
+	}
+	button {
+		border-radius: 10px;
+		background-color: #0066CC;
+		font-style: "Century Gothic";
+		font-size: 20px;
+		color: white;
+		padding-right: 10px;
+		padding-left: 10px;
+		padding-bottom: 5px;
+		padding-top: 5px;
+	}
+	.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content/Box */
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto; /* 15% from the top and centered */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 60%; /* Could be more or less, depending on screen size */
+}
+/* Modal Header */
+.modal-header {
+    background-color: #66ccff;
+    color: white;
+}
+
+/* Modal Body */
+.modal-body {
+	padding: 2px 16px;
+}
+
+/* Modal Footer */
+.modal-footer {
+    background-color: #66ccff;
+    color: white;
+}
+	</style>
+</head>
+<body onload="loadGame()">
+	<!-- The Modal -->
+<div id="myModal" class="modal">
+<!-- Modal content -->
+<div class="modal-content">
+  <div class="modal-header">
+    <h2>SCORE</h2>
+  </div>
+  <div class="modal-body">
+    <p>*insert score here*</p>
+  </div>
+  <div class="modal-footer" id="modalFooter">
+  </div>
+</div>
+</div>
+<script>
+	var canvas = document.createElement("canvas");
+	canvas.width = window.innerWidth * 0.9;
+	canvas.height = window.innerHeight * 0.9;
+	var index = 1;
+	var e = {{ exerciseid|tojson }};
+	var q = {{ questions|tojson }};
+	var a = {{ answers|tojson }};
+	var button = document.createElement('button');
+	var ok = document.createTextNode("OK");
+	button.appendChild(ok);
+	//var data = [score, e];
+	var entry = "";
+	var correctAnswer = false;
+	var pause = false;
+	var score = 0;
+// the following function stores the user's input and checks it
+document.onkeypress = function (e) {
+  
+  var keyPress;
+if (!pause) {
+  if (typeof event !== 'undefined') {
+    keyPress = event.keyCode;
+    if (keyPress == 13) {
+    	checkAns();
+    	entry = "";
+    }
+	else if (keyPress == 8) {
+		entry = entry.slice(0,-1);
+	}
+    else {
+    	entry += String.fromCharCode(keyPress);
+    }
+  }
+  else if (e) {
+    keyPress = e.which;
+  }
+  
+  return false;   // Prevents the default action
+}
+};
+//displays modal
+function endGame() {
+
+	var modal = document.getElementById('myModal');
+	modal.style.display = "block";
+}
+
+// the following function pauses the game
+function setPauseTrue() {
+	pause = true;
+}
+
+function setPauseFalse() {
+	pause = false;
+}
+
+// the following function compares entry and answer
+function checkAns() {
+	if (entry == answer)
+		correctAnswer = true;
+	else
+		correctAnswer = false;
+	if (index < {{length|tojson}}-1)
+		index++;
+	else
+		endGame();
+}
+// the following function sets question and corresponding answer
+function setQA() {
+	// to be changed into randow indeces
+	question = q[index];
+	answer = a[index];
+}
+// initializes the game and game elements
+function loadGame() {
+	GameArea.start();
+}
+
+function startGame() {
+	setQA();
+	Q = new stringDrop();
+}
+
+// this function generates what you can see
+var GameArea = {
+		
+		start : function() {
+			this.canvas = canvas;
+			this.context = this.canvas.getContext("2d");
+			this.context.font = "20pt Century Gothic";
+			this.context.fillStyle = "#0066CC";
+			this.context.strokeText("Score: " + score, 15, 30);
+			this.context.fillText(entry, 150, GameArea.canvas.height*0.9);
+			this.context.beginPath();
+			this.context.moveTo(0, GameArea.canvas.height*0.8);
+			this.context.lineTo(GameArea.canvas.width, GameArea.canvas.height*0.8);
+			this.context.strokeStyle = "#0066CC";
+			this.context.stroke();
+			document.body.insertBefore(this.canvas, document.body.childNodes[0]);
+			this.interval = setInterval(updateGameArea, 20);
+			if (pause == true) {
+				this.context.fillRect(0, 0, canvas.width, canvas.height);
+			}	
+		},
+		clear : function() {
+        	this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        	this.context.font = "20pt Century Gothic";
+			this.context.fillStyle = "#0066CC";
+			this.context.strokeText("Score: " + score, 15, 30);
+			this.context.fillText(entry, 150, this.canvas.height*0.9);
+			this.context.beginPath();
+			this.context.moveTo(0, GameArea.canvas.height*0.8);
+			this.context.lineTo(this.canvas.width, GameArea.canvas.height*0.8);
+			this.context.strokeStyle = "#0066CC";
+			this.context.stroke();
+			this.context.fillStyle = 'rgba(225,225,225,0.7)';
+			if (pause == true)
+				this.context.fillRect(0, 0, canvas.width, canvas.height);
+		}
+	}
+
+function updateGameArea() {
+	GameArea.clear();
+	Q.update();
+	Q.drop();
+	Q.check();
+	Q.speedUp();
+}
+	var modalf = document.getElementById('modalFooter');
+	modalf.appendChild(button);
+	btn.addEventListener('click', sendData());
+
+function sendData() {
+
+}
+
+function stringDrop() {
+		this.context = GameArea.context;
+		this.dropSpeed = 0.5;
+		this.initialYpos = 60;
+		this.initialXpos = 50 + Math.floor((Math.random() * GameArea.canvas.width/4));
+	this.update = function() {
+		this.context.font = "20px Arial";
+		this.context.fillStyle = "Green";
+		this.context.fillText(question, this.initialXpos, this.initialYpos);
+	}
+	this.reset = function() {
+		this.initialYpos = 60;
+		this.initialXpos = 50 + Math.floor((Math.random() * GameArea.canvas.width/4));
+		setQA();
+	}
+	this.drop = function() {
+		if (!pause) {
+			this.initialYpos += this.dropSpeed;
+		}
+		else
+			this.initialYpos = this.initialYpos;
+	}
+	this.check = function() {
+		if ((this.initialYpos) >= GameArea.canvas.height * 0.8) {
+			//context = GameArea.context;
+			//context.font = "50px Century Gothic";
+			//context.fillStyle = "#0066CC";
+			//context.fillText("YOU LOSE", GameArea.canvas.width/2-120, GameArea.canvas.height/2-100);
+			question = "";
+			endGame();
+
+		}
+		else {
+			if (correctAnswer == true) {
+				this.reset();
+				score++;
+				correctAnswer = false;
+			}
+		}
+	}
+	this.speedUp = function() {
+		if (score >= 5 && score%5 == 0) {
+			this.dropSpeed += this.increment;
+			this.increment = 0;
+		}
+		else
+			this.increment = 0.1;
+	}
+}
+</script>
+<button onclick="startGame()">Start</button>
+<button onclick="setPauseTrue()">Pause</button>
+<button onclick="setPauseFalse()">Continue</button>
+</body>
+</html>

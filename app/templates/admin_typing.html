@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+{% extends "admin_master.html" %}
+<head>
+    <title>{% block title %}Typing{% endblock %}</title>
+</head>
+<body>
+    {% block content %}
+<div class="main">
+    <div class="container-fluid">
+        <div class="row">
+        <nav class="breadcrumb">
+          <a class="breadcrumb-item" href="{{ url_for('showadmindashboard') }}">Home</a>
+              <span class="glyphicon glyphicon-menu-right marginicon"></span>
+          <a class="breadcrumb-item" href="{{ url_for('adminGames') }}">Manage Games</a>
+             <span class="glyphicon glyphicon-menu-right marginicon"></span>
+          <span class="breadcrumb-item active">Typing Game</span>
+
+        </nav>
+        <h2>Manage Questions</h2>
+
+                <table class="table table-bordered table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <a href="{{ url_for('addTypingQuestion') }}" class="btn btn-info btn-med">
+                                <span class="glyphicon glyphicon-plus"></span> Add a question
+                            </a>
+                        </tr>
+                    </thead>
+                </table>
+
+                <div class="col-md-12">
+                    <table class="table table-bordered table-striped table-hover">
+                        <thead>
+                            <tr>
+                                <th class="col-md-3">
+                                    Question
+                                </th>
+                                <th class="col-md-3">
+                                    Answers
+                                </th>
+                                <th class="col-md-2">
+                                    Difficulty
+                                </th>
+                                <th class="col-md-4">
+
+                                </th>
+
+                            </tr>
+                        </thead>
+                        {% for question in questions %}
+                        <tbody>
+                            <tr>
+                                <td class="col-md-3">
+                                    <h6 class="question-size">{{loop.index}}<span>. </span> {{question.question}}</h6>
+                                </td>
+                                <td class="col-md-3">
+                                    <h6 class="question-size">
+                                     {{ question.answer }}
+                                    </h6>
+                                </td>
+                                <td class="col-md-2">
+                                    <h6 class="question-size">
+                                 {{ question.difficulty }}
+                                    </h6>
+                                </td>
+                                <td class="col-md-4" style="align-content: center;">
+                                    <h6 class="question-size">
+                                    <a href="{{ url_for('manageTyping', questionid=question.questionid) }}">
+                                            <button type="submit" name="remove" id="deletequestion" class="btn btn-danger btn-xs confirmation">
+                                                <span class="glyphicon glyphicon-trash"></span> Remove
+                                            </button>
+                                    </a>
+                                    </h6>
+                                </td>
+                            </tr>
+                        </tbody>
+                        {% endfor %}
+                    </table>
+                    </div>
+                </div>
+            </div>
+
+    </div>
+</div>
+    {% endblock %}
+</body>
+</html>

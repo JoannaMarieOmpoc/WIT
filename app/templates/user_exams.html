@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    {% block script%}
+    <script type="text/javascript" src="/static/js/courses_js.js"></script>
+    {% endblock %}
+            <style type="text/css">
+        .content {
+            padding-top: 100px;
+        }
+    </style>
+    <title>WIT | {% block title %}Exams{% endblock %}</title>
+    }
+</head>
+
+<body>
+    {% extends "master.html" %}
+    {% block content %}
+    <table class="table table-bordered table-striped table-hover">
+                        <thead>
+                            <tr>
+                                <th class="col-md-3">
+                                    Course
+                                </th>
+                                <th class="col-md-2">
+                                    Exam Type
+                                </th>
+                                <th class="col-md-3">
+                                    Actions
+                                </th>
+
+                            </tr>
+                        </thead>
+                        {% for exam in exams %}
+                        <tbody>
+                            <tr>
+                                <td class="col-md-3">
+                                    <h6 class="question-size">
+                                    {{course.coursename}}
+                                	</h6>
+                                </td>
+                                {% for exam in course.exams %}
+                                <td class="col-md-3">
+                                    <h6 class="question-size">
+                                 	{{ exam.examtype }}
+                                    </h6>
+                                </td>
+                                {% endfor %}
+                                <td class="col-md-3" style="align-content: center;">
+                                    <h6 class="question-size">
+                                    <a href="{{ url_for('takeExams', user = user, examid = exam.examid) }}">
+                                            <button type="submit" name="action" id="takeexam" class="btn btn-danger btn-xs confirmation">
+                                                <span class="glyphicon glyphicon-trash"></span> Take Exam
+                                            </button>
+                                    </a>
+                                    </h6>
+                                </td>
+                            </tr>
+                        </tbody>
+                        {% endfor %}
+                    </table>
+    {% endblock %}
+</body>
+
+</html>

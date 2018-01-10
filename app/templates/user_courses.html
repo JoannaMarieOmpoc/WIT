@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+{% extends "master.html" %}
+<head>
+    <title>{% block title %}Courses{% endblock %}</title>
+</head>
+<body>
+{% block content %}
+        <div class="content" style="padding: 100px 50px 50px 50px;">
+            <nav class="breadcrumb">
+                <a class="breadcrumb-item" href="{{url_for('showDashboard', user=user)}}">Home</a>
+                <span class="glyphicon glyphicon-menu-right marginicon"></span>
+                <a class="breadcrumb-item active" href="#">My Courses</a>
+            </nav>
+            <div class="container-course">
+
+                <h2 class="margin">Courses</h2>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <form name="addForm" id="addForm" action="{{ url_for('userAddcourse', user=user) }}" method="POST">
+                                <td>
+                                    <div class="form-group floating-label-form-group controls pull-left">
+                                        <label for="choosecourse"></label>
+                                        <select class="form-control" id="choosecourse" name=coursename1 id=coursename1>
+                                            <option value="" disabled selected>Select a course to add</option>
+                                              {% for course in coursesoption %}
+                                              <option value="{{ course.coursename }}">{{ course.coursename }}</option>
+                                              {% endfor %}
+                                          </select>
+                                        <p class="help-block text-danger"></p>
+                                    </div>
+                                    <div class="add">
+                                        <button type="submit" name="addcourse" id="addcourse" class="btn btn-info btn-lg">
+                                                <span class="glyphicon glyphicon-plus"></span> Add
+                                        </button>
+                                    </div>
+                                </td>
+                            </form>
+                        </tr>
+                    </thead>
+                </table>
+                <div class="container-courses">
+                    <div class="row">
+                        <div class="course-menu">
+                            {% for course in courses %}
+                            <div class="col-md-4">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h3 class="panel-title">
+                                            <a href="{{ url_for('displayCourse', coursename=course.coursename, user=user) }}">
+                                    {{ course.coursename }}
+                                    </a>
+                                        </h3>
+                                    </div>
+                                    <h4 class="panel-body">
+                                        Description: {{ course.coursedesc }}
+                                    </h4>
+                                    <br>
+                                    <div class="progress" style="margin: 10px 10px 10px 10px;">
+                                        <div class="progress-bar" role="progressbar" aria-valuenow="{{course.progress}}" aria-valuemin="0" aria-valuemax="100" style="width:{{course.progress}}">
+                                            {{course.progress}}%
+                                        </div>
+                                    </div>
+                                    <div class="withdrawcss">
+                                        <form class="confirmation" method="POST" action="{{url_for('userRemovecourse', coursename=course.coursename, user=user) }}">
+                                            <button type="submit" name="removecourse" id="removecourse" class="btn btn-info btn-med">
+                                            <span class="glyphicon glyphicon-trash"></span> Withdraw
+                                        </button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+{% endblock %}
+</body>
+</html>

@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html lang="en" class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html lang="en" class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html lang="en" class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html lang="en" class="no-js">
+<!--<![endif]-->
+
+<head>
+    <style type="text/css">
+        .content {
+            padding-top: 100px;
+        }
+    </style>
+    <!-- meta character set -->
+    <meta charset="utf-8">
+    <!-- Always force latest IE rendering engine or request Chrome Frame -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>WIT | Courses </title>
+    <!-- Meta Description -->
+    <meta name="description" content="Blue One Page Creative HTML5 Template">
+    <meta name="keywords" content="one page, single page, onepage, responsive, parallax, creative, business, html5, css3, css3 animation">
+    <meta name="author" content="Muhammad Morshed">
+
+    <!-- Mobile Specific Meta -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- CSS
+		================================================== -->
+
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+
+    <link rel="stylesheet" href="css/footer-distributed-with-address-and-phones.css">
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
+    <!-- Fontawesome Icon font
+
+    <link rel="stylesheet" href="../static/css/font-awesome.min.css">
+    <!-- bootstrap.min -->
+    <link rel="stylesheet" type="text/css" href="{{ url_for('.static', filename='css/jquery.fancybox.css')}}">
+    <!-- bootstrap.min -->
+    <link rel="stylesheet" type="text/css" href="{{ url_for('.static', filename='css/bootstrap.min.css')}}">
+    <!-- bootstrap.min -->
+
+    <!-- bootstrap.min -->
+    <link rel="stylesheet" type="text/css" href="{{ url_for('.static', filename='css/slit-slider.css')}}">
+    <!-- bootstrap.min -->
+    <link rel="stylesheet" type="text/css" href="{{ url_for('.static', filename='css/animate.css')}}">
+    <!-- Main Stylesheet -->
+    <link rel="stylesheet" type="text/css" href="{{ url_for('.static', filename='css/main.css')}}">
+
+    <!-- Modernizer Script for old Browsers -->
+    <script src="../static/js/modernizr-2.6.2.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('.static', filename='css/mycourses.css')}}">
+    <style>
+        .jumbotron {
+            margin-top: 4.8%;
+            width: 100%;
+            height: 1200px;
+        }
+        
+        .add {
+            margin-top: 1px;
+        }
+        
+        #addcourse {
+            padding-bottom: 15px;
+        }
+        
+        .withdrawcss {
+            position: absolute;
+            top: 155px;
+            right: 25px;
+        }
+        
+        .panel {
+            height: 130px;
+        }
+        
+        .button {
+            background-color: #4CAF50;
+            /* Green */
+            border: none;
+            color: white;
+            padding: 16px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            -webkit-transition-duration: 0.4s;
+            /* Safari */
+            transition-duration: 0.4s;
+            cursor: pointer;
+        }
+        
+        .button2 {
+            background-color: white;
+            color: black;
+            border: 2px solid #008CBA;
+        }
+        
+        .button2:hover {
+            background-color: #008CBA;
+            color: white;
+        }
+        
+        a {
+            color: inherit;
+        }
+        
+        a:link {
+            text-decoration: none;
+        }
+        
+        a:visited {
+            text-decoration: none;
+        }
+        
+        .footer-distributed {
+            background-color: #333;
+            box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.12);
+            box-sizing: border-box;
+            width: 100%;
+            text-align: left;
+            font: bold 16px sans-serif;
+            padding: 55px 50px;
+            margin-top: 80px;
+        }
+        
+        .footer-distributed .footer-left,
+        .footer-distributed .footer-center,
+        .footer-distributed .footer-right {
+            display: inline-block;
+            vertical-align: top;
+        }
+        /* Footer left */
+        
+        .footer-distributed .footer-left {
+            width: 40%;
+        }
+        /* The company logo */
+        
+        .footer-distributed h3 {
+            color: #ffffff;
+            font: normal 36px 'Cookie', cursive;
+            margin: 0;
+        }
+        
+        .footer-distributed h3 span {
+            color: #01BAFF;
+        }
+        /* Footer links */
+        
+        .footer-distributed .footer-links {
+            color: #ffffff;
+            margin: 20px 0 12px;
+            padding: 0;
+        }
+        
+        .footer-distributed .footer-links a {
+            display: inline-block;
+            line-height: 1.8;
+            text-decoration: none;
+            color: inherit;
+        }
+        
+        .footer-distributed .footer-company-name {
+            color: #8f9296;
+            font-size: 14px;
+            font-weight: normal;
+            margin: 0;
+        }
+        /* Footer Center */
+        
+        .footer-distributed .footer-center {
+            width: 35%;
+        }
+        
+        .footer-distributed .footer-center i {
+            background-color: #33383b;
+            color: #ffffff;
+            font-size: 25px;
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 42px;
+            margin: 10px 15px;
+            vertical-align: middle;
+        }
+        
+        .footer-distributed .footer-center i.fa-envelope {
+            font-size: 17px;
+            line-height: 38px;
+        }
+        
+        .footer-distributed .footer-center p {
+            display: inline-block;
+            color: #ffffff;
+            vertical-align: middle;
+            margin: 0;
+        }
+        
+        .footer-distributed .footer-center p span {
+            display: block;
+            font-weight: normal;
+            font-size: 14px;
+            line-height: 2;
+        }
+        
+        .footer-distributed .footer-center p a {
+            color: #01BAFF;
+            text-decoration: none;
+            ;
+        }
+        /* Footer Right */
+        
+        .footer-distributed .footer-right {
+            width: 20%;
+        }
+        
+        .footer-distributed .footer-company-about {
+            line-height: 20px;
+            color: #92999f;
+            font-size: 13px;
+            font-weight: normal;
+            margin: 0;
+        }
+        
+        .footer-distributed .footer-company-about span {
+            display: block;
+            color: #ffffff;
+            font-size: 14px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+        
+        .footer-distributed .footer-icons {
+            margin-top: 25px;
+        }
+        
+        .footer-distributed .footer-icons a {
+            display: inline-block;
+            width: 35px;
+            height: 35px;
+            cursor: pointer;
+            background-color: #33383b;
+            border-radius: 2px;
+            font-size: 20px;
+            color: #ffffff;
+            text-align: center;
+            line-height: 35px;
+            margin-right: 3px;
+            margin-bottom: 5px;
+        }
+        /* If you don't want the footer to be responsive, remove these media queries */
+        
+        @media (max-width: 880px) {
+            .footer-distributed {
+                font: bold 14px sans-serif;
+            }
+            .footer-distributed .footer-left,
+            .footer-distributed .footer-center,
+            .footer-distributed .footer-right {
+                display: block;
+                width: 100%;
+                margin-bottom: 40px;
+                text-align: center;
+            }
+            .footer-distributed .footer-center i {
+                margin-left: 0;
+            }
+        }
+    </style>
+</head>
+
+<body id="body">
+
+    <!-- preloader -->
+    <div id="preloader">
+        <div class="loder-box">
+            <div class="battery"></div>
+        </div>
+    </div>
+    <!-- end preloader -->
+
+    <!--
+        Fixed Navigation
+        ==================================== -->
+    <header id="navigation" class="navbar-inverse navbar-fixed-top animated-header">
+        <div class="container">
+            <div class="navbar-header">
+                <!-- responsive nav button -->
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+						<span class="sr-only">Toggle navigation</span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+                    </button>
+                <!-- /responsive nav button -->
+
+                <!-- logo -->
+                <h1 class="navbar-brand">
+                    <img src="{{ url_for('.static', filename='img/wit_logo.png')}}" alt="wit logo" width="40%">
+                </h1>
+                <!-- /logo -->
+            </div>
+
+            <!-- main nav -->
+            <nav class="collapse navbar-collapse navbar-right">
+                <ul id="nav" class="nav navbar-nav">
+                    <li><a href="{{ url_for('showDashboard', user=user)}}">Home</a></li>
+                    <li><a href="{{ url_for('games', user=user)}}">Games</a></li>
+                    <li><a href="{{url_for('enrolledCourses', user=user)}}">Courses</a></li>
+                    <li><a href="{{url_for('exams', user=user)}}">Mock Exam</a></li>
+                    <li><a href="{{ url_for('profile', user=user)}}">Profile</a></li>
+                    <li><a href="{{ url_for('logout')}}">Logout</a></li>
+                </ul>
+            </nav>
+            <!-- /main nav -->
+
+        </div>
+    </header>
+    <!--
+        End Fixed Navigation
+        ==================================== -->
+    <main class="site-content" role="main">
+
+        <div class="jumbotron">
+            <nav class="breadcrumb">
+                <a class="breadcrumb-item" href="{{url_for('showDashboard', user=user)}}">Home</a>
+                <span class="glyphicon glyphicon-menu-right marginicon"></span>
+                <a class="breadcrumb-item" href="{{url_for('enrolledCourses', user=user)}}">My Courses</a>
+                <span class="glyphicon glyphicon-menu-right marginicon"></span>
+                <a class="breadcrumb-item" href="#">{{ course.coursename}}</a>
+            </nav>
+
+            <div class="container-course">
+
+                <h2 class="margin">{{ course.coursename}}</h2>
+                <div class="container-courses">
+                    <div class="row">
+                        <div class="course-menu">
+                            {% for topic in topics %}
+                            <div class="col-md-6">
+                                <div class="panel panel-default text-center">
+                                    <div class="panel-heading">
+                                        <h3 class="panel-title">
+                                            {{ topic.topicname }}
+                                            </a>
+                                        </h3>
+                                    </div>
+                                    <p></p>
+                                    <button class="button button2"><a href="{{ url_for('user_Topic', coursename=course.coursename, user=user, topicname=topic.topicname) }}">View Topic</a></button>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer-distributed">
+
+        <div class="footer-left">
+
+            <img src="{{ url_for('.static', filename='img/wit_logo.png')}}" alt="wit logo" height="20%" ,width="20%">
+
+            <p class="footer-links">
+                <a href="#">Home</a> ·
+                <a href="#">Games</a> ·
+                <a href="#">Courses</a> ·
+                <a href="#">Mock Exam</a> ·
+                <a href="#">Profile</a> ·
+
+            </p>
+
+            <p class="footer-company-name">WIT &copy; 2017</p>
+        </div>
+
+        <div class="footer-center">
+
+            <div>
+                <i class="fa fa-map-marker"></i>
+                <p><span>Tibanga</span>Iligan, Philippines</p>
+            </div>
+
+            <div>
+                <i class="fa fa-phone"></i>
+                <p>+639 0583 8123</p>
+            </div>
+
+            <div>
+                <i class="fa fa-envelope"></i>
+                <p><a href="mailto:support@company.com">support@wit.com</a></p>
+            </div>
+
+        </div>
+
+        <div class="footer-right">
+
+            <p class="footer-company-about">
+                <span>About the company</span>
+            </p>
+
+            <div class="footer-icons">
+
+                <a href="#"><i class="fa fa-facebook"></i></a>
+                <a href="#"><i class="fa fa-twitter"></i></a>
+                <a href="#"><i class="fa fa-linkedin"></i></a>
+                <a href="#"><i class="fa fa-github"></i></a>
+
+            </div>
+
+        </div>
+
+    </footer>
+
+
+    <!-- Essential jQuery Plugins
+		================================================== -->
+    <!-- Main jQuery -->
+    <script src="{{url_for('.static', filename='js/jquery-1.11.1.min.js')}}"></script>
+    <!-- Twitter Bootstrap -->
+    <script src="{{url_for('.static', filename='js/bootstrap.min.js')}}"></script>
+
+    <script src="{{url_for('.static', filename='js/jquery.fancybox.pack.js')}}"></script>
+    <!-- Google Map API -->
+    <script src="http://maps.google.com/maps/api/js?sensor=false"></script>
+    <!-- Owl Carousel -->
+    <script src="{{url_for('.static', filename='js/owl.carousel.js')}}"></script>
+    <script src="{{url_for('.static', filename='js/owl.navigation.js')}}"></script>
+
+    <!-- jquery easing -->
+    <script src="{{url_for('.static', filename='js/jquery.easing.min.js')}}"></script>
+    <!-- Fullscreen slider -->
+    <script src="{{url_for('.static', filename='js/jquery.slitslider.js')}}"></script>
+    <script src="{{url_for('.static', filename='js/jquery.ba-cond.min.js')}}"></script>
+    <!-- onscroll animation -->
+    <script src="{{url_for('.static', filename='js/wow.min.js')}}"></script>
+    <!-- Custom Functions -->
+    <script src="{{url_for('.static', filename='js/main.js')}}"></script>
+
+
+</body>
+
+</html>

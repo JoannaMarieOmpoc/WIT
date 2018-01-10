@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+{% extends "admin_master.html" %}
+<head>
+  <title>{% block title %}Games{% endblock %}</title>
+</head>
+<body>
+{% block content %}
+<div class="main">
+  <div class="container-fluid">
+    <div class="row">
+        <nav class="breadcrumb">
+          <a class="breadcrumb-item" href="{{ url_for('showadmindashboard') }}">Home</a>
+            <span><span class="glyphicon glyphicon-menu-right marginicon"></span></span>
+          <a class="breadcrumb-item active">Manage Games</a>
+        </nav>
+        <h2>Manage Games</h2>
+            <div class="col s12 m12">
+                <div class="card green white-text">
+                    <div class="card-content valign-wrapper">
+                        <div class="card-text">
+                            <h6>Impossible Game</h6>
+                            <p>Manage Impossible Game Questions</p>
+                        </div>
+                        <div class="card-icon">
+                            <i class="material-icons medium valign">games</i>
+                        </div>
+                    </div>
+              <div class="card-action">
+                <a href="{{ url_for('manageImpossible') }}">View Impossible Game</a>
+              </div>
+            </div>
+        </div>
+        <div class="col s12 m12">
+            <div class="card green white-text">
+                <div class="card-content valign-wrapper">
+                    <div class="card-text">
+                        <h6>Memory Game</h6>
+                        <p>Manage Memory Game Questions</p>
+                    </div>
+                    <div class="card-icon">
+                        <i class="material-icons medium valign">games</i>
+                    </div>
+                </div>
+                <div class="card-action">
+                    <a href="#">View Memory Game</a>
+                </div>
+            </div>
+        </div>
+        <div class="col s12 m12">
+            <div class="card green white-text">
+                <div class="card-content valign-wrapper">
+                    <div class="card-text">
+                        <h6>Typing Game</h6>
+                        <p>Manage Typing Game Questions</p>
+                    </div>
+                    <div class="card-icon">
+                        <i class="material-icons medium valign">games</i>
+                    </div>
+                </div>
+                <div class="card-action">
+                    <a href="{{url_for('manageTyping')}}">View Typing Game</a>
+                </div>
+            </div>
+        </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+</body>
+</html>

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+{% extends "admin_master.html" %}
+<head>
+  <title>{% block title %}Exams{% endblock %}</title>
+</head>
+<body>
+{% block content %}
+<div class="main">
+    <div class="container-fluid">
+        <div class="row">
+        <nav class="breadcrumb">
+          <a class="breadcrumb-item" href="{{ url_for('showadmindashboard') }}">Home</a>
+              <span class="glyphicon glyphicon-menu-right marginicon"></span>
+          <a class="breadcrumb-item" href="{{ url_for('managecourses') }}">Manage Courses</a>
+              <span class="glyphicon glyphicon-menu-right marginicon"></span>
+          <a class="breadcrumb-item" href="/admin/{{coursename}}">{{ coursename }}</a>
+              <span class="glyphicon glyphicon-menu-right marginicon"></span>
+          <a class="breadcrumb-item" href="/admin/{{coursename}}/manageexams">Manage Exams</a>
+            <span class="glyphicon glyphicon-menu-right marginicon"></span>
+          <a class="breadcrumb-item" href="/admin/{{coursename}}/manageexams">{{ examid }}</a>
+             <span class="glyphicon glyphicon-menu-right marginicon"></span>
+          <a class="breadcrumb-item" href="/admin/{{coursename}}/manageexams/{{examid}}/managequestions">Manage Questions</a>
+          <span class="breadcrumb-item active">Add Questions</span>
+        </nav>
+        <div class="content" style="margin: 100px 20px 20px 20px;">
+        <h6>Questions</h6>
+                                          </a><br>
+                            <table class="table table-bordered table-striped table-hover">
+                        <thead>
+                            <tr>
+                                <th class="col-md-2">
+                                    Question
+                                </th>
+                                <th class="col-md-2">
+                                    Topic
+                                </th>
+                                <th class="col-md-2">
+                                    Difficulty
+                                </th>
+                                <th class="col-md-2">
+                                    Choices
+                                </th>
+                                <th class="col-md-2">
+                                    Answers
+                                </th>
+                                <th class="col-md-2">
+                                    Actions
+                                </th>
+
+                            </tr>
+                        </thead>
+                        {% for question in questions %}
+                        <tbody>
+                            <tr>
+                                <td class="col-md-3">
+                                    <h6 class="question-size">{{loop.index}}<span>. </span> {{question.question}}</h6>
+                                </td>
+                                <td class="col-md-2">
+                                    <h6 class="question-size">
+                                    {{ question.topic_id }}
+                                    </h6>
+                                </td>
+                                <td class="col-md-2">
+                                    <h6 class="question-size">
+                                    {{ question.difficulty }}
+                                    </h6>
+                                </td>
+                                <td class="col-md-2">
+                                <ul>
+                                    <h6 class="question-size">
+                                    {% for choice in question.choices %}
+                                    <li><a>{{ choice.choice }}</a></li>
+                                    {% endfor %}
+                                    </h6>
+                                </ul>
+                                </td>
+                                <td class="col-md-2">
+                                    <h6 class="question-size">
+                                     {{ question.answer }}
+                                    </h6>
+                                </td>
+                                <td class="col-md-2" style="align-content: center;">
+                                    <h6 class="question-size">
+                                    <form action="/admin/{{ coursename }}/manageexams/{{ examid }}/managequestions/addquestions", method="POST">
+                                            <button type="submit" value="{{ question.questionid }}" name="action" id="removequestion" class="btn btn-danger btn-xs">
+                                                <span class="glyphicon glyphicon-plus"></span> add
+                                            </button>
+                                    </form>
+                                    </h6>
+                                </td>
+                            </tr>
+                        </tbody>
+                        {% endfor %}
+                    </table>
+                </div>
+    </div>
+</div>
+</div>
+{% endblock %}
+</body>
+</html>

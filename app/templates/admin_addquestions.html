@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+{% extends "admin_master.html" %}
+<head>
+	<title>{% block title %}Questions{% endblock %}</title>
+</head>
+<body>
+{% block content %}
+<div class="main">
+  <div class="container-fluid">
+<div class="container-fluid" style="padding: 100px 50px 50px 50px;">
+        <div class="row">
+        <nav class="breadcrumb">
+          <a class="breadcrumb-item" href="{{ url_for('showadmindashboard') }}">Home</a>
+             <span class="glyphicon glyphicon-menu-right marginicon"></span>
+          <a class="breadcrumb-item" href="{{ url_for('manageQuestions') }}">Manage Questions</a>
+          	<span class="glyphicon glyphicon-menu-right marginicon"></span>
+          <a class="breadcrumb-item" href="{{ url_for('addquestions') }}">Add Question</a>
+        </nav>
+        <h2 class="margin">Add a Question</h2>
+            <form name="addForm" id="addForm" action="{{ url_for('addquestions') }}" method="POST">
+                <div class="form-group floating-label-form-group controls">
+                    <h5>Topic</h5>
+                        <select class="form-control" id="difficulty" name="topic">
+                            <option value="" disabled selected>Select the Topic...</option>
+                            {% for topic in topics %}
+                            <option value="{{ topic.topicname }}">{{ topic.topicname }}</option>
+                            {% endfor %}
+                        </select>
+                    <h5>Question</h5>
+                    <input type="text" class="form-control" placeholder="Question" name=question id=question required data-validation-required-message="Please enter the question.">
+                    <h5>Answer</h5>
+                    <input type="text" class="form-control" placeholder="Answer" name=answer id=answer required data-validation-required-message="Please enter the answer.">
+                    <h5>Choice 1</h5>
+                    <input type="text" class="form-control" placeholder="Answer" name=choice1 id=answer required data-validation-required-message="Please enter the choice.">
+                    <h5>Choice 2</h5>
+                    <input type="text" class="form-control" placeholder="Answer" name=choice2 id=answer required data-validation-required-message="Please enter the choice.">
+                    <h5>Choice 3</h5>
+                    <input type="text" class="form-control" placeholder="Answer" name=choice3 id=answer required data-validation-required-message="Please enter the choice.">
+
+                    <h5>Difficulty</h5>
+                        <select class="form-control" id="difficulty" name="difficulty">
+                            <option value="" disabled selected>Select the level of difficulty...</option>
+                            <option value="Easy">Easy</option>
+                            <option value="Moderate">Moderate</option>
+                            <option value="Hard">Hard</option>
+                        </select>
+                <br/>
+                <button type="submit" name="addquestion" id="addquestion" class="btn btn-info btn-med pull-right">
+                    Submit
+                </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</div>
+{% endblock %}
+</body>
+</html>

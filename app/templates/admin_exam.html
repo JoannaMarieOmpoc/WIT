@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+{% extends "admin_master.html" %}
+<head>
+  <title>{% block title %}Exams{% endblock %}</title>
+</head>
+<body>
+{% block content %}
+<div class="main">
+    <div class="container-fluid">
+        <div class="row">
+        <nav class="breadcrumb">
+          <a class="breadcrumb-item" href="{{ url_for('showadmindashboard') }}">Home</a>
+              <span class="glyphicon glyphicon-menu-right marginicon"></span>
+          <a class="breadcrumb-item" href="{{ url_for('managecourses') }}">Manage Courses</a>
+              <span class="glyphicon glyphicon-menu-right marginicon"></span>
+          <a class="breadcrumb-item" href="/admin/{{coursename}}">{{ coursename }}</a>
+              <span class="glyphicon glyphicon-menu-right marginicon"></span>
+          <span class="breadcrumb-item active">Manage Exams</span>
+        </nav>
+                <table class="bordered highlight">
+                    <thead>
+                        <tr>
+                            <div class="control-group pull-left">
+                                    <form name="addForm" id="addForm" action="{{ url_for('addexam', coursename=coursename) }}" method="POST">
+                                         <div class="form-group floating-label-form-group controls pull-left">
+                                             <div class="pull-left">
+                                                    <label for="addexam">Add an exam</label>
+                                                      <select class="form-control" id="addexam" name=examtype id=examtype>
+                                                        <option value="" disabled selected>Select the exam type...</option>
+                                                          <option value="Prelim">Prelim</option>
+                                                          <option value="Midterm">Midterm</option>
+                                                          <option value="Finals">Finals</option>
+                                                      </select>
+                                             </div>
+                                             <div class="add-header pull-right addaexam">
+                                                <button type="submit" name="addaexam" id="addaexam" class="btn btn-info btn-med pull-right">
+                                                    <span class="glyphicon glyphicon-plus"></span> Add Exam
+                                                </button>
+                                            </div>
+                                    </form>
+                            </div>
+                        </tr>
+                    </thead>
+                    <tr>
+                        <td class="text-center" colspan="12"><h3>Exams</h3></td>
+                    </tr>
+                    <tr>
+                        <th class="text-center">Exam ID</th>
+                        <th class="text-center">Exam Type</th>
+                        <th class="text-center">Manage Questions</th>
+                        <th class="text-center"></th>
+                    </tr>
+                    {% for e in exams %}
+                    <tr class="text-center" colspan="12">
+                        <td class="text-center"><a href="/admin/{{coursename}}/manageexams/{{e.examid}}/managequestions">{{ e.examid }}</a></td>
+                        <td class="text-center"><a>{{ e.examtype }}</a></td>
+                        <td class="text-center"><a href="/admin/{{coursename}}/manageexams/{{e.examid}}/managequestions">{{ e.examtype }} Questions</a></td>
+                        <td class="text-center">
+                            <form method='POST' action="/admin/{{ coursename }}/manageexams/deleteexam/{{ e.examid }}">
+                                <button class="btn btn-sm btn-danger confirmation">
+                                    <span class="glyphicon glyphicon-trash"></span>Delete
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="{{ url_for('.static', filename='js/jquery.min.js')}}"></script>
+  <script src="{{ url_for('.static', filename='js/bootstrap.min.js')}}"></script>
+  <script src="{{ url_for('.static', filename='js/materialize.min.js')}}"></script>
+  <script>
+      function hideshow() {
+    var x = document.getElementById("hidemenu");
+    if (x.style.display === "none") {
+        x.style.display = "block";
+    } else {
+        x.style.display = "none";
+    }
+    }
+  </script>
+    <script type="text/javascript">
+        var elems = document.getElementsByClassName('confirmation');
+        var confirmIt = function (e) {
+            if (!confirm('Are you sure?')) e.preventDefault();
+        };
+        for (var i = 0, l = elems.length; i < l; i++) {
+            elems[i].addEventListener('click', confirmIt, false);
+        }
+    </script>
+{% endblock %}
+</body>
+</html>
