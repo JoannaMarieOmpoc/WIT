@@ -1,15 +1,15 @@
-Web Interactive Tutorial
+![WIT LOGO](https://imgur.com/COPgJGV)
+# WIT - Web Interactive Tutorial 
+Web Interactive Tutorial for Computer Science Courses in MSU-IIT School of Computer Studies. It is an interactive learning assistant created to make learning more fun.
 
-Use python3 and MySQL
+## Instructions 
+1.
+2.
+3.
 
-Install requirements
+### Screenshots
 
-$ pip install -r requirements.txt
 
-Setup db
 
-$ mysql -u root -p Enter password mysql> CREATE DATABASE flask_todo_app; mysql> source schema.sql;
 
-Start server.
 
-$ python3 run.py
