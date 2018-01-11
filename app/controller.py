@@ -112,8 +112,18 @@ def showDashboard(user):
 def enrolledCourses(user):
     courses = current_user.courses
     coursesoption = Course.query.order_by().all()
-
-    return render_template('user_courses.html', user=user, courses=courses, coursesoption=coursesoption)
+    pro = [];
+    count = 0.0
+    for course in courses:
+        ttopics = Topic.query.filter_by(courseid=course.coursename).count()
+        topics = course.topics
+        for topic in topics:
+            exercise = userTakesExercise.query.filter_by(exer_id=topic.topicname).filter_by(user_id=current_user.username).first()
+            if exercise is not None and exercise.score > 0:
+                count = count + 1
+    progress = (count/ttopics)*100
+    pro.append(progress)
+    return render_template('user_courses.html', user=user, courses=zip(courses, pro), coursesoption=coursesoption)
 
 ################################################################()
 
