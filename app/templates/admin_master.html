@@ -1,79 +1,100 @@
 <!DOCTYPE html>
-<html lang="en" >
+<html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <title>Admin | {% block title%} {% endblock %}</title>
+    <meta charset="UTF-8">
+    <title>Admin | {% block title%} {% endblock %}</title>
     <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link type="text/css" rel="stylesheet" href="{{ url_for('.static', filename='css/bootstrap.min.css') }}">
     <link type="text/css" rel="stylesheet prefetch" href="{{ url_for('.static', filename='css/materialize.min.css') }}">
     <link rel='stylesheet prefetch' href='https://fonts.googleapis.com/icon?family=Material+Icons'>
     <link type="text/css" rel="stylesheet" href="..static/css/style.css">
     <link type="text/css" rel="stylesheet" href="{{ url_for('.static', filename='css/styleadmin.css') }}">
-    <link type="text/css" rel="stylesheet" href="{{ url_for('.static', filename='css/adminstylenew.css')}}">
-    {%block style %}{% endblock %}
+    <link type="text/css" rel="stylesheet" href="{{ url_for('.static', filename='css/adminstylenew.css')}}"> {%block style %}{% endblock %}
 </head>
+
 <body>
-  <div class="navbar-fixed">
-  <nav>
-    <div class="nav-wrapper blue">
-      <ul>
-        <li><a href="#!" onclick="return hideshow();"><i class="material-icons">menu</i></a></li>
-        <li><a href="{{ url_for('showadmindashboard') }}" class="title"><img src="../static/img/wit_logo.png"></a></li>
-      </ul>
-      <ul class="right">
-          <li class="dropdown">
-            <a href="#" id=#signout class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                <i class="material-icons">arrow_drop_down</i>
-            </a>
-            <ul class="dropdown-menu">
-                <li><a href="{{ url_for('logout')}}">Log-out</a></li>
-            </ul>
-          </li>
-      </ul>
+    <div class="navbar-fixed">
+        <nav>
+            <div class="nav-wrapper blue">
+                <ul>
+                    <li><a href="#!" onclick="return hideshow();"><i class="material-icons">menu</i></a></li>
+                    <li>
+                        <a href="{{ url_for('showadmindashboard') }}" class="title"><img src="../static/img/wit_logo.png"></a>
+                    </li>
+                </ul>
+                <ul class="right">
+                    <li class="dropdown">
+                        <a href="#" id=#signout class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                            <i class="material-icons">arrow_drop_down</i>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="{{ url_for('logout')}}">Log-out</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </nav>
     </div>
-  </nav>
-</div>
-<div class="brown hide" style="height: 200px;"></div>
-<ul id="hidemenu" class="side-nav fixed transparent z-depth-0">
-    <li class="active"><a href="{{ url_for('showadmindashboard') }}"><i class="material-icons blue-text text-darken-1">dashboard</i>Dashboard</a></li>
-    <li><a href="{{ url_for('adminList')}}"><i class="material-icons">supervisor_account</i>Admin</a></li>
-  <li><div class="divider"></div></li>
-  <li><a href="{{ url_for('managecourses')}}"><i class="material-icons">school</i>Courses</a></li>
-  <li><a href="{{ url_for('manageQuestions')}}"><i class="material-icons">question_answer</i>Questions</a></li>
-  <li><a href="{{ url_for('adminGames')}}"><i class="material-icons">games</i>Games</a></li>
-    <li><a href="{{url_for('manageUsers')}}"><i class="material-icons">person</i>Users</a></li>
-</ul>
-<div class="content">
-{% block content %}
-{% endblock %}
-</div>
-  <script src="{{ url_for('.static', filename='js/jquery.min.js')}}"></script>
-  <script src="{{ url_for('.static', filename='js/bootstrap.min.js')}}"></script>
-  <script src="{{ url_for('.static', filename='js/materialize.min.js')}}"></script>
-  <script>
-      function hideshow() {
-    var x = document.getElementById("hidemenu");
-    if (x.style.display === "none") {
-        x.style.display = "block";
-    } else {
-        x.style.display = "none";
-    }
-    }
-  </script>
-      <script type="text/javascript">
+    <div class="brown hide" style="height: 200px;"></div>
+    <ul id="hidemenu" class="side-nav fixed transparent z-depth-0">
+        <li class="active"><a href="{{ url_for('showadmindashboard') }}"><i class="material-icons blue-text text-darken-1">dashboard</i>Dashboard</a></li>
+        <li><a href="{{ url_for('adminList')}}"><i class="material-icons">supervisor_account</i>Admin</a></li>
+        <li>
+            <div class="divider"></div>
+        </li>
+        <li><a href="{{ url_for('managecourses')}}"><i class="material-icons">school</i>Courses</a></li>
+        <li><a href="{{ url_for('manageQuestions')}}"><i class="material-icons">question_answer</i>Questions</a></li>
+        <li><a href="{{ url_for('adminGames')}}"><i class="material-icons">games</i>Games</a></li>
+        <li><a href="{{url_for('manageUsers')}}"><i class="material-icons">person</i>Users</a></li>
+    </ul>
+    <div class="content">
+        {% block content %} {% endblock %}
+    </div>
+    <script src="{{ url_for('.static', filename='js/jquery.min.js')}}"></script>
+    <script src="{{ url_for('.static', filename='js/bootstrap.min.js')}}"></script>
+    <script src="{{ url_for('.static', filename='js/materialize.min.js')}}"></script>
+    <script>
+        function hideshow() {
+            var x = document.getElementById("hidemenu");
+            if (x.style.display === "none") {
+                x.style.display = "block";
+            } else {
+                x.style.display = "none";
+            }
+        }
+    </script>
+    <script type="text/javascript">
         var elems = document.getElementsByClassName('confirmation');
-        var confirmIt = function (e) {
+        var confirmIt = function(e) {
             if (!confirm('Are you sure?')) e.preventDefault();
         };
         for (var i = 0, l = elems.length; i < l; i++) {
             elems[i].addEventListener('click', confirmIt, false);
         }
     </script>
-  <!--
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#myTable').pageMe({
+                pagerSelector: '#myPager',
+                activeColor: 'blue',
+                prevText: 'Anterior',
+                nextText: 'Siguiente',
+                showPrevNext: true,
+                hidePageNumbers: false,
+                perPage: 5
+            });
+        });
+    </script>
+    <!--
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
   <script src='https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/js/materialize.min.js'></script>
     -->
-  
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.2.1.min.js"></script>
+    <script src="https://cdn.rawgit.com/Dogfalo/materialize/fc44c862/dist/js/materialize.min.js"></script>
+    <script type="text/javascript" src="https://cdn.rawgit.com/pinzon1992/materialize_table_pagination/f9a8478f/js/pagination.js"></script>
 </body>
+
 </html>
