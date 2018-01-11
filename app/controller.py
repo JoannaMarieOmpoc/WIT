@@ -160,26 +160,25 @@ def user_Topic(user, coursename, topicname):
 
 ################################################################
 
-@app.route('/<user>/courses/<coursename>/topic/<topicname>/exercise/<exerciseid>/saveExercise', methods=['GET'])
+@app.route('/<user>/courses/<coursename>/topic/<topicname>/saveScoreExercise', methods=['POST'])
 @login_required
-def saveScore(user, coursename, topicname, exerciseid):
-        data = request.args.get('data')
-        score = data[0]
-        exerciseid = data[1]
-        exercise = userTakesExercise.query.filter_by(exer_id=exerciseid).first()
-        if exercise is None:
-            result = userTakesExercise(exerciseid, current_user.username, score)
-            db.session.add(result)
-            db.session.commit()
-            return redirect('user_Topic', user = user, coursename = coursename, topicname=topicname)
-        else:
-            if exercise.score < score:
-                exercise.score = score
-                db.session.commit()
-
+def saveScore(user, coursename, topicname):
+    #data = request.get_json()
+    score = request.json['score']
+    exerciseid = request.json['e']
+    eid = int(exerciseid)
+    exercise = Exercise.query.filter_by(exerciseid=eid).first()
+    user = User.query.filter_by(username=user).first()
+    exercisetaken = userTakesExercise.query.filter_by(exer_id=exercise.topicid).filter_by(user_id=user.username).first()
+    if exercisetaken is None:
+        result = userTakesExercise(exercise.topicid, user.username, score)
         db.session.add(result)
-        db.session.commit() 
-        return redirect('user_Topic', user = user, coursename = coursename, topicname=topicname)
+        db.session.commit()
+    else:
+        if exercisetaken.score < score:
+            exercise.score = score
+            db.session.commit()
+    return redirect(url_for('user_Topic', user = user, coursename = coursename, topicname=topicname))
 
 ################################################################
 
@@ -239,7 +238,9 @@ def games(user):
 @login_required
 def profile(user):
     courses = current_user.courses
-    return render_template('user_profile.html', user = current_user)
+    exercisescores = userTakesExercise.query.filter_by(user_id=current_user.username).all()
+    examscores = userTakesExam.query.filter_by(user_id=current_user.username).all()
+    return render_template('user_profile.html', user = user, exercisescores = exercisescores, examscores=examscores)
 
 ################################################################
 
