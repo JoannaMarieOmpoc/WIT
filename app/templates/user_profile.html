@@ -17,6 +17,79 @@
     <h3> {{ user.username }} </h3>
     <p><b> Email: </b>{{ user.usermail }}</p>
     <br>
+    <table class="table table-bordered table-striped table-hover">
+                        <thead>
+                            <tr>
+                                <th class="col-md-4">
+                                    Exercise: Topic
+                                </th>
+                                <th>
+                                    Type
+                                </th>
+                                <th class="col-md-4">
+                                    Score
+                                </th>
+
+                            </tr>
+                        </thead>
+                        {% for exercise in exercisescores %}
+                        <tbody>
+                            <tr>
+                                <td class="col-md-4">
+                                    <h6 class="question-size">
+                                 {{ exercise.exer_id }}
+                                    </h6>
+                                </td>
+                                <td class="col-md-4">
+                                    <h6 class="question-size">
+                                 {{ exercise.gametype }}
+                                    </h6>
+                                </td>
+                                <td class="col-md-4">
+                                    <h6 class="question-size">
+                                    {{ exercise.score }}
+                                    </h6>
+                            </tr>
+                        </tbody>
+                        {% endfor %}
+                    </table>
+            <table class="table table-bordered table-striped table-hover">
+                        <thead>
+                            <tr>
+                                <th class="col-md-4">
+                                    Exam: Course
+                                </th>
+                                <th class="col-md-4">
+                                    Type
+                                </th>
+                                <th class="col-md-4">
+                                    Score
+                                </th>
+
+                            </tr>
+                        </thead>
+                        {% for exam in examscores %}
+                        <tbody>
+                            <tr>
+                                <td class="col-md-4">
+                                    <h6 class="question-size">
+                                 {{ exam.examid }}
+                                    </h6>
+                                </td>
+                                <td class="col-md-4">
+                                    <h6 class="question-size">
+                                 {{ exam.type }}
+                                    </h6>
+                                </td>
+                                <td class="col-md-4">
+                                    <h6 class="question-size">
+                                    {{ exercise.score }}
+                                    </h6>
+                                </td>
+                            </tr>
+                        </tbody>
+                        {% endfor %}
+                    </table>
     </div>
 </div>
     {% endblock %}

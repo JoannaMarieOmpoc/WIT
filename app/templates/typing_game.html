@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Typing</title>
-	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<title>WIT | Typing</title>
 	<style>
 	div {
 			width: 100%;
@@ -10,25 +10,14 @@
 		}
 	canvas {
 		display: inline;
-		border: 1px #0066CC;
+		border: 2px #000000;
 		background-color: white;
 		position: absolute;
     	top: 55px;
     	bottom: 0;
     	left: 0;
     	right: 0;
-    	margin:auto;
-	}
-	button {
-		border-radius: 10px;
-		background-color: #0066CC;
-		font-style: "Century Gothic";
-		font-size: 20px;
-		color: white;
-		padding-right: 10px;
-		padding-left: 10px;
-		padding-bottom: 5px;
-		padding-top: 5px;
+    	margin: auto;
 	}
 	.modal {
     display: none; /* Hidden by default */
@@ -70,6 +59,7 @@
 	</style>
 </head>
 <body onload="loadGame()">
+	<div class="content">
 	<!-- The Modal -->
 <div id="myModal" class="modal">
 <!-- Modal content -->
@@ -80,8 +70,7 @@
   <div class="modal-body">
     <p>*insert score here*</p>
   </div>
-  <div class="modal-footer" id="modalFooter">
-  </div>
+  <button id="btn" style="margin: 10px 10px 10px 10px;">OK</button>
 </div>
 </div>
 <script>
@@ -92,14 +81,33 @@
 	var e = {{ exerciseid|tojson }};
 	var q = {{ questions|tojson }};
 	var a = {{ answers|tojson }};
-	var button = document.createElement('button');
-	var ok = document.createTextNode("OK");
-	button.appendChild(ok);
+	var limit = {{ length|tojson }};
 	//var data = [score, e];
 	var entry = "";
 	var correctAnswer = false;
 	var pause = false;
 	var score = 0;
+	var button = document.getElementById('btn');
+	button.addEventListener('click', function sendData() {
+	alert("HEY, YOU 'LIL PIECE OF-");
+		var data = {
+		"score": String(score),
+		"e": String(e),
+	}
+	$.ajax({
+			type: 'POST',
+            url: "{{ url_for('saveScore', user=user, coursename=coursename, topicname=topicname) }}",
+            data: JSON.stringify(data, null, '\t'),
+            contentType: 'application/json;charset=UTF-8',
+            success: function() {
+                window.location.href = "{{ url_for('user_Topic', user=user, coursename=coursename, topicname=topicname) }}";
+            },
+            error: function(error) {
+                console.log(error);
+            }
+        });
+	//window.location.href = '{{ url_for('user_Topic', user=user, coursename=coursename, topicname=topicname) }}';
+});
 // the following function stores the user's input and checks it
 document.onkeypress = function (e) {
   
@@ -147,7 +155,7 @@ function checkAns() {
 		correctAnswer = true;
 	else
 		correctAnswer = false;
-	if (index < {{length|tojson}}-1)
+	if (index < limit)
 		index++;
 	else
 		endGame();
@@ -213,13 +221,6 @@ function updateGameArea() {
 	Q.check();
 	Q.speedUp();
 }
-	var modalf = document.getElementById('modalFooter');
-	modalf.appendChild(button);
-	btn.addEventListener('click', sendData());
-
-function sendData() {
-
-}
 
 function stringDrop() {
 		this.context = GameArea.context;
@@ -274,5 +275,6 @@ function stringDrop() {
 <button onclick="startGame()">Start</button>
 <button onclick="setPauseTrue()">Pause</button>
 <button onclick="setPauseFalse()">Continue</button>
+</div>
 </body>
 </html>
