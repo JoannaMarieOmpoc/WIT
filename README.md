@@ -1,4 +1,7 @@
-![WIT LOGO](https://imgur.com/COPgJGV)
+<p align="left">
+  <img src="/app/static/img/wit_logo_black.png" width="150"/>
+</p>
+
 # :books: WIT - Web Interactive Tutorial 
 Web Interactive Tutorial for Computer Science Courses in MSU-IIT School of Computer Studies. It is an interactive learning assistant created to make learning more fun.
 
