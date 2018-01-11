@@ -43,7 +43,7 @@
                 <div class="container-courses">
                     <div class="row">
                         <div class="course-menu">
-                            {% for course in courses %}
+                            {% for course, pro in courses %}
                             <div class="col-md-4">
                                 <div class="panel panel-default">
                                     <div class="panel-heading">
@@ -58,8 +58,8 @@
                                     </h4>
                                     <br>
                                     <div class="progress" style="margin: 10px 10px 10px 10px;">
-                                        <div class="progress-bar" role="progressbar" aria-valuenow="{{course.progress}}" aria-valuemin="0" aria-valuemax="100" style="width:{{course.progress}}">
-                                            {{course.progress}}%
+                                        <div class="progress-bar" role="progressbar" aria-valuenow="{{ pro }}" aria-valuemin="0" aria-valuemax="100" style="width:{{pro}}%;">
+                                            {{pro}}%
                                         </div>
                                     </div>
                                     <div class="withdrawcss">
