@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-{% extends "master.html" %}
 <!--[if lt IE 7]>      <html lang="en" class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
 <!--[if IE 7]>         <html lang="en" class="no-js lt-ie9 lt-ie8"> <![endif]-->
 <!--[if IE 8]>         <html lang="en" class="no-js lt-ie9"> <![endif]-->
@@ -12,7 +11,7 @@
     <meta charset="utf-8">
     <!-- Always force latest IE rendering engine or request Chrome Frame -->
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>{% block title%}Exams{% endblock %}</title>
+    <title>WIT | {{name}} </title>
     <!-- Meta Description -->
     <meta name="description" content="Blue One Page Creative HTML5 Template">
     <meta name="keywords" content="one page, single page, onepage, responsive, parallax, creative, business, html5, css3, css3 animation">
@@ -59,25 +58,93 @@
         .radio{
             margin-left: 2%;
         }
-        .question-correct:after {
+        .correct {
+            margin-left: 1%;
+            margin-bottom: 1%;
+            margin-top: 1%;
+        }
+        .correct:after {
             content: "✓";
             font-size: 30px;
             color: green;
             padding-left: 10px;
         }
-
-        .question-incorrect:after {
+        .incorrect {
+            margin-left: 1%;
+            margin-bottom: 1%;
+            margin-top: 1%;
+        }
+        .incorrect:after {
             content: "✗";
             font-size: 30px;
             color: red;
             padding-left: 10px;
         }
+        .help{
+            margin-left: 1%;
+            margin-bottom: 1%;
+            margin-top: 1%;
+        }
+        .quest{
+            font-size: 30px;
+            margin-bottom: 1%;
+            margin-top: 1%;
+        }
     </style>
 </head>
+
+<body id="body">
+
+    <!-- preloader -->
+    <div id="preloader">
+        <div class="loder-box">
+            <div class="battery"></div>
+        </div>
+    </div>
+    <!-- end preloader -->
+
+    <!--
+        Fixed Navigation
+        ==================================== -->
+    <header id="navigation" class="navbar-inverse navbar-fixed-top animated-header">
+        <div class="container">
+            <div class="navbar-header">
+                <!-- responsive nav button -->
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+						<span class="sr-only">Toggle navigation</span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+                    </button>
+                <!-- /responsive nav button -->
+
+                <!-- logo -->
+                <h1 class="navbar-brand">
+                    <img src="{{ url_for('.static', filename='img/wit_logo.png')}}" alt="wit logo" width="40%">
+                </h1>
+                <!-- /logo -->
+            </div>
+
+            <!-- main nav -->
+            <nav class="collapse navbar-collapse navbar-right">
+                <ul id="nav" class="nav navbar-nav">
+                    <li><a href="{{ url_for('showDashboard', user = user)}}">Home</a></li>
+                    <li><a href="{{url_for('enrolledCourses', user=user)}}">My Courses</a></li>
+                    <li><a href="{{ url_for('games', user = user)}}">Games</a></li>
+                    <li><a href="{{url_for('exams', user = user)}}">Mock Exam</a></li>
+                    <li><a href="{{ url_for('profile', user = user)}}">Profile</a></li>
+                    <li><a href="{{ url_for('logout')}}">Logout</a></li>
+
+
+                </ul>
+            </nav>
+            <!-- /main nav -->
+
+        </div>
+    </header>
     <!--
         End Fixed Navigation
         ==================================== -->
-        {% block content %}
     <main class="site-content" role="main">
 
         <div class="jumbotron">
@@ -86,37 +153,86 @@
                 <span class="glyphicon glyphicon-menu-right marginicon"></span>
                 <a class="breadcrumb-item" href="{{url_for('exams', user=user)}}">Mock Exam</a>
                 <span class="glyphicon glyphicon-menu-right marginicon"></span>
-                <a class="breadcrumb-item active" href="#">{{examid}}</a>
+                <a class="breadcrumb-item active" href="#">{{exam.examtype}}</a>
 
             </nav>
-            <div class="container-course" style="margin: 100px 50px 50px 50px;">
+            <div class="container-course">
+                <div class="col-md-12">
+                    <div class="panel panel-default">
+                      <div class="panel-body">
+                        <h3 class="margin">
+                            {{exam.examtype}} - Checking ({{correctanswers}} / {{total}})
+                        </h3>
+                            {% for choice in choices %}
+                                    {% for question in questionorder %}
+                                        {% if question == choice %}
+                                            <p class="quest">
+                                                {{loop.index}}<span>. </span> {{question}}
+                                            </p>
+                                        {% endif %}
+                                    {% endfor %}
+                                    {% for chosen in correct_answers %}
+                                        {% if choice == chosen %}
+                                            <p  class="correct">
+                                                <span>- </span>{{choice}}  - <strong> Chosen </strong>
+                                            </p>
+                                         {% endif %}
+                                    {% endfor %}
+                                    {% if choice in wrong_answers %}
+                                        {% for chosen in wrong_answers %}
+                                            {% if choice == chosen %}
+                                                <p class="incorrect">
+                                                    <span>- </span>{{choice}} - <strong> Chosen </strong>
+                                                </p>
+                                            {% endif %}
+                                        {% endfor %}
+                                    {% endif %}
+                                    {% if (choice not in wrong_answers and choice not in correct_answers) and choice not in questionorder %}
+                                    {% if choice not in orderquestion %}
+                                    <p class="help">
+                                        <span>- </span>{{choice}}
+                                    </p>
+                                    {% endif %}
+                                    {% endif %}
 
-                <h2 class="margin">Mock Exam</h2>
-                <h3 class="margin"> {{quiz['name']}} - Checking ({{correct}} / {{total}}) </h3>
-                        {% for question, choice in question_answer %}
-                        <div class="col-md-12">
-                                    <div class="panel panel-default">
-                                        <div class="panel-heading">
-                                            <h3 class="panel-title">
-                                                {% set outer_loop = loop %}
-                                                <p>
-                                                    {{loop.index}} {{question['text']|safe}}
-                                                </p>
-                                            </h3>
-                                        </div>
-                                        <h4 class="panel-body" style="margin-left: 3%;">
-                                            {% for answer in question['options'] %}
-                                                <p {% if answer[1] %} class="question-correct" {% elif not answer[1] %} class="question-incorrect" {% endif %}>
-                                                    {{answer[0]|safe}} {% if answer == choice %} - <strong> Chosen </strong> {% endif %}
-                                                </p>
-                                            {% endfor %}
-                                            </h4>
-                                    </div>
-                        </div>
-                        {% endfor %}
+
+                            {% endfor %}
+                      </div>
+                    </div>
+                </div>
             </div>
     </main>
-{% endblock %}
+    <footer id="footer">
+        <div class="container">
+            <div class="row text-center">
+                <div class="footer-content">
+                    <div class="wow animated fadeInDown">
+                        <p>newsletter signup</p>
+                        <p>Get Cool Stuff! We hate spam!</p>
+                    </div>
+                    <form action="#" method="post" class="subscribe-form wow animated fadeInUp">
+                        <div class="input-field">
+                            <input type="email" class="subscribe form-control" placeholder="Enter Your Email...">
+                            <button type="submit" class="submit-icon">
+									<i class="fa fa-paper-plane fa-lg"></i>
+								</button>
+                        </div>
+                    </form>
+                    <div class="footer-social">
+                        <ul>
+                            <li class="wow animated zoomIn"><a href="#"><i class="fa fa-thumbs-up fa-3x"></i></a></li>
+                            <li class="wow animated zoomIn" data-wow-delay="0.3s"><a href="#"><i class="fa fa-twitter fa-3x"></i></a></li>
+                            <li class="wow animated zoomIn" data-wow-delay="0.6s"><a href="#"><i class="fa fa-skype fa-3x"></i></a></li>
+                            <li class="wow animated zoomIn" data-wow-delay="0.9s"><a href="#"><i class="fa fa-dribbble fa-3x"></i></a></li>
+                            <li class="wow animated zoomIn" data-wow-delay="1.2s"><a href="#"><i class="fa fa-youtube fa-3x"></i></a></li>
+                        </ul>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </footer>
 
     <!-- Essential jQuery Plugins
 		================================================== -->

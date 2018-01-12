@@ -43,14 +43,14 @@
             <a href="{{ url_for('coursePage', coursename=course.coursename)}}">View {{course.coursename}}</a>
               <div class="card-button pull-right">
                   <span class="pull-left">
-                  <form class="confirmation" method='POST' action="/admin/managecourses/removecourse/{{ course.courseid }}">
+                  <form class="confirmation" method='POST' action="/admin/managecourses/removecourse/{{ course.coursename }}">
                     <button type="submit" name="removecourse" id="removecourse" class="btn btn-primary btn-xs">
                         <span class="glyphicon glyphicon-trash"></span> Delete
                     </button>
                   </form>
                   </span>
                   <span class="pull-right">
-                    <form class="" action="/admin/managecourses/editcourse/{{ course.courseid }}">
+                    <form class="" action="/admin/managecourses/editcourse/{{ course.coursename }}">
                         <button type="submit" name="editcourse" id="editcourse" class="btn btn-primary btn-xs">
                             <span class="glyphicon glyphicon-edit"></span> Edit
                         </button>

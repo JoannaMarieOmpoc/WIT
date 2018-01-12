@@ -1,4 +1,5 @@
 from app import app, db
+from datetime import datetime
 
 enroll = db.Table('Enrolled',
                     db.Column('username', db.ForeignKey('Users.username')),
@@ -59,7 +60,6 @@ class Course(db.Model):
 
     coursename = db.Column(db.String(50), unique=True, nullable=False, primary_key=True)
     coursedesc = db.Column(db.Text, nullable=False)
-    progress = db.Column(db.Integer, nullable=True)
     topics = db.relationship('Topic', cascade='all, delete', backref='course')
     exams = db.relationship('Exam', cascade='all, delete', backref='course')
 
@@ -133,11 +133,13 @@ class Exam(db.Model):
     examid = db.Column(db.Integer, primary_key=True)
     examtype = db.Column(db.String(30), nullable=False)
     courseid = db.Column(db.String(50), db.ForeignKey('Courses.coursename'), nullable=False)
+    timelimit = db.Column(db.Integer, nullable=False)
     questions = db.relationship('Question', secondary=examHasQuestions, backref=db.backref('exam', lazy='dynamic'))
 
-    def __init__(self, examtype, courseid):
+    def __init__(self, examtype, courseid, timelimit):
         self.examtype = examtype
         self.courseid = courseid
+        self.timelimit = timelimit
 
 
 
@@ -157,7 +159,7 @@ class userTakesExercise(db.Model):
     __tablename__ = 'ExerciseResult'
 
     exerresultid = db.Column(db.Integer, primary_key=True)
-    exer_id = db.Column(db.Integer, db.ForeignKey(Exercise.exerciseid))
+    exer_id = db.Column(db.String(30), db.ForeignKey(Exercise.topicid))
     user_id = db.Column(db.String(30), db.ForeignKey(User.username))
     score = db.Column(db.Integer)
 
@@ -172,12 +174,17 @@ class userTakesExam(db.Model):
     examresultid = db.Column(db.Integer, primary_key=True)
     exam_id = db.Column(db.Integer, db.ForeignKey(Exam.examid))
     user_id = db.Column(db.String(30), db.ForeignKey(User.username))
+    datetaken = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+    correct = db.Column(db.Integer, nullable=False)
+    total = db.Column(db.Integer, nullable=False)
     score = db.Column(db.Integer)
 
-    def __init__(self, exam_id, user_id, score):
+    def __init__(self, exam_id, user_id, score, correct, total):
         self.exam_id = exam_id
         self.user_id = user_id
         self.score = score
+        self.correct = correct
+        self.total = total
 
 class userTakesGame(db.Model):
     __tablename__ = 'GameResult'
@@ -191,7 +198,6 @@ class userTakesGame(db.Model):
         self.game_id = game_id
         self.user_id = user_id
         self.highscore = highscore
-
 
 
 db.create_all()

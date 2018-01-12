@@ -3,6 +3,14 @@
 {% extends "admin_master.html" %}
 <head>
   <title>{% block title %}Exams{% endblock %}</title>
+    <style>
+        .panel{
+            width:500px; !important;
+            height: auto !important;
+            margin: 0px;
+            font-size: 20px;
+        }
+    </style>
 </head>
 <body>
 {% block content %}
@@ -26,76 +34,44 @@
         <div class="content" style="margin: 100px 20px 20px 20px;">
         <h6>Questions</h6>
                                           </a><br>
-                            <table class="table table-bordered table-striped table-hover">
-                        <thead>
-                            <tr>
-                                <th class="col-md-2">
-                                    Question
-                                </th>
-                                <th class="col-md-2">
-                                    Topic
-                                </th>
-                                <th class="col-md-2">
-                                    Difficulty
-                                </th>
-                                <th class="col-md-2">
-                                    Choices
-                                </th>
-                                <th class="col-md-2">
-                                    Answers
-                                </th>
-                                <th class="col-md-2">
-                                    Actions
-                                </th>
-
-                            </tr>
-                        </thead>
-                        {% for question in questions %}
-                        <tbody>
-                            <tr>
-                                <td class="col-md-3">
-                                    <h6 class="question-size">{{loop.index}}<span>. </span> {{question.question}}</h6>
-                                </td>
-                                <td class="col-md-2">
-                                    <h6 class="question-size">
-                                    {{ question.topic_id }}
-                                    </h6>
-                                </td>
-                                <td class="col-md-2">
-                                    <h6 class="question-size">
-                                    {{ question.difficulty }}
-                                    </h6>
-                                </td>
-                                <td class="col-md-2">
-                                <ul>
-                                    <h6 class="question-size">
-                                    {% for choice in question.choices %}
-                                    <li><a>{{ choice.choice }}</a></li>
-                                    {% endfor %}
-                                    </h6>
-                                </ul>
-                                </td>
-                                <td class="col-md-2">
-                                    <h6 class="question-size">
-                                     {{ question.answer }}
-                                    </h6>
-                                </td>
-                                <td class="col-md-2" style="align-content: center;">
-                                    <h6 class="question-size">
-                                    <form action="/admin/{{ coursename }}/manageexams/{{ examid }}/managequestions/addquestions", method="POST">
-                                            <button type="submit" value="{{ question.questionid }}" name="action" id="removequestion" class="btn btn-danger btn-xs">
-                                                <span class="glyphicon glyphicon-plus"></span> add
-                                            </button>
-                                    </form>
-                                    </h6>
-                                </td>
-                            </tr>
-                        </tbody>
+            <div class="col-md-12">
+                <div class="panel panel-default pull-left">
+                 <div class="panel-heading">
+                    <h3 class="panel-title">
+                        Questions in exam
+                    </h3>
+                 </div>
+                <div class="panel-body">
+                        {% for question in examquestions %}
+                            <form action="{{url_for('manageExamQuestions',coursename=coursename, examid=examid)}}" method="POST">
+                                    <button type="submit" name="action" value="{{ question.questionid }}" id="deletequestion" class="btn btn-danger btn-xs confirmation">
+                                        <span class="glyphicon glyphicon-minus"></span>Remove
+                                    </button>
+                                    {{loop.index}}<span>. </span> {{question.question}}
+                            </form>
                         {% endfor %}
-                    </table>
                 </div>
+                </div>
+                <div class="panel panel-default pull-left">
+                     <div class="panel-heading">
+                        <h3 class="panel-title">
+                            Questions in database
+                        </h3>
+                     </div>
+                        <div class="panel-body">
+                            {% for question in questions %}
+                                <form action="{{url_for('addExamQuestions',coursename=coursename, examid=examid)}}", method="POST">
+                                        <button type="submit" value="{{ question.questionid }}" name="action" id="removequestion" class="btn btn-danger btn-xs">
+                                            <span class="glyphicon glyphicon-plus"></span>Add
+                                        </button>
+                                    {{loop.index}}<span>. </span> {{question.question}}
+                                </form>
+                            {% endfor %}
+                        </div>
+                </div>
+            </div>
+        </div>
     </div>
-</div>
 </div>
 {% endblock %}
 </body>

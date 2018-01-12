@@ -33,6 +33,10 @@
                                                           <option value="Finals">Finals</option>
                                                       </select>
                                              </div>
+                                             <div class="pull-left">
+                                              <label>Set Time Limit (minutes): </label><br>
+                                              <input name="timelimit" type="text" style="margin-left: 10px; margin-bottom: 10px; width: 80px;">
+                                            </div>
                                              <div class="add-header pull-right addaexam">
                                                 <button type="submit" name="addaexam" id="addaexam" class="btn btn-info btn-med pull-right">
                                                     <span class="glyphicon glyphicon-plus"></span> Add Exam
@@ -49,18 +53,24 @@
                         <th class="text-center">Exam ID</th>
                         <th class="text-center">Exam Type</th>
                         <th class="text-center">Manage Questions</th>
+                        <th class="text-center">Time Limit</th>
                         <th class="text-center"></th>
                     </tr>
                     {% for e in exams %}
                     <tr class="text-center" colspan="12">
-                        <td class="text-center"><a href="/admin/{{coursename}}/manageexams/{{e.examid}}/managequestions">{{ e.examid }}</a></td>
+                        <td class="text-center"><a href="/admin/{{coursename}}/manageexams/{{e.examid}}/addexamquestions">{{ e.examid }}</a></td>
                         <td class="text-center"><a>{{ e.examtype }}</a></td>
-                        <td class="text-center"><a href="/admin/{{coursename}}/manageexams/{{e.examid}}/managequestions">{{ e.examtype }} Questions</a></td>
+                        <td class="text-center"><a href="/admin/{{coursename}}/manageexams/{{e.examid}}/managequestions/addquestions">{{ e.examtype }} Questions</a></td>
+                        <td class="text-center"><a>{{ e.timelimit }} minutes</a></td>
                         <td class="text-center">
                             <form method='POST' action="/admin/{{ coursename }}/manageexams/deleteexam/{{ e.examid }}">
-                                <button class="btn btn-sm btn-danger confirmation">
+                                <button class="btn btn-sm btn-danger confirmation pull-right">
                                     <span class="glyphicon glyphicon-trash"></span>Delete
                                 </button>
+                            </form>
+                            <form method='POST' action="{{ url_for('editexam', coursename=coursename, examid=e.examid) }}">
+                              <input type="text" name="newtimelimit" style=" width: 50px;"">
+                              <button class="btn btn-info btn-med pull-right">Edit Time Limit</button>
                             </form>
                         </td>
                     </tr>

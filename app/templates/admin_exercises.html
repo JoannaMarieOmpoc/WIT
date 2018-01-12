@@ -51,15 +51,13 @@
                         <th class="text-center">Manage Questions</th>
                         <th class="text-center"></th>
                     </tr>
-                    {% for e in exercises %}
                     <tr class="text-center" colspan="12">
-                        <td class="text-center"><a href="{{ url_for('exercisePage', coursename=coursename, topicname=topicname, exerciseid=e.exerciseid)}}">{{ e.exerciseid }}</a></td>
+                        <td class="text-center"><a href="{{ url_for('exercisePage', coursename=coursename, topicname=topicname, exerciseid=exercise.exerciseid)}}">{{ exercise.exerciseid }}</a></td>
                         <td class="text-center">
-                            {{ e.gametype }}
+                            {{ gametype }}
                         </td>
-                        <td class="text-center"><a href="{{ url_for('manageExerciseQuestion', coursename=coursename, topicname=topicname, exerciseid=e.exerciseid) }}">Questions</a></td>
+                        <td class="text-center"><a href="{{ url_for('manageExerciseQuestion', coursename=coursename, topicname=topicname, exerciseid=exercise.exerciseid) }}">Questions</a></td>
                     </tr>
-                    {% endfor %}
                 </table>
             </div>
             </div>

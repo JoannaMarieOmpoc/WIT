@@ -1,8 +1,28 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Typing</title>
-	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+	<title>WIT | Typing</title>
+	   <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,700' rel='stylesheet' type='text/css'>
+
+    <!-- Fontawesome Icon font -->
+    <link rel="stylesheet" href="../static/css/font-awesome.min.css">
+    <!-- bootstrap.min -->
+    <link rel="stylesheet" href="../static/css/jquery.fancybox.css">
+    <!-- bootstrap.min -->
+    <link rel="stylesheet" href="../static/css/bootstrap.min.css">
+    <!-- bootstrap.min -->
+
+    <!-- bootstrap.min -->
+    <link rel="stylesheet" href="../static/css/slit-slider.css">
+    <!-- bootstrap.min -->
+    <link rel="stylesheet" href="../static/css/animate.css">
+    <!-- Main Stylesheet -->
+    <link rel="stylesheet" href="../static/css/main.css">
+
+    <!-- Modernizer Script for old Browsers -->
+    <script src="../static/js/modernizr-2.6.2.min.js"></script>
 	<style>
 	div {
 			width: 100%;
@@ -10,25 +30,14 @@
 		}
 	canvas {
 		display: inline;
-		border: 1px #0066CC;
+		border: 2px #000000;
 		background-color: white;
 		position: absolute;
     	top: 55px;
     	bottom: 0;
     	left: 0;
     	right: 0;
-    	margin:auto;
-	}
-	button {
-		border-radius: 10px;
-		background-color: #0066CC;
-		font-style: "Century Gothic";
-		font-size: 20px;
-		color: white;
-		padding-right: 10px;
-		padding-left: 10px;
-		padding-bottom: 5px;
-		padding-top: 5px;
+    	margin: auto;
 	}
 	.modal {
     display: none; /* Hidden by default */
@@ -70,6 +79,7 @@
 	</style>
 </head>
 <body onload="loadGame()">
+	<div class="content">
 	<!-- The Modal -->
 <div id="myModal" class="modal">
 <!-- Modal content -->
@@ -78,10 +88,9 @@
     <h2>SCORE</h2>
   </div>
   <div class="modal-body">
-    <p>*insert score here*</p>
+    <p>GAME OVER</p>
   </div>
-  <div class="modal-footer" id="modalFooter">
-  </div>
+  <button id="btn" style="margin: 10px 10px 10px 10px;">OK</button>
 </div>
 </div>
 <script>
@@ -92,14 +101,37 @@
 	var e = {{ exerciseid|tojson }};
 	var q = {{ questions|tojson }};
 	var a = {{ answers|tojson }};
-	var button = document.createElement('button');
-	var ok = document.createTextNode("OK");
-	button.appendChild(ok);
+	q.push("");
+	a.push("");
+	//alert(q[0] + " " + q[1] + " " + q[2] + " " + q[3] + " " + q[4] + " " + q[5]);
+	var limit = {{ length|tojson }};
+	//alert(limit);
 	//var data = [score, e];
 	var entry = "";
 	var correctAnswer = false;
 	var pause = false;
 	var score = 0;
+	var button = document.getElementById('btn');
+	button.addEventListener('click', function sendData() {
+	//alert("HEY, YOU 'LIL PIECE OF-");
+		var data = {
+		"score": String(score),
+		"e": String(e),
+	}
+	$.ajax({
+			type: 'POST',
+            url: "{{ url_for('saveScore', user=user, coursename=coursename, topicname=topicname) }}",
+            data: JSON.stringify(data, null, '\t'),
+            contentType: 'application/json;charset=UTF-8',
+            success: function() {
+                window.location.href = "{{ url_for('user_Topic', user=user, coursename=coursename, topicname=topicname) }}";
+            },
+            error: function(error) {
+                console.log(error);
+            }
+        });
+	//window.location.href = '{{ url_for('user_Topic', user=user, coursename=coursename, topicname=topicname) }}';
+});
 // the following function stores the user's input and checks it
 document.onkeypress = function (e) {
   
@@ -127,7 +159,6 @@ if (!pause) {
 };
 //displays modal
 function endGame() {
-
 	var modal = document.getElementById('myModal');
 	modal.style.display = "block";
 }
@@ -147,10 +178,10 @@ function checkAns() {
 		correctAnswer = true;
 	else
 		correctAnswer = false;
-	if (index < {{length|tojson}}-1)
-		index++;
-	else
+	index++;
+	if (index == 4) {
 		endGame();
+	}
 }
 // the following function sets question and corresponding answer
 function setQA() {
@@ -213,13 +244,6 @@ function updateGameArea() {
 	Q.check();
 	Q.speedUp();
 }
-	var modalf = document.getElementById('modalFooter');
-	modalf.appendChild(button);
-	btn.addEventListener('click', sendData());
-
-function sendData() {
-
-}
 
 function stringDrop() {
 		this.context = GameArea.context;
@@ -251,7 +275,6 @@ function stringDrop() {
 			//context.fillText("YOU LOSE", GameArea.canvas.width/2-120, GameArea.canvas.height/2-100);
 			question = "";
 			endGame();
-
 		}
 		else {
 			if (correctAnswer == true) {
@@ -271,8 +294,12 @@ function stringDrop() {
 	}
 }
 </script>
-<button onclick="startGame()">Start</button>
-<button onclick="setPauseTrue()">Pause</button>
-<button onclick="setPauseFalse()">Continue</button>
+<form action="{{ url_for('showDashboard', user=user) }}">
+<button class="btn btn-info btn-med pull-left">HOME</button>
+</form>
+<button onclick="startGame()" class="btn btn-info btn-med pull-left">Start</button>
+<button onclick="setPauseTrue()" class="btn btn-info btn-med pull-left">Pause</button>
+<button onclick="setPauseFalse()" class="btn btn-info btn-med pull-left">Continue</button>
+</div>
 </body>
 </html>

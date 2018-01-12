@@ -3,6 +3,9 @@ from flask import Flask, render_template, redirect, request, url_for, json
 from models import User, Course, Topic, Question, Choice, Exam, Exercise, Game, userTakesExercise, userTakesExam, userTakesGame
 from flask_login import login_required, login_user, logout_user, current_user
 from app import db
+import random
+from ast import literal_eval
+from datetime import datetime
 
 ################################################################()
 
@@ -112,8 +115,18 @@ def showDashboard(user):
 def enrolledCourses(user):
     courses = current_user.courses
     coursesoption = Course.query.order_by().all()
-
-    return render_template('user_courses.html', user=user, courses=courses, coursesoption=coursesoption)
+    pro = []
+    count = 0.0
+    for course in courses:
+        ttopics = Topic.query.filter_by(courseid=course.coursename).count()
+        topics = course.topics
+        for topic in topics:
+            exercise = userTakesExercise.query.filter_by(exer_id=topic.topicname).filter_by(user_id=current_user.username).first()
+            if exercise is not None and exercise.score > 0:
+                count = count + 1
+        progress = (count/ttopics)*100
+        pro.append(progress)
+    return render_template('user_courses.html', user=user, courses=zip(courses, pro), coursesoption=coursesoption)
 
 ################################################################()
 
@@ -122,7 +135,14 @@ def enrolledCourses(user):
 def displayCourse(coursename, user):
     course = Course.query.filter_by(coursename=coursename).first()
     topics = Topic.query.filter_by(courseid=course.coursename).all()
-    return render_template('user_showCourse.html', topics = topics, course=course, user=user)
+    status = []
+    for topic in topics:
+    	exercise = userTakesExercise.query.filter_by(exer_id=topic.topicname).filter_by(user_id=current_user.username).first()
+        if exercise is not None and exercise.score > 0:
+            status.append('DONE')
+        else:
+        	status.append('')
+    return render_template('user_showCourse.html', topics = zip(topics, status), course=course, user=user)
 
 ################################################################()
 
@@ -160,26 +180,25 @@ def user_Topic(user, coursename, topicname):
 
 ################################################################
 
-@app.route('/<user>/courses/<coursename>/topic/<topicname>/exercise/<exerciseid>/saveExercise', methods=['GET'])
+@app.route('/<user>/courses/<coursename>/topic/<topicname>/saveScoreExercise', methods=['POST'])
 @login_required
-def saveScore(user, coursename, topicname, exerciseid):
-        data = request.args.get('data')
-        score = data[0]
-        exerciseid = data[1]
-        exercise = userTakesExercise.query.filter_by(exer_id=exerciseid).first()
-        if exercise is None:
-            result = userTakesExercise(exerciseid, current_user.username, score)
-            db.session.add(result)
-            db.session.commit()
-            return redirect('user_Topic', user = user, coursename = coursename, topicname=topicname)
-        else:
-            if exercise.score < score:
-                exercise.score = score
-                db.session.commit()
-
+def saveScore(user, coursename, topicname):
+    #data = request.get_json()
+    score = request.json['score']
+    exerciseid = request.json['e']
+    eid = int(exerciseid)
+    exercise = Exercise.query.filter_by(exerciseid=eid).first()
+    user = User.query.filter_by(username=user).first()
+    exercisetaken = userTakesExercise.query.filter_by(exer_id=exercise.topicid).filter_by(user_id=user.username).first()
+    if exercisetaken is None:
+        result = userTakesExercise(exercise.topicid, user.username, score)
         db.session.add(result)
-        db.session.commit() 
-        return redirect('user_Topic', user = user, coursename = coursename, topicname=topicname)
+        db.session.commit()
+    else:
+        if exercisetaken.score < score:
+            exercisetaken.score = score
+            db.session.commit()
+    return redirect(url_for('user_Topic', user = user, coursename = coursename, topicname=topicname))
 
 ################################################################
 
@@ -192,40 +211,142 @@ def user_takeExercise(user, exerciseid, coursename, topicname):
         exercise = Exercise.query.filter_by(topicid=topic.topicname).first()
         questions = ['q']
         answers =['a']
-        length = 0
         data = exercise.questions
+        random.shuffle(data)
         for d in data:
             q = d.question
             a = d.answer
-            length = length + 1
             questions.append(q)
             answers.append(a)
+        if len(questions) <= 1:
+            return redirect(url_for('user_Topic', user=user, coursename=coursename, topicname=topicname))
         if exercise.gametype == 3:
-            return render_template('impossible_game.html', questions = questions, answers= answers, length = length, exerciseid=exerciseid)
+            return render_template('impossible_game.html',user = user, coursename = coursename, topicname = topicname, questions = questions, answers= answers, length = len(q), exerciseid=exerciseid)
         elif exercise.gametype == 1:
-            return render_template('typing_game.html', questions=questions, answers=answers, length = length, exerciseid=exerciseid)
+            return render_template('typing_game.html',user = user, coursename = coursename, topicname = topicname, questions=questions, answers=answers, length = len(q), exerciseid=exerciseid)
         else:
-            return render_template('memory_game.html', questions = questions)
+            return render_template('memory_game.html', user = user, coursename = coursename, topicname = topicname, questions = questions)
 
 ################################################################()
 
 @app.route('/<user>/exams')
 @login_required
 def exams(user):
-    courses = current_user.courses
-    return render_template('user_exams.html', courses = courses)
+    user = User.query.filter_by(username=current_user.username).first()
+    exams = ()
+    courses = user.courses
+    for course in courses:
+        exams = exams + (course.coursename,)
+        examsincourse = Exam.query.filter_by(courseid=course.coursename).all()
+        for exam in examsincourse:
+            exams = exams + (exam,)
+    print(exams)
+    return render_template('user_exams.html', user=current_user.username, exams=exams, courses=courses)
+
 
 ################################################################
 
 @app.route('/<user>/exams/<examid>')
 def user_takeExams(user, examid):
-    quiz = copy.deepcopy(quizzes[id])
-    questions = list(enumerate(quiz["questions"]))
+    exam = Exam.query.filter_by(examid=examid).first()
+    timelimit = exam.timelimit
+    choices = ()
+    choices2 = ()
+    num = 1
+    questions = exam.questions
     random.shuffle(questions)
-    quiz["questions"] = map(lambda t: t[1], questions)
-    ordering = map(lambda t: t[0], questions)
+    print(questions)
+    orderquestion = ()
+    innerchoices = ()
+    for question in questions:
+        randomchoice = ()
+        choices = choices + (question.question,)
+        orderquestion = orderquestion + (question.question,)
+        randomchoice = randomchoice + (question.answer,)
+        for choice in question.choices:
+            randomchoice = randomchoice + (choice.choice,)
+            innerchoices = innerchoices + (choice,)
+            if len(randomchoice) == 4:
+                list2 = list(randomchoice)
+                random.shuffle(list2)
+                tuple2 = tuple(list2)
+                choices = choices + tuple2
 
-    return flask.render_template('exam.html', name=name, id=id, user=user, quiz=quiz, quiz_ordering=json.dumps(ordering))
+    print(choices)
+    print(innerchoices)
+    if len(choices) > 100:
+        list3 = list(choices)
+        limit = len(choices) - 100
+        for i in range(limit):
+            list3.pop()
+        tuple3 = tuple(list3)
+        choices2 = choices2 + tuple3
+        return render_template('exam.html', questions=questions, choices=choices2, exam=exam, num=num, timelimit=timelimit)
+    print(choices2)
+    return render_template('exam.html', questions=questions, choices=list(choices), exam=exam, num=num,
+                           user=current_user.username, orderquestion=list(orderquestion), total=len(questions),
+                           innerchoices=innerchoices, timelimit=timelimit)
+
+
+################################################################()
+@app.route('/<user>/exams/check_exam/<examid>/<total>', methods=['POST', 'GET'])
+def check_exam(user, examid, total):
+    exam = Exam.query.filter_by(examid=examid).first()
+    questions = exam.questions
+    ordering = request.form.getlist('ord')
+    orderquestion = request.form.getlist('orderquestion')
+    print(orderquestion)
+    print(list(orderquestion))
+    newlist11 = [x.encode('UTF8') for x in ordering]
+    newlist22 = [x.encode('UTF8') for x in orderquestion]
+    order = newlist11[0]
+    order2 = newlist22[0]
+    l = literal_eval(str(order))
+    l2 = literal_eval(str(order2))
+    list1 = []
+    print(l)
+    list22 = [x.encode('UTF8') for x in l]
+    list33 = [x.encode('UTF8') for x in l2]
+    print(list22)
+    print(list33)
+    chosen_answer = ()
+    correct_answers = ()
+    wrong_answers = ()
+    for i in range(int(total)):
+        choice_data = request.form.get('choice%d' % i)
+        print(choice_data)
+        if choice_data is None:
+            continue
+        else:
+            chosen_answer = chosen_answer + (choice_data,)
+            list1 = list(chosen_answer)
+            print(chosen_answer)
+            print(list1)
+
+    newlist = [x.encode('UTF8') for x in list1]
+    newtuple = tuple(newlist)
+    for q in questions:
+        print("answer:" + q.answer)
+        for i in newtuple:
+            print("i:" + i)
+            if i == q.answer:
+                correct_answers = correct_answers + (i,)
+    for i in correct_answers:
+        newlist.remove(i)
+    listforwrong = newlist
+    tuplewr = tuple(listforwrong)
+    wrong_answers = wrong_answers + tuplewr
+    print(questions[0])
+    percentage = len(correct_answers)/float(total)*100
+    takenexam = userTakesExam.query.filter_by(exam_id=exam.examid).filter_by(user_id=current_user.username).first()
+    examresult = userTakesExam(exam.examid, current_user.username, percentage, len(correct_answers), total)#exam_id, user_id, score, correct, total
+    db.session.add(examresult)
+    db.session.commit()
+    return render_template('check_exam.html', user=current_user.username, choices=list22, exam=exam,
+                           questionorder=list33, questions=questions, wrong_answers=wrong_answers,
+                           correctanswers=len(correct_answers), correct_answers=correct_answers, total=total)
+
+
 ################################################################()
 
 @app.route('/<user>/games')
@@ -239,7 +360,22 @@ def games(user):
 @login_required
 def profile(user):
     courses = current_user.courses
-    return render_template('user_profile.html', user = current_user)
+    exercisescores = userTakesExercise.query.filter_by(user_id=user).all()
+    exertype = []
+    for e in exercisescores:
+    	ex = Exercise.query.filter_by(topicid=e.exer_id).first()
+    	g = Game.query.get(ex.gametype)
+    	exertype.append(g.gamename)
+    examscores = userTakesExam.query.filter_by(user_id=user).all()
+    examcourses = []
+    examtypes = []
+    for examscore in examscores:
+    	ex = Exam.query.filter_by(examid=examscore.exam_id).first()
+    	c = ex.courseid
+    	t = ex.examtype
+    	examcourses.append(c)
+    	examtypes.append(t)
+    return render_template('user_profile.html', user=current_user.username, usermail = current_user.usermail, exercisescores = zip(exercisescores, exertype), examscores= zip(examscores, examcourses, examtypes))
 
 ################################################################
 
@@ -250,10 +386,23 @@ def impossible(user):
 
 ################################################################
 
-@app.route('/<user>/games/typing', methods=['POST'])
+@app.route('/<user>/games/typing', methods=['POST', 'GET'])
 @login_required
 def typing(user):
-    return render_template('typing_game.html', user=user, questions = game.questions)
+    '''game = Game.query.filter_by(gamename='Typing').first()
+    exercises = Exercise.query.filter_by(gametype=game.gameid).all()
+    random.shuffle(exercises)
+    exercise = exercises[0]
+    topic = Topic.query.filter_by(topicname=exercise.topicid).first()
+    topicname = topic.topicname
+    coursename = topic.courseid
+    questions = exercise.questions
+    q = ['q']
+    a = ['a']
+    for question in questions:
+        q.append(question.question)
+       a.append(question.answer)'''
+    return render_template('typing_game.html')
 
 ################################################################
 
@@ -362,9 +511,29 @@ def addcourse():
 def removecourse(coursename):
     if request.method == 'POST':
         course = Course.query.filter_by(coursename=coursename).first()
+        exams = course.exams
+        for exam in exams:
+            examresults = userTakesExam.query.filter_by(exam_id=exam.examid).all()
+            for examresult in examresults:
+                db.session.delete(examresult)
+                db.session.commit()
+        topics = course.topics
+        for topic in topics:
+            questions = Question.query.filter_by(topic_id=topic.topicname)
+            for question in questions:
+                choices = question.choices
+                for choice in choices:
+                    db.session.delete(choice)
+                    db.session.commit()
+                db.session.delete(question)
+                db.session.commit()
+            exerciseresults = userTakesExercise.query.filter_by(exer_id=topic.topicname).all()
+            for exerciseresult in exerciseresults:
+                db.session.delete(exerciseresult)
+                db.session.commit()
         db.session.delete(course)
         db.session.commit()
-        return redirect(url_for('managecourses'))
+    return redirect(url_for('managecourses'))
 
 ################################################################
 
@@ -473,9 +642,11 @@ def manageExercises(coursename, topicname):
             db.session.commit()
         return redirect(url_for('manageTopics', coursename=coursename, topicname=topicname))
     else:
-        exercises = topic.exercises
+        exercise = Exercise.query.filter_by(topicid=topic.topicname).first()
+        game = Game.query.get(exercise.gametype)
+        gametype = game.gamename
         games = Game.query.all()
-        return render_template('admin_exercises.html', topicname=topicname, coursename=coursename, exercises=exercises, games=games)
+        return render_template('admin_exercises.html', topicname=topicname, coursename=coursename, exercise=exercise, gametype=gametype, games=games)
 
 ################################################################
 
@@ -511,8 +682,9 @@ def manageExerciseQuestion(coursename, topicname, exerciseid):
         db.session.commit()
         return redirect(url_for('exercisePage', topicname=topicname, coursename=coursename, exerciseid=exerciseid))
     else:
+        questions = exercise.questions
         return render_template('admin_manageexercisequestions.html', topicname=topicname, coursename=coursename,
-                       exerciseid=exerciseid)
+                       exerciseid=exerciseid, questions = questions)
 
 ################################################################
 
@@ -528,7 +700,7 @@ def addExerciseQuestion(coursename, topicname, exerciseid):
     else:
         questions = Question.query.filter_by(topic_id=topicname).all()
         return render_template('admin_addexercisequestion.html', topicname=topicname, coursename=coursename,
-                       exerciseid=exerciseid, questions=questions)
+                    exerciseid=exerciseid, questions=questions)
 
 ################################################################
 
@@ -541,15 +713,25 @@ def manageExams(coursename):
 
 ################################################################
 
+@app.route('/admin/<coursename>/manageexams/editexam/<examid>',methods=['POST', 'GET'])
+@login_required
+def editexam(examid, coursename):
+    exam = Exam.query.get(examid)
+    exam.timelimit = request.form['newtimelimit']
+    db.session.commit()
+    return redirect(url_for('manageExams', coursename=coursename))
+##################################################################
+
 @app.route('/admin/<coursename>/manageexams/addexam', methods=['POST', 'GET'])
 @login_required
 def addexam(coursename):
     if request.method == 'POST':
         examtype = request.form.get("examtype")
+        tlimit = request.form['timelimit']
         course = Course.query.filter_by(coursename=coursename).first()
-        examtest = Exam.query.filter_by(courseid=course.coursename, examtype=examtype).first()
+        examtest = Exam.query.filter_by(courseid=course.coursename).filter_by(examtype=examtype).first()
         if examtest is None:
-            exam = Exam(examtype=examtype, courseid=course.coursename)
+            exam = Exam(examtype=examtype, courseid=course.coursename, timelimit=tlimit)
             db.session.add(exam)
             db.session.commit()
             course.exams.append(exam)
@@ -578,16 +760,26 @@ def deleteexam(coursename, examid):
 @login_required
 def manageExamQuestions(coursename, examid):
     exam = Exam.query.filter_by(examid=examid).first()
+    listofquestions = ()
     if request.method == "POST":
-        delete = Question.query.get(request.form['action'])
-        exam.questions.remove(delete)
+        delete1 = Question.query.get(request.form['action'])
+        exam.questions.remove(delete1)
         db.session.commit()
-        return redirect(url_for('manageExamQuestions', coursename=coursename, examid=examid))
+        questions = Question.query.all()
+        examquestions = exam.questions
+        for examquestion in examquestions:
+            questions.remove(examquestion)
+        print(listofquestions)
+
+        return redirect(url_for('addExamQuestions', coursename=coursename, examid=examid, questions=questions,
+                                examquestions=examquestions))
     else:
         exam = Exam.query.filter_by(examid=examid).first()
         questions = exam.questions
         topics = Topic.query.all()
-        return render_template('admin_examquestion.html', exam=exam, coursename=coursename, questions=questions, topics=topics)
+        return render_template('admin_examquestion.html', exam=exam, coursename=coursename, questions=questions,
+                               topics=topics)
+
 
 ################################################################
 
@@ -595,16 +787,25 @@ def manageExamQuestions(coursename, examid):
 @login_required
 def addExamQuestions(coursename, examid):
     exam = Exam.query.filter_by(examid=examid).first()
+    listofquestions = ()
     if request.method == 'POST':
         question = Question.query.get(request.form['action'])
         exam.questions.append(question)
         db.session.commit()
-        return redirect(url_for('manageExamQuestions', coursename=coursename, examid=examid))
+        questions = Question.query.all()
+        examquestions = exam.questions
+        for examquestion in examquestions:
+             questions.remove(examquestion)
+        return redirect(url_for('addExamQuestions', coursename=coursename, examid=examid, questions=questions,
+                                examquestions=examquestions))
     else:
         questions = Question.query.all()
-        return render_template('admin_addexamquestions.html',coursename=coursename,
-                       examid=examid, questions=questions)
-        
+        examquestions = exam.questions
+        for examquestion in examquestions:
+            questions.remove(examquestion)
+        return render_template('admin_addexamquestions.html', coursename=coursename,
+                               examid=examid, questions=questions, examquestions=examquestions)
+
 
 ################################################################
 

@@ -148,7 +148,7 @@
                 <div class="container-courses">
                     <div class="row">
                         <div class="col-md-12">
-                            <div class="panel panel-default">
+                            <div class="panel panel-default" style=" height: auto;overflow-y:auto;">
                                 <div class="panel-heading text-center">
                                     <h2 class="panel-title">
                                         <a href="{{ url_for('user_Topic', coursename=coursename, user=user, topicname=topic.topicname) }}">
@@ -156,7 +156,7 @@
                                     </a>
                                     </h2>
                                 </div>
-                                <div class="panel-body" style="overflow:auto;">
+                                <div class="panel-body" style=" height: auto;overflow-y:auto;">
                                     <h3>Discussion: {{ topic.topicdisc }}</h3>
                                 </div>
                                 <div class="panel-footer">

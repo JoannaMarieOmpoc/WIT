@@ -83,12 +83,12 @@
             /* Green */
             border: none;
             color: white;
-            padding: 16px 32px;
+            padding: 10px 32px;
             text-align: center;
             text-decoration: none;
             display: inline-block;
             font-size: 16px;
-            margin: 4px 2px;
+            margin: 0px 2px;
             -webkit-transition-duration: 0.4s;
             /* Safari */
             transition-duration: 0.4s;
@@ -343,12 +343,12 @@
                 <div class="container-courses">
                     <div class="row">
                         <div class="course-menu">
-                            {% for topic in topics %}
+                            {% for topic, status in topics %}
                             <div class="col-md-6">
                                 <div class="panel panel-default text-center">
-                                    <div class="panel-heading">
+                                    <div class="panel-heading" style="height: 60px;">
                                         <h3 class="panel-title">
-                                            {{ topic.topicname }}
+                                            {{ topic.topicname }}<p style="color: green;"><b>{{ status }}</b></p>
                                             </a>
                                         </h3>
                                     </div>

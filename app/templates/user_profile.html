@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+{% extends "master.html" %}
 <head>
     <title>WIT | {% block title %}Home{% endblock %}</title>
             <style type="text/css">
@@ -9,14 +10,104 @@
     </style>
 </head>
 <body>
-    {% extends "master.html" %}
     {% block content %}
-<div class="content">
-    <img src="../static/img/prof.png" alt="Profile Pic" width="10%"><br>
-    <button type="button">Edit Profile Picture</button>
-    <h3> {{ user.username }} </h3>
-    <p><b> Email: </b>{{ user.usermail }}</p>
+<div class="content" style="margin: 100px 20px 20px 20px;">
+    <div style="text-align: center;">
+    <img src="../static/img/prof.png" alt="Profile Pic" width="20%" style="border-radius: 50%; align-self: center;"><br>
+    <!--<br><button type="button" class="btn btn-info btn-med" style="align-self: center;">Edit Profile Picture</button>-->
+    <h3> {{ user }} </h3>
+    <p>Email: {{ usermail }} </p>
     <br>
+    </div>
+    <table class="table table-bordered table-striped table-hover">
+                        <thead style="background-color: lightblue; font-size: 20px; color:black;">
+                            <tr>
+                                <th class="col-md-4">
+                                    Exercise: Topic
+                                </th>
+                                <th>
+                                    Type
+                                </th>
+                                <th class="col-md-4">
+                                    Score
+                                </th>
+
+                            </tr>
+                        </thead>
+                        {% for exercise, exert in exercisescores %}
+                        <tbody>
+                            <tr>
+                                <td class="col-md-4">
+                                    <h6 class="question-size">
+                                 {{ exercise.exer_id }}
+                                    </h6>
+                                </td>
+                                <td class="col-md-4">
+                                    <h6 class="question-size">
+                                 {{ exert }}
+                                    </h6>
+                                </td>
+                                <td class="col-md-4">
+                                    <h6 class="question-size">
+                                    {{ exercise.score }}
+                                    </h6>
+                            </tr>
+                        </tbody>
+                        {% endfor %}
+                    </table>
+            <table class="table table-bordered table-striped table-hover">
+                        <thead style="background-color: lightblue; font-size: 20px;color:black;">
+                            <tr>
+                                <th class="col-md-2">
+                                    Exam: Course
+                                </th>
+                                <th class="col-md-2">
+                                    Type
+                                </th>
+                                <th class="col-md-2">
+                                    Score
+                                </th>
+                                <th class="col-md-2">
+                                    Percentage
+                                </th>
+                                <th class="col-md-2">
+                                    Date Taken
+                                </th>
+
+                            </tr>
+                        </thead>
+                        {% for exam, course, type in examscores %}
+                        <tbody>
+                            <tr>
+                                <td class="col-md-2">
+                                    <h6 class="question-size">
+                                 {{ course }}
+                                    </h6>
+                                </td>
+                                <td class="col-md-2">
+                                    <h6 class="question-size">
+                                 {{ type }}
+                                    </h6>
+                                </td>
+                                <td class="col-md-2">
+                                    <h6 class="question-size">
+                                 {{ exam.correct }}/{{ exam.total }}
+                                    </h6>
+                                </td>
+                                <td class="col-md-2">
+                                    <h6 class="question-size">
+                                    {{ exam.score }}%
+                                    </h6>
+                                </td>
+                                <td class="col-md-2">
+                                    <h6 class="question-size">
+                                 {{ exam.datetaken }}
+                                    </h6>
+                                </td>
+                            </tr>
+                        </tbody>
+                        {% endfor %}
+                    </table>
     </div>
 </div>
     {% endblock %}
